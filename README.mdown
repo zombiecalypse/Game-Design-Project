@@ -1,0 +1,40 @@
+# Ideas
+
+## Involve aesthetics into game play
+There are games, that make creating "art" the goal, for example through
+dynamically generated music, but the battle dance from games like Bayonetta
+might count as well.
+
+### Draw a Route
+In jump and runs, you normally get to controll the little guy that jumps and
+runs. In this game however, you get to build a level by painting platforms. I
+imagine the game to be somewhat similar to Little Wings, except that you have a
+lot more actions.
+
+## Boids!
+Everything's better with boids.
+
+## Player can program helpers
+The helpers are as useful as the player manages them to make. Maybe you can earn
+new snipplets to use in regular play.
+
+## Gestures
+In order to activate skills, the player needs to draw stuff. Instead of the
+difficult problem of pattern recognition, there are symbols (left, right, up,
+down, ...) that can be combined. The precision affects the efficiency of the
+skill.
+
+## Social
+The simulated conflict is not physical in nature, but rather social. This might
+be similar to Sims or less emergent and more scripted.
+
+### Contracts
+Contracts are interesting in that they can fuck any of the parties over, due to
+the incomplete information. The best implementation I've seen is Civilization.
+
+## Collaborative
+There are AI and/or human actors, taht need to cooperate in order to succeed.
+
+### Teams
+Three teams compete. This combines teamwork and competition and even politics in
+that it allows two parties to form alliances.
