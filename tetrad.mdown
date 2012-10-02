@@ -1,0 +1,51 @@
+# Group: Dark Ducks
+
+# Theme: The Price of Freedom
+
+# Story
+## 1: The Great Magitech War
+it destroyed most of the civilization as we knew it and rendered the surface of
+our planet uninhabitable. We now live under the ocean in confined space.
+
+## Um... what's the plot?
+
+# Aesthetic
+## 3: Steampunk Magitech
+Leaky steam pipes, floating crystal platforms, gas lights. There will probably
+be underwater zepelins somewhere.
+
+## 4: &lt;3D
+3D is much easier to get wrong than 2D graphics. Neither of us can 3D model or
+do textures. Either we do a 2D graphic in the style of isometric games, in Final
+Fantasy &le;6 style or we add a 0.5D level switching (like A Link to the Past).
+
+## 5: Minimalism
+Experiment with 16bit or simplistic vector graphic style. Since we're not
+artists, we need something simple, that still brings the atmosphere across.
+
+# Mechanic
+## 6: Gestures
+Actions and spells are controlled by gesture symbols - a sequence of 
+`right-click` =&gt; `drag` =&gt; `release` that is simplified to `left`,
+`right`, `up`, and `down` movement. For example, a simple attack spell might be
+`up-up`, which shoots in the direction we're looking.
+
+## 7: Real time fights
+The idea of freedom is much better conveyed by this smooth transition between
+fight, exploration and interaction.
+
+## 8: WASD + mouse
+We can't do both movement and gestures with the mouse. Shooters prove that
+people can adapt to such controls, but we might need to experiment with it.
+
+## 9: Fights on a distance
+Since the spells would be hard to aim, we should allow a certain area to be
+affected.
+
+# Technology
+## Game engine for a scripting language
+
+* Allegro? 
+* Pygame?
+* Actionscript?
+* Javascript?
