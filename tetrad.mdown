@@ -7,43 +7,54 @@
 it destroyed most of the civilization as we knew it and rendered the surface of
 our planet uninhabitable. We now live under the ocean in confined space.
 
-## Um... what's the plot?
+## 2: Putting back the "punk" in "steampunk"
+We live in the lower levels of the city, largely ignored or forgotten by the
+upper society. Our life is one of continual fear and danger of violent death,
+solitary, poor, nasty, brutish, and short. I might escape that life, because I
+was born with the anima magica, something very rare, because it is usually
+inherited. Will I leave my family to help them from afar? Will I get rid of my
+past and indulge in the intrigues of the upper society? My best friend
+"upstairs" wants to overthrow the Zar, will I help?
+
+## 3: Retrospective Storytelling
+As to allow in media res, questions about the past are determined by the
+reaction in the present (Bioware titles like KotOR2 use that).
 
 # Aesthetic
-## 3: Steampunk Magitech
+## 4: Steampunk Magitech
 Leaky steam pipes, floating crystal platforms, gas lights. There will probably
 be underwater zepelins somewhere.
 
-## 4: &lt;3D
+## 5: &lt;3D
 3D is much easier to get wrong than 2D graphics. Neither of us can 3D model or
 do textures. Either we do a 2D graphic in the style of isometric games, in Final
 Fantasy &le;6 style or we add a 0.5D level switching (like A Link to the Past).
 
-## 5: Minimalism
+## 6: Minimalism
 Experiment with 16bit or simplistic vector graphic style. Since we're not
 artists, we need something simple, that still brings the atmosphere across.
 
 # Mechanic
-## 6: Gestures
+## 7: Gestures
 Actions and spells are controlled by gesture symbols - a sequence of 
 `right-click` =&gt; `drag` =&gt; `release` that is simplified to `left`,
 `right`, `up`, and `down` movement. For example, a simple attack spell might be
 `up-up`, which shoots in the direction we're looking.
 
-## 7: Real time fights
+## 8: Real time fights
 The idea of freedom is much better conveyed by this smooth transition between
 fight, exploration and interaction.
 
-## 8: WASD + mouse
+## 9: WASD + mouse
 We can't do both movement and gestures with the mouse. Shooters prove that
 people can adapt to such controls, but we might need to experiment with it.
 
-## 9: Fights on a distance
+## 10: Fights on a distance
 Since the spells would be hard to aim, we should allow a certain area to be
 affected.
 
 # Technology
-## Game engine for a scripting language
+## 11: Game engine for a scripting language
 
 * Allegro? 
 * Pygame?
