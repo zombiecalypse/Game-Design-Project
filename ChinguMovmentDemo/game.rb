@@ -11,6 +11,7 @@ class Game < Chingu::Window
       holding_d: :move_right, 
       holding_w: :move_up,
       holding_s: :move_down,
+      mouse_left: :new_word,
       holding_mouse_right: :record_gesture,
       mouse_right: :new_gesture,
       released_mouse_right: :finished_gesture}
@@ -84,10 +85,70 @@ class GestureBuffer
   end
 end
 
+class Spell
+  attr_reader :name
+  def initialize name
+    @name = name
+  end
+
+  def to_s
+    @name.to_s
+  end
+end
+
+class SpellBook
+  class << self
+    attr_reader :depth
+    def spell name, combination
+      @root  ||= {}
+      @depth ||= 0
+      insert Spell.new(name), combination.reverse, @root
+      @depth = [combination.length, @depth].max
+    end
+
+    def lookup_spell combination
+      lookup combination.reverse, @root
+    end
+
+    private
+    def insert item, word, map
+      raise "empty combination" if word.size == 0
+      nxt, rest = word.first, word.drop(1)
+      if rest.size == 0 
+        raise "#{item} and #{map[nxt]} have similar combination!" if map[nxt]
+        map[nxt] = item
+      elsif map[nxt].nil?
+        map[nxt] = insert(item, rest, {})
+      else
+        raise "#{item} has combination of #{map[nxt]} as prefix" unless map[nxt].kind_of? Hash
+        insert(item, rest, map[nxt])
+      end
+      map
+    end
+
+    def lookup combination, tree
+      return nil unless tree
+      return nil if combination.size == 0
+      return tree if not tree.kind_of? Hash
+      first, rest = combination.first, combination.drop(1)
+      return lookup rest, tree[first]
+    end
+  end
+
+  def lookup combination
+    self.class.lookup_spell combination
+  end
+
+  spell :shield, [:top_arc]
+  spell :fire, [:up, :down]
+  spell :fire_boom, [:up, :up, :up]
+end
+
 class Player < Chingu::GameObject
   def initialize(options = {})
     super(options.merge(:image => Gosu::Image['player.png']))
     @gesture_symbols = []
+    @spell_book = SpellBook.new
   end
 
   def move_left
@@ -115,7 +176,19 @@ class Player < Chingu::GameObject
   end
 
   def finished_gesture
-    puts @gesture_buffer.read
+     @gesture_symbols << @gesture_buffer.read
+     spell = @spell_book.lookup @gesture_symbols
+     if spell
+       puts spell
+       new_word
+     end
+     return if @gesture_symbols == []
+     back = [[SpellBook.depth, @gesture_symbols.length].min, 1].max
+     @gesture_symbols = @gesture_symbols[-back..-1]
+  end
+
+  def new_word
+    @gesture_symbols = []
   end
 end
 
