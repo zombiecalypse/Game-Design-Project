@@ -53,6 +53,8 @@ class Player
 
   def recognize(syms)
     return :fire if syms == [:up, :up]
+    return :ice if syms == [:left, :right]
+    return :shield if syms == [:down, :down]
   end
 end
 
