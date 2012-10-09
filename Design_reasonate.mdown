@@ -1,0 +1,2 @@
+* Kein Inventar, Waffen werden freigeschaltet, aber ersetzen alte sofort.
+* Keine Super-duper-sonder-spezial-Fertigkeiten von Waffen.

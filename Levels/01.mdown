@@ -1,0 +1,15 @@
+# Szene 1
+## Captured!
+
+* Spieler muss Fragen bei Verhör beantworten und verändert so seine Figur und
+  Hintergrund.
+  - Was für Waffe haben sie ihm abgenommen?
+* Wird in Zelle geworfen.
+* Einführung in Geschichte mittels Mitgefangenem.
+* Sprengen der Zellenwand mit erstem Spruch.
+  - Wärter rechnen nicht damit, weil die Unterschicht keine magischen
+    Fertigkeiten besitzt.
+* Kommt in Gebiet mit relativ ungefährlichen Gegnern.
+* Gegner werden nach und nach mit Wächtern, Robotern, ... ersetzt.
+* Endgegner: mechanische Spinne
+  - Loot: awesome weapon #1, zerfetzte Klamotten
