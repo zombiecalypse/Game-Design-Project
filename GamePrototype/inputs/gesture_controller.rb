@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'chingu'
 require 'gosu'
+
+require_relative '../game_objects/player'
 module Inputs
   class GestureBuffer
     class << self
