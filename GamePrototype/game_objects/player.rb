@@ -7,6 +7,7 @@ require_relative '../inputs/gesture_controller'
 
 module Objects
   class Player < Chingu::GameObject
+    trait :bounding_box, debug: true
     def initialize(options = {})
       super(options.merge(:image => Gosu::Image['player.png']))
       @gesture_symbols = []
@@ -39,9 +40,9 @@ module Objects
 
     def finished_gesture
        @gesture_symbols << @gesture_buffer.read
-       spell = @spell_book.lookup @gesture_symbols
-       if spell
-         spell.run self
+       spell_class = @spell_book.lookup @gesture_symbols
+       if spell_class
+         spell_class.create.run(self)
          new_word
        end
        return if @gesture_symbols == []
