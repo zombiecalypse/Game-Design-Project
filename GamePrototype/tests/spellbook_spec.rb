@@ -2,7 +2,7 @@ require_relative '../databases/spellbook'
 
 require 'rspec'
 
-describe "Array extension" do
+describe Array do
   it "is prefix of itself" do
     [:top_arc].has_prefix?([:top_arc]).should be(true)
   end
