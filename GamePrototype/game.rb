@@ -9,7 +9,7 @@ require_relative 'levels/start_menu.rb'
 class Game < Chingu::Window
   def setup
     super
-    push_game_state(Levels::TestLevel)
+    push_game_state(Levels::StartMenu)
   end
 
   def needs_cursor?; true; end
