@@ -57,7 +57,5 @@ affected.
 # Technology
 ## 11: Game engine for a scripting language
 
-* Allegro? 
-* Pygame?
-* Actionscript?
-* Javascript?
+* Ruby
+* Chingu engine

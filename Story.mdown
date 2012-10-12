@@ -1,0 +1,27 @@
+# Story
+## In groben Zügen
+Charakter will Geheimnis seiner Person lüften und muss dazu eine Seite im
+Konflikt von <Rot> und <Blau> wählen (oder die eigene). Er wird von beiden
+manipuliert, da sie herausfinden/wissen, dass er die toxische Luft der
+Oberfläche atmen kann.
+
+In ca der Mitte des Spieles findet dies der Charakter raus und sucht seinen
+Erschaffer auf. Er findet nun raus, dass es noch 149 weitere Testsubjekte gibt,
+die in der Population verteilt wurden (und andere, welche schon auf der
+Oberfläche sind). Der Charakter hat nun das Ziel, die restlichen zu finden (13
+Stück).
+
+## Schlüsselpunkte
+* Charakter startet in Gefängnis (als Spion von <Blau>) und bricht aus. Er wird
+  von <Name Henry> - einem Undercover Spion von <Blau> - aufgenommen und in die
+  obere Gesellschaft eingeschmuggelt.
+  - Roboter mit wählbarer Ansprechart
+* Da Akte des Chars `Top Secret` (oder sonst komisch war) weiss der Charakter
+  nun, dass er Teil des <Name> Programmes war, jedoch nicht, was dies ist. Eine
+  Blutprobe wurde in das magitechnologische Institut geschickt.
+* Bevor wir die Info selbst bekommen, wird jemand auf uns angesetzt ("lebendig
+  fangen") und wir wissen nur, dass es mit der Probe zusammen hängt.
+* Beide Seiten bieten einem an, für sie zu arbeiten
+  - Sie wollen uns zu Zucht-<X> machen.
+* Eine der 13 ist einem schon begegnet
+  - eine Pflegerin aus <Name Henry>'s Haus?
