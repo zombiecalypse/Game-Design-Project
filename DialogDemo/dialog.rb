@@ -21,4 +21,9 @@ class Dialog
 		dialog_pack
 	end
 	
+	def answer choice
+		puts choice
+		@next_dialog
+	end
+	
 end
