@@ -18,7 +18,7 @@ class Dialog
 	
 	def ask
 		dialog_pack = [question, answer1, answer2,answer3]
-		dialog_pack
+		dialog pack
 	end
 	
 end
