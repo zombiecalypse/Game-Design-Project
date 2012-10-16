@@ -1,0 +1,37 @@
+# /usr/bin/env ruby
+
+require 'rubygems'
+require 'chingu'
+include Gosu
+
+class Game < Chingu::Window
+	def initialize
+		super
+		@str = "not clicked"
+		self.input = {:escape => :exit}
+		self.input = {:mouse_left => :left_click}
+	end
+	
+	def draw
+		super
+		Image["background.png"].draw(0,0,0)
+		Image["dialog_box.png"].draw(0,440,0)
+	end
+	
+	def update
+	      super
+	      self.caption = "#{mouse_x.to_s} #{mouse_y.to_s}"
+	      
+	end
+	
+	def left_click
+	      
+	end
+	
+	def needs_cursor?; true; end
+		
+	  
+end
+
+Game.new.show
+
