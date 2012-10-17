@@ -29,8 +29,16 @@ module Inputs
     end
 
     it "should recognize a perfect arc" do
-      @window.should_receive(:mouse_x).and_return(*((0..180).collect {|x| 200 + 100*Math::cos(x*Math::PI/180)}))
-      @window.should_receive(:mouse_y).and_return(*((0..180).collect {|x| 200 - 100*Math::sin(x*Math::PI/180)}))
+      @window\
+        .should_receive(:mouse_x)\
+        .and_return(*(\
+                      (0..180)\
+                        .collect {|x| 200 + 100*Math::cos(x*Math::PI/180)}))
+      @window\
+        .should_receive(:mouse_y)\
+        .and_return(*(\
+                      (0..180)\
+                        .collect {|x| 200 - 100*Math::sin(x*Math::PI/180)}))
       (0..180).each {@buffer.dot}
       @buffer.read.should be(:top_arc)
     end

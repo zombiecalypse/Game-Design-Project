@@ -6,10 +6,13 @@ require 'logger'
 
 module Levels
   class TestLevel < Chingu::GameState
+    trait :viewport
     def initialize(opts = {})
       super(opts)
+      self.viewport.lag = 0
+      self.viewport.game_area = [0.0, 0.0, 1000.0, 1000.0]
       @log = Logger.new(STDOUT)
-      @player = Objects::Player.create
+      @camera = @player = Objects::Player.create x: 550, y: 550
       @log.info("TestLevel") { "entering" }
     end
 
@@ -31,8 +34,18 @@ module Levels
     end
     
     def draw
-      fill(Gosu::Color::WHITE)
+      draw_background
       super
+      viewport.center_around @camera
+    end
+
+    def draw_background
+      fill(Gosu::Color::WHITE)
+    end
+
+    def update
+      super
+      self.viewport.center_around @player
     end
 
   end
