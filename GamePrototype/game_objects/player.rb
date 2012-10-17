@@ -8,26 +8,29 @@ require_relative '../inputs/gesture_controller'
 module Objects
   class Player < Chingu::GameObject
     trait :bounding_box, debug: true
+    trait :collision_detection
     def initialize(options = {})
       super(options.merge(:image => Gosu::Image['player.png']))
       @gesture_symbols = []
       @spell_book = Databases::SpellBook.new
+      @speed = 3
+      @level = options[:level]
     end
 
     def move_left
-      @x -= 2
+      @x -= @speed unless @level and @level.blocked? @x-@speed, @y
     end
 
     def move_right
-      @x += 2
+      @x += @speed unless @level and @level.blocked? @x+@speed, @y
     end
 
     def move_up
-      @y -= 2
+      @y -= @speed unless @level and @level.blocked? @x, @y-@speed
     end
 
     def move_down
-      @y += 2
+      @y += @speed unless @level and @level.blocked? @x, @y+@speed
     end
 
     def new_gesture

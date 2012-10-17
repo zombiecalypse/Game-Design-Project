@@ -39,6 +39,7 @@ module Inputs
       y < 0 and x.abs < y.abs
     end
 
+=begin
     def self.circ? xs,ys
       begin
         xavg,yavg = xs.inject(&:+)/xs.size, ys.inject(&:+)/ys.size
@@ -53,6 +54,7 @@ module Inputs
         nil
       end
     end
+=end
 
     gesture :top_arc, 10 do |xs, ys|
       my = ys[ys.size/2]
