@@ -15,17 +15,24 @@ module Levels
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
       @log = Logger.new(STDOUT)
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
-      @log.info("TestLevel") { "entering" }
+      log_info { "entering" }
     end
 
     def finalize
-      @log.info("TestLevel") { "exiting" }
+      log_info { "exiting" }
+    end
+
+    def log_info &block
+      @log.info("TestLevel", &block)
     end
 
     def blocked? x,y
       return true if x < 0 or y < 0
       return true if x > @level_width or y > @level_height
-      
+    end
+
+    def can_move_to? x,y
+      not blocked? x,y
     end
 
     def setup
