@@ -7,15 +7,26 @@ module Chingu::Traits
     module ClassMethods
       def initialize_trait(options)
         @spell_name = options[:name] || "<no name>"
+        @options = options
         super
       end
       def spell_name
         @spell_name
       end
+
+      def options
+        @options
+      end
     end
 
     def setup_trait(options)
-      @image ||= Gosu::Image["#{self.class.spell_name}.png"]
+      opts = {file: "#{self.class.spell_name}_ani.png"}.merge(self.class.options)
+      @animation = Chingu::Animation.new( opts ) rescue nil
+      if @animation
+        @image = @animation.next
+      else
+        @image ||= Gosu::Image["#{self.class.spell_name}.png"]
+      end
       super
     end
   end
@@ -38,15 +49,28 @@ end
 
 module Databases
   class Fire < Chingu::GameObject
-    trait :spell, name: :fire
-    trait :timer
+    trait :spell, name: :fire, size: [200,400], delay: 125
+    traits :timer, :velocity
+
+    def update
+      super
+      @image = @animation.next if @animation
+    end
+
+    @@dir_to_vector = {
+      left:  [-5,0],
+      right: [ 5,0],
+      up:    [0,-5],
+      down:  [0, 5]
+    }
+
 
     def run player
-      self.center_y = 0
-      during(1000) do
-        self.x, self.y = player.x, player.y
-        self.alpha *= 0.9
-      end.then { self.destroy }
+      self.center_y = 0.75
+      self.x = player.x
+      self.y = player.y
+      self.velocity = @@dir_to_vector[player.current_dir]
+      after(1000) { self.destroy }
     end
   end
   class Shield < Chingu::GameObject
@@ -67,7 +91,7 @@ module Databases
   # buffer first.
   class SpellBook
     class << self
-      attr_reader :depth
+      attr_reader :depth, :dict
       def spell s, combination
         @dict  ||= {}
         @depth ||= 0
@@ -80,8 +104,11 @@ module Databases
         @depth = [combination.length, @depth].max
       end
 
+
+
       def lookup_spell c
-        @dict[c]
+        postfixed = @dict.keys.detect {|k| c.reverse.has_prefix? k.reverse }
+        @dict[postfixed]
       end
 
       private
@@ -91,6 +118,13 @@ module Databases
         nil
       end
 
+    end
+
+    def to_s
+      d = self.class.dict
+      d.keys\
+        .collect {|k| "#{k}: #{d[k]}" }
+        .join("\n")
     end
 
     def lookup combination

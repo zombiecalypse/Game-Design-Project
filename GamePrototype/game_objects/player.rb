@@ -1,12 +1,14 @@
 require 'rubygems'
 require 'chingu'
 require 'gosu'
+require 'logger'
 
 require_relative '../databases/spellbook'
 require_relative '../inputs/gesture_controller'
 
 module Objects
   class Player < Chingu::GameObject
+    attr_reader :current_dir
     trait :bounding_box, debug: true
     trait :collision_detection
     def initialize(options = {})
@@ -18,6 +20,7 @@ module Objects
       @spell_book = Databases::SpellBook.new
       @speed = 3
       @level = options[:level]
+      @log = Logger.new(STDOUT)
     end
 
     def update
@@ -49,6 +52,7 @@ module Objects
     end
 
     def new_gesture
+      @log.debug("Player") { "New Gesture" }
       @gesture_buffer = Inputs::GestureBuffer.new
     end
 
@@ -57,15 +61,19 @@ module Objects
     end
 
     def finished_gesture
-       @gesture_symbols << @gesture_buffer.read
-       spell_class = @spell_book.lookup @gesture_symbols
-       if spell_class
-         spell_class.create.run(self)
-         new_word
-       end
-       return if @gesture_symbols == []
-       back = [[Databases::SpellBook.depth, @gesture_symbols.length].min, 1].max
-       @gesture_symbols = @gesture_symbols[-back..-1]
+      @log.debug("Player") { "Finished Gesture" }
+      @gesture_symbols << @gesture_buffer.read if @gesture_buffer.read
+      spell_class = @spell_book.lookup @gesture_symbols
+      if spell_class
+        @log.info("Player") { "Executing #{spell_class} for gesture #{@gesture_symbols}" }
+        spell_class.create.run(self)
+        new_word
+      else
+        @log.debug("Player") { "#{@gesture_symbols} is not a gesture in #{@spell_book.to_s}" }
+      end
+      return if @gesture_symbols == []
+      back = [[Databases::SpellBook.depth, @gesture_symbols.length].min, 1].max
+      @gesture_symbols = @gesture_symbols[-back..-1]
     end
 
     def new_word
