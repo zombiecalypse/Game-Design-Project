@@ -2,13 +2,31 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 require 'logger'
+require 'texplay'
 
 
 module Levels
+  class Map < Chingu::GameObject
+    def initialize opts={}
+      super opts
+      @mask = opts[:mask] || self.image
+    end
+
+    def blocked? x,y
+      not @mask.transparent_pixel?(x,y)
+    end
+  end
+
   class TestLevel < Chingu::GameState
     trait :viewport
     def initialize(opts = {})
       super(opts)
+      @map = Map.create( x: 0, y: 0, \
+                        image: Gosu::Image['maps/01_bg.png'], \
+                        mask: Gosu::Image['maps/01_mask.png'], \
+                        zorder: -1)
+      @map.center = 0
+      p @map.center
       @level_width = 1000
       @level_height = 1000
       self.viewport.lag = 0
@@ -29,6 +47,7 @@ module Levels
     def blocked? x,y
       return true if x < 0 or y < 0
       return true if x > @level_width or y > @level_height
+      return true if @map.blocked? x,y
     end
 
     def can_move_to? x,y
@@ -62,7 +81,7 @@ module Levels
     end
 
     def draw_background
-      fill(Gosu::Color::WHITE)
+      fill(Gosu::Color::WHITE, -5)
     end
 
     def update
