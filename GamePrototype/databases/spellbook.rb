@@ -106,8 +106,8 @@ module Databases
 
 
 
-      def lookup_spell c
-        postfixed = @dict.keys.detect {|k| c.reverse.has_prefix? k.reverse }
+      def lookup_spell combination
+        postfixed = @dict.keys.detect {|key| combination.reverse.has_prefix? key.reverse }
         @dict[postfixed]
       end
 

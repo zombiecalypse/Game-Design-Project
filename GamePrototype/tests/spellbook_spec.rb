@@ -51,4 +51,9 @@ describe Databases::SpellBook do
       Databases::SpellBook.spell("Explosion", [:up, :up, :down, :down]) }.to raise_error
   end
 
+  it "should allow postfix triggering" do
+    book = Databases::SpellBook.new
+    book.lookup([:up, :top_arc]).should be(Databases::Shield)
+  end
+
 end
