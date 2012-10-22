@@ -32,6 +32,8 @@ module Levels
       self.viewport.lag = 0
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
       @log = Logger.new(STDOUT)
+      load_game_objects( :file => "events.yml")
+      log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
       log_info { "entering" }
     end
