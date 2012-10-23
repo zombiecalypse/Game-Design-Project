@@ -1,5 +1,5 @@
 ---   
-- ConversationEvent:
+- 'ObjectsEventTrigger'
     :x: 500.0
     :y: 500.0
     :angle: 0
@@ -7,4 +7,5 @@
     :factor_x: 1
     :factor_y: 1
     :alpha: 255
-    
+    :lines: ["I was an adventurer like you", "until I took a thunderbolt to the knee"]
+    :once: true

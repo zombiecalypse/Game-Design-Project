@@ -13,8 +13,17 @@ module Levels
     end
 
     def blocked? x,y
-      not @mask.transparent_pixel?(x,y)
+      is_wall?(@mask.get_pixel(x,y)) rescue false
     end
+
+    def is_wall? pixel
+      r,g,b,a = pixel
+      r < 0.1 and g < 0.1 and b < 0.1 and a > 0.99
+    end
+  end
+
+  class TextEvent < Chingu::GameObject
+
   end
 
   class TestLevel < Chingu::GameState
@@ -26,7 +35,6 @@ module Levels
                         mask: Gosu::Image['maps/01_mask.png'], \
                         zorder: -1)
       @map.center = 0
-      p @map.center
       @level_width = 1000
       @level_height = 1000
       self.viewport.lag = 0

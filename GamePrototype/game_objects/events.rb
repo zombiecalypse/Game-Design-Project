@@ -5,19 +5,25 @@ require 'logger'
 require 'texplay'
 
 
-	class ConversationEvent < Chingu::GameObject
+module Objects
+	class EventTrigger < Chingu::GameObject
 		trait :bounding_box
 		
 		def initialize (opts={})
 			super opts
+      @event = Events::Conversation.new opts if opts[:lines]
+      @once = opts[:once]
 		end
 		
 		def setup
 			@image = Gosu::Image["platform.png"]
-			self.factor = 1
 		end
+
+    def update
+      each_collision(Player) do
+        @event.render if @event
+        self.destroy if @once
+      end
+    end
 	end
-
-	
-	
-
+end
