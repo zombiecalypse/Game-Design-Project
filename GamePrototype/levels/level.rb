@@ -4,6 +4,9 @@ require 'gosu'
 require 'logger'
 require 'texplay'
 
+require_relative '../events/dsl'
+require_relative '../events/tile'
+
 
 module Levels
   class Map < Chingu::GameObject
@@ -22,10 +25,6 @@ module Levels
     end
   end
 
-  class TextEvent < Chingu::GameObject
-
-  end
-
   class TestLevel < Chingu::GameState
     trait :viewport
     def initialize(opts = {})
@@ -40,10 +39,21 @@ module Levels
       self.viewport.lag = 0
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
       @log = Logger.new(STDOUT)
-      load_game_objects( :file => "events.yml")
+      load_events
       log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
       log_info { "entering" }
+    end
+
+    def load_events
+      dialog = Dsl::Event.new(once: true) do |evt|
+        evt.on_hit do
+          show_popup "I was an adventurer like you"
+          show_popup "Until I took a thunderbolt to the knee"
+        end
+      end
+
+      tile = Events::Tile.create event: dialog, x: 400, y: 300
     end
 
     def finalize

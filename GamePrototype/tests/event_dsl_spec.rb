@@ -1,4 +1,5 @@
 require_relative '../events/dsl'
+require_relative '../events/conversation'
 require 'rspec'
 
 describe Dsl::Event do
@@ -9,7 +10,7 @@ describe Dsl::Event do
         show_popup("Cure for cancer found")
       end
     end
-    event.hit.should eq([Dsl::Popup.new("Cure for cancer found")])
+    event.hit.should eq([Events::Conversation.new(lines: "Cure for cancer found")])
   end
 
   it "has `on_activate` to run on box collision when clicked" do
@@ -18,7 +19,7 @@ describe Dsl::Event do
         show_popup("Cure for cancer found")
       end
     end
-    event.activate.should eq([Dsl::Popup.new("Cure for cancer found")])
+    event.activate.should eq([Events::Conversation.new(lines: "Cure for cancer found")])
   end
 
   it "has `automatically` to run at the beginning of the scene" do
@@ -27,7 +28,7 @@ describe Dsl::Event do
         show_popup("Cure for cancer found")
       end
     end
-    event.enter_scene.should eq([Dsl::Popup.new("Cure for cancer found")])
+    event.enter_scene.should eq([Events::Conversation.new(lines: "Cure for cancer found")])
   end
 
   it "allows simple text popups" do
@@ -36,7 +37,7 @@ describe Dsl::Event do
         show_popup("Cure for cancer found")
       end
     end
-    event.hit.should eq([Dsl::Popup.new("Cure for cancer found")])
+    event.hit.should eq([Events::Conversation.new(lines: "Cure for cancer found")])
   end
 
   it "allows multiple text popups" do
@@ -46,7 +47,7 @@ describe Dsl::Event do
         show_popup("requires only 3 sacrificed unicorns")
       end
     end
-    event.hit.should eq([Dsl::Popup.new("Cure for cancer found"), Dsl::Popup.new("requires only 3 sacrificed unicorns")])
+    event.hit.should eq([Events::Conversation.new(lines: "Cure for cancer found"), Events::Conversation.new(lines: "requires only 3 sacrificed unicorns")])
   end
 
   it "should by default run everything over and over" do
@@ -55,8 +56,8 @@ describe Dsl::Event do
         show_popup("Cure for cancer found")
       end
     end
-    event.hit.should eq([Dsl::Popup.new("Cure for cancer found")])
-    event.hit.should eq([Dsl::Popup.new("Cure for cancer found")])
+    event.hit.should eq([Events::Conversation.new(lines: "Cure for cancer found")])
+    event.hit.should eq([Events::Conversation.new(lines: "Cure for cancer found")])
   end
 
   it "should have the option to run only once" do
@@ -65,7 +66,7 @@ describe Dsl::Event do
         show_popup("Cure for cancer found")
       end
     end
-    event.hit.should eq([Dsl::Popup.new("Cure for cancer found")])
+    event.hit.should eq([Events::Conversation.new(lines: "Cure for cancer found")])
     event.hit.should eq([])
   end
 
@@ -76,7 +77,7 @@ describe Dsl::Event do
       end
     end
 
-    event.enter_scene.should eq([Dsl::Popup.new("Cure for cancer found")])
+    event.enter_scene.should eq([Events::Conversation.new(lines: "Cure for cancer found")])
     event.enter_scene.should eq([])
   end
 
@@ -89,7 +90,7 @@ describe Dsl::Event do
         show_popup("requires only 3 sacrificed unicorns")
       end
     end
-    event.hit.should eq([Dsl::Popup.new("Cure for cancer found")])
-    event.hit.should eq([Dsl::Popup.new("requires only 3 sacrificed unicorns")])
+    event.hit.should eq([Events::Conversation.new(lines: "Cure for cancer found")])
+    event.hit.should eq([Events::Conversation.new(lines: "requires only 3 sacrificed unicorns")])
   end
 end

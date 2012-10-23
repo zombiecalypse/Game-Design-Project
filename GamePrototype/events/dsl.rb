@@ -1,14 +1,5 @@
+require_relative 'conversation'
 module Dsl
-  class Popup
-    attr_accessor :text
-    def initialize text
-      self.text = text
-    end
-
-    def == other
-      text == other.text
-    end
-  end
   class Event
     def initialize opts={}, &block
       block.call(self)
@@ -21,6 +12,7 @@ module Dsl
     end
 
     def activate
+      return [] unless @on_activate
       block, rest = @on_activate[0], @on_activate[1..-1]
       @on_activate = rest
       @on_activate << block unless @once
@@ -33,6 +25,7 @@ module Dsl
     end
 
     def hit
+      return [] unless @on_hit
       block, rest = @on_hit[0], @on_hit[1..-1]
       @on_hit = rest
       @on_hit << block unless @once
@@ -45,6 +38,7 @@ module Dsl
     end
 
     def enter_scene
+      return [] unless @on_scene
       block, rest = @on_scene[0], @on_scene[1..-1]
       @on_scene = rest
       @on_scene << block unless @once
@@ -58,7 +52,7 @@ module Dsl
     end
 
     def show_popup(str)
-      @buffer << Popup.new(str)
+      @buffer << Events::Conversation.new(lines: str)
     end
   end
 end
