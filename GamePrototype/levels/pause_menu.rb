@@ -5,7 +5,7 @@ module Levels
       super
       @bg = Gosu::Color::BLACK
       @menu = Menu.create(menu_items: {
-        "Continue" => lambda {pop_game_state},
+        "Continue" => lambda {pop_game_state(setup: false)},
         "Exit" => :exit
       })
       @menu.input= {
