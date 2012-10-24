@@ -6,6 +6,7 @@ require 'texplay'
 
 require_relative '../events/dsl'
 require_relative '../events/tile'
+require_relative 'pause_menu'
 
 
 module Levels
@@ -74,10 +75,15 @@ module Levels
       not blocked? x,y
     end
 
+    def debug_state
+      push_game_state Chingu::GameStates::Debug
+    end
+
     def setup
       super
       self.input = {
-        esc:                   :open_menu
+        esc:                   :open_menu,
+        F1:                    :debug_state
       }
       @player.input = { 
         holding_a:             :move_left, 
@@ -91,7 +97,7 @@ module Levels
     end
 
     def open_menu
-      pop_game_state
+      push_game_state PauseMenu
     end
     
     def draw
