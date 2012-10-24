@@ -48,11 +48,11 @@ module Dsl
     def run_block block
       @buffer = []
       self.instance_eval &block if block
-      @buffer
+      [Events::Conversation.new(lines: @buffer)]
     end
 
     def show_popup(str)
-      @buffer << Events::Conversation.new(lines: str)
+      @buffer << Events::Popup.new(lines: str)
     end
   end
 end

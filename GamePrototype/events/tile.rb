@@ -13,7 +13,9 @@ module Events
 
     def update
       each_collision(Objects::Player) do |me, player|
-        me.event.hit.each(&:render)
+        me.event.hit.each do |e|
+          e.render
+        end
       end
     end
   end
