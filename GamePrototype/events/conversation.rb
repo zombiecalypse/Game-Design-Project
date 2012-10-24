@@ -9,16 +9,16 @@ module Events
       @y = opts[:y] || 2*$window.height/3 - @width/2
       @align = opts[:align] || :left
       @fg = opts[:fg] || Gosu::Color::WHITE
-      @bg = opts[:bg] || Gosu::Color::BLACK
+      @bg = opts[:bg] || Gosu::Color.new(220, 0,0,0)
       @lines = opts[:lines].reverse
       @text = as_text @lines.pop
       self.input = {
-        [:mouse_left, :mouse_right, :space] => :forward
+        [:mouse_left, :mouse_right, :space, :enter] => :forward
       }
     end
 
     def as_text txt
-      Chingu::Text.new(txt.to_s, x: @x + 20, y: @y + 10, align: @align, zorder: 1001)
+      Chingu::Text.new(txt.render, x: @x + 20, y: @y + 10, align: @align, zorder: 1001) rescue nil
     end
 
     def render
@@ -26,11 +26,8 @@ module Events
     end
 
     def forward
-      if not @lines.empty?
-        @text = as_text @lines.pop
-      else
-        quit_dialog
-      end
+      @text = as_text @lines.pop
+      quit_dialog unless @text
     end
 
     def quit_dialog
@@ -40,12 +37,12 @@ module Events
     def draw
       previous_game_state.draw
 
-      $window.draw_quad( 
-                        @x, @y, @bg, 
-                        @width+@x, @y, @bg,
-                        @width+@x, @y+@height, @bg,
-                        @x, @y+@height, @bg, 1000)
-      @text.draw
+      $window.draw_quad(
+          @x                 , @y        , @bg,
+          @width+@x          , @y        , @bg,
+          @width+@x          , @y+@height, @bg,
+          @x                 , @y+@height, @bg, 1000)
+      @text.draw if @text
     end
   end
 
@@ -57,7 +54,6 @@ module Events
     end
 
     def render
-      puts @lines
       @lines
     end
 
