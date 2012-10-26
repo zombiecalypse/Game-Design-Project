@@ -4,3 +4,7 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = "./tests/**/*_spec.rb"
 end
 
+RSpec::Core::RakeTask.new(:coverage) do |t| 
+  t.pattern = "./tests/**/*_spec.rb"
+  ENV['COVERAGE'] = "true"
+end
