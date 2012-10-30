@@ -5,7 +5,7 @@ require 'gosu'
 module Chingu::Traits
   module Hp
     module ClassMethods
-      def initialize_trait(options)
+      def initialize_trait(options={})
         @hp_max = options[:hp] || 10
       end
 
