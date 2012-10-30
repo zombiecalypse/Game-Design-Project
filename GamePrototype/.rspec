@@ -1,2 +1,3 @@
 --color
---format progress
+--format documentation
+--pattern "tests/**/*_spec.rb"
