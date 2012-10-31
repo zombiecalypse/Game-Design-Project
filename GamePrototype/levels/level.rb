@@ -7,6 +7,7 @@ require 'texplay'
 require_relative '../events/dsl'
 require_relative '../events/tile'
 require_relative 'pause_menu'
+require_relative '../game_objects/simple_tower'
 
 
 module Levels
@@ -43,6 +44,7 @@ module Levels
       load_events
       log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
+      @tower = Objects::SimpleTower.create x: 100, y: 100
       log_info { "entering" }
     end
 
