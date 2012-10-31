@@ -10,9 +10,10 @@ require_relative '../object_traits/hp'
 module Objects
   class Player < Chingu::GameObject
     attr_reader :current_dir
+    attr_accessor :vulnerability
     trait :bounding_box, debug: true
     trait :collision_detection
-    trait :hp
+    trait :hp, hp: 100
     def initialize(options = {})
       @animation = Chingu::Animation.new( bounce: true, file: 'pc.png', size: 100, delay: 250)
       @animation.frame_names = {down: (0..2), up: (3..5), left: (6..8), right: (9..11)}
@@ -23,10 +24,20 @@ module Objects
       @speed = 3
       @level = options[:level]
       @log = Logger.new(STDOUT)
+      @vulnerability = 1
     end
 
-    def update
-      super
+    def harm h
+      super(h * vulnerability)
+    end
+
+    def on_harm hrm
+      @log.info("Player") { "ouch! I'm at #{hp}HP" }
+    end
+
+    def on_kill
+      @log.info("Player") { "X_x" }
+      $window.pop_game_state
     end
 
     def move_left

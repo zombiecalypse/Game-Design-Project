@@ -46,7 +46,7 @@ module Levels
       load_events
       log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
-      @tower = Objects::SimpleTower.create x: 100, y: 100
+      @tower = Objects::SimpleTower.create x: 700, y: 700
       log_info { "entering" }
     end
 

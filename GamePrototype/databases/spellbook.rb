@@ -2,6 +2,8 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 
+require_relative '../game_objects/simple_tower'
+
 module Chingu::Traits
   module Spell
     module ClassMethods
@@ -50,11 +52,17 @@ end
 module Databases
   class Fire < Chingu::GameObject
     trait :spell, name: :fire, size: [200,400], delay: 125
-    traits :timer, :velocity
+    traits :timer, :velocity, :collision_detection
+    trait :bounding_circle, debug: true, scale: 0.5
+
 
     def update
       super
       @image = @animation.next if @animation
+      each_collision(Objects::SimpleTower) do |s, tower|
+        tower.harm 10
+        self.destroy
+      end
     end
 
     @@dir_to_vector = {
@@ -79,10 +87,14 @@ module Databases
 
     def run player
       self.x, self.y = player.x, player.y
+      player.vulnerability = 0.2
       during(2000) do
         self.x, self.y = player.x, player.y
         self.alpha *= 0.99
-      end.then { self.destroy }
+      end.then do
+        player.vulnerability = 1
+        self.destroy 
+      end
     end
   end
 

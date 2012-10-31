@@ -44,7 +44,6 @@ module Chingu::Traits
       def initialize opts={}
         super({:image => Gosu::Image['projectile.png']}.merge(opts))
         phi = Math::atan2 opts[:at_y], opts[:at_x]
-        puts "Phi: #{phi}"
         self.velocity_x = Math::cos(phi) * self.max_speed
         self.velocity_y = Math::sin(phi) * self.max_speed
       end

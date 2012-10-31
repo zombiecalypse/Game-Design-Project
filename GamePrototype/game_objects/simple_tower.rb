@@ -7,9 +7,13 @@ module Objects
     class Projectile < Chingu::Traits::Tower::Projectile
       trait :timer
 
+      def timeout
+        2000
+      end
+
       def setup
         super
-        after(2000) { self.destroy }
+        after(timeout) { self.destroy }
         every(50) do
           self.angle += 10 
         end
@@ -21,20 +25,21 @@ module Objects
 
       def on_hit player
         puts "blarg!"
+        player.harm 10
       end
     end
     trait :tower, projectile: Projectile
     trait :timer
+    trait :bounding_box, debug: true
+    trait :hp, hp: 50
 
     def initialize(opts={})
       super(opts.merge image: Gosu::Image['tower.png'])
       every(1500, name: :shoot) do 
         if $window.current_game_state.respond_to? :player
           player_coords = [$window.current_game_state.player.x,$window.current_game_state.player.y]
-          puts "shoot at player at #{player_coords}"
           shoot(*player_coords)
         else
-          puts "am in #{$window.current_game_state}, cant shoot at player"
           shoot(500,500)
         end
       end
