@@ -27,7 +27,6 @@ module Chingu::Traits
     def shoot x,y
       log_debug {"Shooting at #{[x,y]}"}
       dx, dy = x - self.x, y - self.y
-      vx, vy = dx/(dx.abs + dy.abs), dy/(dx.abs + dy.abs)
       proj = produce_projectile x: self.x, y: self.y, at_x: dx, at_y: dy
       proj.on_shoot
       log_debug {"Proj: #{proj} => #{proj.velocity}"}
@@ -44,7 +43,8 @@ module Chingu::Traits
 
       def initialize opts={}
         super({:image => Gosu::Image['projectile.png']}.merge(opts))
-        phi = Math::atan2 opts[:at_x], opts[:at_y]
+        phi = Math::atan2 opts[:at_y], opts[:at_x]
+        puts "Phi: #{phi}"
         self.velocity_x = Math::cos(phi) * self.max_speed
         self.velocity_y = Math::sin(phi) * self.max_speed
       end

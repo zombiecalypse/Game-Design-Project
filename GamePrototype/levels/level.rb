@@ -29,6 +29,8 @@ module Levels
 
   class TestLevel < Chingu::GameState
     trait :viewport
+
+    attr_reader :player
     def initialize(opts = {})
       super(opts)
       @map = Map.create( x: 0, y: 0, \

@@ -29,9 +29,15 @@ module Objects
     def initialize(opts={})
       super(opts.merge image: Gosu::Image['tower.png'])
       every(1500, name: :shoot) do 
-        shoot(500,500) 
+        if $window.current_game_state.respond_to? :player
+          player_coords = [$window.current_game_state.player.x,$window.current_game_state.player.y]
+          puts "shoot at player at #{player_coords}"
+          shoot(*player_coords)
+        else
+          puts "am in #{$window.current_game_state}, cant shoot at player"
+          shoot(500,500)
+        end
       end
     end
-
   end
 end

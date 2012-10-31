@@ -11,7 +11,7 @@ describe Chingu::Traits::Tower do
       end
     end
     @enemy_class = Class.new(Chingu::GameObject) do
-      trait :tower, projectile: (Proc.new { @projectile_class.new })
+      trait :tower, projectile: @projectile_class
     end
 
     @tower = @enemy_class.new x: 50, y: 50
