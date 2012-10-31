@@ -3,7 +3,7 @@ require 'chingu'
 require 'gosu'
 
 require_relative '../game_objects/player'
-module Inputs
+module Interface
   class GestureBuffer
     class << self
       def gesture name, priority, &block

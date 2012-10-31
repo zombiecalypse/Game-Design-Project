@@ -8,6 +8,7 @@ require_relative '../events/dsl'
 require_relative '../events/tile'
 require_relative '../menu/pause_menu'
 require_relative '../game_objects/simple_tower'
+require_relative '../interface/hud_interface'
 
 
 module Levels
@@ -47,6 +48,7 @@ module Levels
       log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
       @tower = Objects::SimpleTower.create x: 700, y: 700
+      @hud = Interface::HudInterface.new(@player)
       log_info { "entering" }
     end
 
@@ -103,9 +105,14 @@ module Levels
     def open_menu
       push_game_state PauseMenu
     end
+
+    def update_hud
+      @hud.update
+    end
     
     def draw
       draw_background
+      @hud.draw
       viewport.center_around @camera
       super
     end

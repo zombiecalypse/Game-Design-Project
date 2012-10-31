@@ -4,7 +4,7 @@ require 'gosu'
 require 'logger'
 
 require_relative '../databases/spellbook'
-require_relative '../inputs/gesture_controller'
+require_relative '../interface/gesture_controller'
 require_relative '../object_traits/hp'
 
 module Objects
@@ -32,7 +32,12 @@ module Objects
     end
 
     def on_harm hrm
+      parent.update_hud
       @log.info("Player") { "ouch! I'm at #{hp}HP" }
+    end
+
+    def on_heal hl
+      parent.update_hud
     end
 
     def on_kill
@@ -66,7 +71,7 @@ module Objects
 
     def new_gesture
       @log.debug("Player") { "New Gesture" }
-      @gesture_buffer = Inputs::GestureBuffer.new
+      @gesture_buffer = Interface::GestureBuffer.new
     end
 
     def record_gesture

@@ -79,11 +79,9 @@ module Levels
 
     def item_selected(x,y)
       @items.each_with_index do |item, i|
-        if item.rect.collide_point?(x,y)
-          return i
-        end
+        return i if item.rect.collide_point?(x,y)
       end
-      return nil
+      nil
     end
 
     def update
