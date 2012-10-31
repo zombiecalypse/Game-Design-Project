@@ -3,7 +3,7 @@ require 'chingu'
 require 'gosu'
 
 require_relative 'inputs/gesture_controller.rb'
-require_relative 'levels/start_menu.rb'
+require_relative 'menu/start_menu.rb'
 require_relative 'game_objects/events.rb'
 
 class Game < Chingu::Window

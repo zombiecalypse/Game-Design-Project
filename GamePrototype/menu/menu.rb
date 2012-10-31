@@ -1,3 +1,8 @@
+class Chingu::BasicGameObject
+  def rect
+    Chingu::Rect.new(self.x-self.width/2,self.y-self.height/2, self.width, self.height)
+  end
+end
 module Levels
   class Menu < Chingu::BasicGameObject
     include Chingu::Helpers::InputClient
@@ -38,7 +43,7 @@ module Levels
       @selected = options[:selected] || 0
       step(0)
       
-      self.input = {:up => lambda{step(-1)}, :down => lambda{step(1)}, [:return, :space] => :select}
+      self.input = {[:w, :up] => lambda{step(-1)}, [:s, :down] => lambda{step(1)}, [:return, :space, :mouse_left] => :select}
     end
     
     #
@@ -71,6 +76,25 @@ module Levels
     def draw
       @items.each { |item| item.draw }
     end
+
+    def item_selected(x,y)
+      @items.each_with_index do |item, i|
+        if item.rect.collide_point?(x,y)
+          return i
+        end
+      end
+      return nil
+    end
+
+    def update
+      super
+      x, y = $window.mouse_x, $window.mouse_y
+      n_selected = item_selected(x,y)
+      return unless n_selected and n_selected != @selected
+      selected.options[:on_deselect].call(selected)
+      @selected = n_selected
+      selected.options[:on_select].call(selected)
+    end
     
     private
     
@@ -93,5 +117,6 @@ module Levels
         # TODO possibly raise an error? This ought to be handled when the input is specified in the first place.
       end
     end    
+
   end
 end

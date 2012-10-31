@@ -28,7 +28,7 @@ module Objects
     end
 
     def harm h
-      super(h * vulnerability)
+      super((h * vulnerability).to_i)
     end
 
     def on_harm hrm

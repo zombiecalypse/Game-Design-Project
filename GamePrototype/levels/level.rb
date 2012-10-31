@@ -6,7 +6,7 @@ require 'texplay'
 
 require_relative '../events/dsl'
 require_relative '../events/tile'
-require_relative 'pause_menu'
+require_relative '../menu/pause_menu'
 require_relative '../game_objects/simple_tower'
 
 
