@@ -1,73 +1,41 @@
 require 'chingu'
-module Events
-  class Conversation < Chingu::GameState
-    def initialize opts={}
-      super
-      @width, @height =  opts[:width] || 300, opts[:height] || 200
-      @x = opts[:x] || $window.width/2 - @width/2 rescue 0
-      @y = opts[:y] || 2*$window.height/3 - @width/2 rescue 0
-      @align = opts[:align] || :left
-      @fg = opts[:fg] || Gosu::Color::WHITE
-      @bg = opts[:bg] || Gosu::Color.new(220, 0,0,0)
-      @original_lines = opts[:lines]
-      @lines = opts[:lines].reverse
-      @text = as_text @lines.pop
-      self.input = {
-        [:mouse_left, :mouse_right, :space, :enter] => :forward
-      }
-    end
 
-    def lines
-      @original_lines
-    end
+class Conversation < Chingu::GameState
+	def initialize (dialogs, opts={})
+		#super opts
+		@dialogs = dialogs
+	end
+	
+	def click
+		quit_conversation
+	end
+	
+	def start
+		height, width = $window.height, $window.width
+		@question_board = Chingu::Rect.new(0, 3*height/4, width, height/16)
+		@answer_board = Chingu::Rect.new(0, 13*height/16, width, 3*height/16)
+		@qb_color = Gosu::Color.new(0xdc000000)
+		@ab_color = Gosu::Color.new(0xa0c3c3c3)
+		self.input = {:mouse_left => :click}
+		$window.push_game_state self
+	end
+	
+	def draw
+		previous_game_state.draw if previous_game_state
+		$window.fill_rect(@question_board, @qb_color, 1)
+		$window.fill_rect(@answer_board, @ab_color, 1)
+	end
+	
+	def quit_conversation
+		pop_game_state
+	end
+	
+end
 
-    def as_text txt
-      Chingu::Text.new(txt.render, x: @x + 20, y: @y + 10, align: @align, zorder: 1001) rescue nil
-    end
-
-    def render
-      $window.push_game_state self
-    end
-    
-    def forward
-      @text = as_text @lines.pop
-      quit_dialog unless @text
-    end
-
-    def quit_dialog
-      pop_game_state
-    end
-
-    def draw
-      previous_game_state.draw
-
-      $window.draw_quad(
-          @x                 , @y        , @bg,
-          @width+@x          , @y        , @bg,
-          @width+@x          , @y+@height, @bg,
-          @x                 , @y+@height, @bg, 1000)
-      @text.draw if @text
-    end
-  end
-
-  class Popup 
-    attr_reader :lines
-
-    def initialize opts={}
-      @lines = opts[:lines]
-    end
-
-    def render
-      @lines
-    end
-
-    def == other
-      return false if not other.respond_to? :lines
-      lines == other.lines
-    end
-
-    def to_s
-      render
-    end
-  end
+class Dialog
+	attr_accessor :question, :answers
+	def initialize (question, answers)
+		@question = question
+		@answer = answer
+	end
 end
