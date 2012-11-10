@@ -66,7 +66,7 @@ module Databases
 
     def random_directions
       @@degrees ||= (0..35).to_a.collect {|i| i*10}
-      @@degrees.sample 5
+      @@degrees.sample(15)
     end
 
     class ExplosionParticle < Chingu::Particle
@@ -79,13 +79,14 @@ module Databases
           rotation_rate: +9,
           mode: :default}.merge(opts))
         @dir = opts[:dir]
+        @speed = opts[:speed] || 5
       end
 
       def update
         super
         every(50) do
-          self.x += Math::cos(@dir)*5
-          self.y += Math::sin(@dir)*5
+          self.x += Math::cos(@dir)*@speed
+          self.y += Math::sin(@dir)*@speed
         end
         after(500) {self.destroy}
       end
@@ -93,8 +94,8 @@ module Databases
 
     def explode_on tower
       tower.harm 10
-      for dir in random_directions
-        particle = ExplosionParticle.create(dir: dir, x: self.x, y: self.y)
+      random_directions.each do |dir|
+        ExplosionParticle.create(dir: dir, x: self.x, y: self.y, speed: Random.rand(5)+2)
       end
       self.destroy
     end
