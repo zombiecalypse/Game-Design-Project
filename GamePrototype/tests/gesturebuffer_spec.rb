@@ -1,8 +1,8 @@
-require_relative '../inputs/gesture_controller'
+require_relative '../interface/gesture_controller'
 
 require 'rspec'
 
-module Inputs
+module Interface
   describe GestureBuffer do
     before(:each) do
       @window = double()

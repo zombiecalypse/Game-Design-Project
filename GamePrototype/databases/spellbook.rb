@@ -8,7 +8,7 @@ module Chingu::Traits
   module Spell
     module ClassMethods
       def initialize_trait(options)
-        @spell_name = options[:name] || "<no name>"
+        @spell_name = options[:name] 
         @options = options
         super
       end
@@ -55,15 +55,50 @@ module Databases
     traits :timer, :velocity, :collision_detection
     trait :bounding_circle, debug: true, scale: 0.5
 
-
     def update
       super
       @image = @animation.next if @animation
+      self.factor = 0.2
       each_collision(Objects::SimpleTower) do |s, tower|
-        tower.harm 10
-        self.destroy
+        s.explode_on tower
       end
     end
+
+    def random_directions
+      @@degrees ||= (0..35).to_a.collect {|i| i*10}
+      @@degrees.sample 5
+    end
+
+    class ExplosionParticle < Chingu::Particle
+      trait :timer
+      def initialize(opts={})
+        super({ 
+          image: "fire_particle.png",
+          scale_rate: +0.2,
+          fade_rate: -10,
+          rotation_rate: +9,
+          mode: :default}.merge(opts))
+        @dir = opts[:dir]
+      end
+
+      def update
+        super
+        every(50) do
+          self.x += Math::cos(@dir)*5
+          self.y += Math::sin(@dir)*5
+        end
+        after(500) {self.destroy}
+      end
+    end
+
+    def explode_on tower
+      tower.harm 10
+      for dir in random_directions
+        particle = ExplosionParticle.create(dir: dir, x: self.x, y: self.y)
+      end
+      self.destroy
+    end
+
 
     @@dir_to_vector = {
       left:  [-5,0],
@@ -81,6 +116,7 @@ module Databases
       after(1000) { self.destroy }
     end
   end
+
   class Shield < Chingu::GameObject
     trait :spell, name: :shield
     trait :timer
