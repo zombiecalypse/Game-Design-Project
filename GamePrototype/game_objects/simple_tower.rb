@@ -23,6 +23,7 @@ module Objects
         player.harm 10
       end
     end
+
     trait :tower, projectile: Projectile
     trait :timer
     trait :bounding_box, debug: true
@@ -30,7 +31,7 @@ module Objects
 
     def initialize(opts={})
       super(opts.merge image: Gosu::Image['tower.png'])
-      every(1500, name: :shoot) do 
+      every(1500, name: :shoot) do
         shoot(Player.the.x, Player.the.y)
       end
     end

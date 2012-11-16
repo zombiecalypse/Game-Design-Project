@@ -6,10 +6,11 @@ require 'logger'
 require_relative '../databases/spellbook'
 require_relative '../interface/gesture_controller'
 require_relative '../object_traits/hp'
+require_relative '../interface/journal'
 
 module Objects
   class Player < Chingu::GameObject
-    attr_reader :current_dir
+    attr_reader :current_dir, :journal
     attr_accessor :vulnerability
     trait :bounding_box, debug: true
     trait :collision_detection
@@ -21,6 +22,7 @@ module Objects
       @spell_book = Databases::SpellBook.new
       @speed = 3
       @log = Logger.new(STDOUT)
+      @journal = Interface::Journal.new
       super(options.merge(:image => @animation[@current_dir][1]))
     end
     
