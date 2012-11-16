@@ -114,12 +114,12 @@ module Databases
     @@speed = 5
 
     def activate x,y
+      @player.spell = nil
       self.x = @player.x
       self.y = @player.y
       dx, dy = x-@player.x_window, y-@player.y_window
       phi = Math::atan2(dy,dx)
       self.velocity = [@@speed * Math::cos(phi), @@speed * Math::sin(phi)]
-      puts "attack! #{[self.x,self.y]} -> #{velocity}"
       after(1000) { self.destroy }
     end
   end
