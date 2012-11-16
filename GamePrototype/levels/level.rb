@@ -97,6 +97,7 @@ module Levels
         mouse_left:            :new_word,
         holding_mouse_right:   :record_gesture,
         mouse_right:           :new_gesture,
+        mouse_left:            :action,
         released_mouse_right:  :finished_gesture}
     end
 

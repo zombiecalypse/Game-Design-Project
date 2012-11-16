@@ -94,6 +94,28 @@ module Objects
       @gesture_symbols = @gesture_symbols[-back..-1]
     end
 
+    # Interacts with the environment, for example triggers an attack.
+    def action
+      x,y = $window.mouse_x, $window.mouse_y
+
+      attack x,y
+    end
+
+    attr_accessor :spell
+
+    def x_window
+      self.x - @level.viewport.x
+    end
+
+    def y_window
+      self.y - @level.viewport.y
+    end
+
+    def attack x,y
+      @log.debug("Player") { "attacking evil point (#{x}, #{y})" }
+      @spell.activate x,y if @spell
+    end
+
     def new_word
       @gesture_symbols = []
     end
