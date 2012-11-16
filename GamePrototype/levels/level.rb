@@ -44,26 +44,22 @@ module Levels
       self.viewport.lag = 0
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
       @log = Logger.new(STDOUT)
-      #load_events 
-      con = Conversation.new(1)
-      Con_Event.new(ON_HIT, con, {x: 400, y: 400, w: 50, h:50}) {puts "Event done"}
+      load_events
       log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
+      puts @player
       @tower = Objects::SimpleTower.create x: 700, y: 700
       @hud = Interface::HudInterface.new(@player)
       log_info { "entering" }
     end
 
-#    def load_events
-#      dialog = Dsl::Event.new(once: true) do |evt|
-#        evt.on_hit do
-#          show_popup "I was an adventurer like you"
-#          show_popup "Until I took a thunderbolt to the knee"
-#        end
-#      end
-#
-#      tile = Events::Tile.create event: dialog, x: 400, y: 300
-#    end
+    def load_events
+    	d1 = Dialog.new("Who are you?",["Claudio","Aaron","The chosen One"])
+      d2 = Dialog.new("What do you want?",["Program","Code","Kill a Dragon"])
+      d1.next_dialog = d2
+      con = Conversation.new(d1)
+      Con_Event.new(ON_HIT, con, {x: 400, y: 400, w: 50, h:50}) {puts "Event done"}
+    end
 
     def finalize
       log_info { "exiting" }
