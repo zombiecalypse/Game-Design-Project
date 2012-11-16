@@ -19,12 +19,7 @@ module Objects
         end
       end
 
-      def on_shoot
-        puts "Pew!"
-      end
-
       def on_hit player
-        puts "blarg!"
         player.harm 10
       end
     end
@@ -37,8 +32,7 @@ module Objects
       super(opts.merge image: Gosu::Image['tower.png'])
       every(1500, name: :shoot) do 
         if $window.current_game_state.respond_to? :player
-          player_coords = [$window.current_game_state.player.x,$window.current_game_state.player.y]
-          shoot(*player_coords)
+          shoot(Player.the.x, Player.the.y)
         else
           shoot(500,500)
         end

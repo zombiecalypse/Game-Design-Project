@@ -14,7 +14,7 @@ require_relative '../interface/hud_interface'
 module Levels
   class Map < Chingu::GameObject
     def initialize opts={}
-      super opts
+      super({zorder: ZOrder::MAP}.merge(opts))
       @mask = opts[:mask] || self.image
     end
 
@@ -36,8 +36,7 @@ module Levels
       super(opts)
       @map = Map.create( x: 0, y: 0, \
                         image: Gosu::Image['maps/01_bg.png'], \
-                        mask: Gosu::Image['maps/01_mask.png'], \
-                        zorder: -1)
+                        mask: Gosu::Image['maps/01_mask.png'])
       @map.center = 0
       @level_width = 1000
       @level_height = 1000
@@ -47,7 +46,6 @@ module Levels
       load_events
       log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
-      puts @player
       @tower = Objects::SimpleTower.create x: 700, y: 700
       @hud = Interface::HudInterface.new(@player)
       log_info { "entering" }
@@ -117,7 +115,7 @@ module Levels
     end
 
     def draw_background
-      fill(Gosu::Color::WHITE, -5)
+      fill(Gosu::Color::WHITE, ZOrder::BACKGROUND)
     end
 
     def update

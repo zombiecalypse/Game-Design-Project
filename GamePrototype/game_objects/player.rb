@@ -18,12 +18,15 @@ module Objects
       @animation = Chingu::Animation.new( bounce: true, file: 'pc.png', size: 100, delay: 250)
       @animation.frame_names = {down: (0..2), up: (3..5), left: (6..8), right: (9..11)}
       @current_dir = :down
-      super(options.merge(:image => @animation[@current_dir][1]))
-      @gesture_symbols = []
       @spell_book = Databases::SpellBook.new
       @speed = 3
-      @level = options[:level]
       @log = Logger.new(STDOUT)
+      super(options.merge(:image => @animation[@current_dir][1]))
+    end
+    
+    def setup(opts={})
+      @gesture_symbols = []
+      @level = options[:level]
       @vulnerability = 1
     end
 
@@ -76,6 +79,7 @@ module Objects
 
     def record_gesture
       @gesture_buffer.dot
+      @hu
     end
 
     def finished_gesture
@@ -118,6 +122,11 @@ module Objects
 
     def new_word
       @gesture_symbols = []
+    end
+
+    def self.the
+      throw "Weird number of players: #{self.all}" if self.all.size != 1
+      self.all.first 
     end
   end
 end
