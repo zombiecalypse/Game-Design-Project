@@ -36,7 +36,7 @@ class Con_Event < Event
 	
 	def activate
 		return unless @active
-		@conversation.start
+		@conversation.activate
 		@block.call
 		@active = @repeat ? true : false
 	end
@@ -47,9 +47,9 @@ class Tile < Chingu::GameObject
 	trait :collision_detection
 	
 	def initialize (event, x, y, w, h, opts={})
-		#super({image: Gosu::Image['platform.png'], x: x, y: y}.merge!(opts))
+		super({image: Gosu::Image['platform.png'], :x => 400, y: 400}.merge!(opts))
 		#TODO fix bounding box
-		super opts
+		#super opts
 		@event = event
 		@area = Chingu::Rect.new(x,y,w,h)
 	end
@@ -64,17 +64,17 @@ class Tile < Chingu::GameObject
 		end
 	end
 		
-	def width
-		100
-	end
+	#def width
+	#	100
+	#end
 	
-	def height
-		100
-	end
+	#def height
+	#	100
+	#end
 	
-	def size
-		[width, height]
-	end
+	#def size
+	#	[width, height]
+	#end
 	
 end
 
