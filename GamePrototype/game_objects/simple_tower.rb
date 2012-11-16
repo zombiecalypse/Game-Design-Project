@@ -31,11 +31,7 @@ module Objects
     def initialize(opts={})
       super(opts.merge image: Gosu::Image['tower.png'])
       every(1500, name: :shoot) do 
-        if $window.current_game_state.respond_to? :player
-          shoot(Player.the.x, Player.the.y)
-        else
-          shoot(500,500)
-        end
+        shoot(Player.the.x, Player.the.y)
       end
     end
   end
