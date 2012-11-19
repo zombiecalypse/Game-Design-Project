@@ -52,13 +52,10 @@ class Pop_Event < Event
 		@line = line
 		@x = opts[:x]
 		@y = opts[:y]
-		@active = true
 	end
 	
 	def activate
-		return unless @active
 		$window.push_game_state(Popup.new(@line, @x, @y))
-		@active = false
 	end
 end
 
@@ -73,8 +70,7 @@ class Tile < Chingu::GameObject
 		@y = y
 		@w = w
 		@h = h
-		@area = Chingu::Rect.new(x-(w/2),y-(h/2),w,h)
-	
+		@area = Chingu::Rect.new(x-w/2,y-h/2,w,h)
 	end
 	
 	def collision_at?(x, y)

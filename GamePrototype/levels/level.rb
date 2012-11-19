@@ -58,14 +58,22 @@ module Levels
       d2 = Dialog.new("What do you want?",["Program","Code","Kill a Dragon"])
       d1.next_dialog = d2
       con = Conversation.new(d1)
-      Con_Event.new(ON_HIT, con, {x: 400, y: 400, w: 50, h:50}) {puts "Event done"}
+      Con_Event.new(ON_HIT, con, {x: 400, y: 400, w: 100, h:50}) {puts "Event done"}
+      
+      line = "Brace yourself if you pass this Point"
+      Pop_Event.new(ON_HIT, line, {x: 300, y: 600, w: 50, h:50})
+      
+      Event.new(ON_HIT,{x:100, y:600, w:100, h:100}) {Objects::SimpleTower.create x: 100, y: 600;
+      																								Objects::SimpleTower.create x: 300, y: 600;
+      																								Objects::SimpleTower.create x: 200, y: 750;
+      																								Objects::SimpleTower.create x: 200, y: 450}
     end
 
     def finalize
       log_info { "exiting" }
     end
 
-    def log_info &block
+    def log_info &block                                                      
       @log.info("TestLevel", &block)
     end
 

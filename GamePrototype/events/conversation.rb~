@@ -90,20 +90,12 @@ class Popup < Chingu::GameState
 		@line = line
 		@tc =  Gosu::Color::WHITE
 		@bc = Gosu::Color.new(220, 0,0,0)
-		@board = Chingu::Rect.new(100,200,200,100)
-		@text = Chingu::Text.new(@line, x: 100, y: 200, color: @tc)
-		self.input = {:mouse_left => :click}
-	end
-	
-	def click
-		pop_game_state
-		puts "done"
+		@board = Chingu::Rect.new(x,y,100,50)
 	end
 	
 	def draw
 		previous_game_state.draw
 		$window.fill_rect(@board, @bc)
-		@text.draw
 	end
 		
 		
