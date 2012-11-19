@@ -2,6 +2,8 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 
+require_relative 'z_orders'
+
 module Interface
   class HudInterface
     attr_reader :player
@@ -15,7 +17,7 @@ module Interface
     end
 
     def update
-      @hp_text = Chingu::Text.new(hp_string, x: 20, y: 20, color: Gosu::Color::BLACK)
+      @hp_text = Chingu::Text.new(hp_string, x: 20, y: 20, color: Gosu::Color::BLACK, zorder: ZOrder::HUD)
     end
 
     def hp_string

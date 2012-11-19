@@ -6,10 +6,11 @@ require 'logger'
 require_relative '../databases/spellbook'
 require_relative '../interface/gesture_controller'
 require_relative '../object_traits/hp'
+require_relative '../interface/journal'
 
 module Objects
   class Player < Chingu::GameObject
-    attr_reader :current_dir
+    attr_reader :current_dir, :journal
     attr_accessor :vulnerability
     trait :bounding_box, debug: true
     trait :collision_detection
@@ -18,12 +19,16 @@ module Objects
       @animation = Chingu::Animation.new( bounce: true, file: 'pc.png', size: 100, delay: 250)
       @animation.frame_names = {down: (0..2), up: (3..5), left: (6..8), right: (9..11)}
       @current_dir = :down
-      super(options.merge(:image => @animation[@current_dir][1]))
-      @gesture_symbols = []
       @spell_book = Databases::SpellBook.new
       @speed = 3
-      @level = options[:level]
       @log = Logger.new(STDOUT)
+      @journal = Interface::Journal.new
+      super(options.merge(:image => @animation[@current_dir][1]))
+    end
+    
+    def setup(opts={})
+      @gesture_symbols = []
+      @level = options[:level]
       @vulnerability = 1
     end
 
@@ -76,6 +81,7 @@ module Objects
 
     def record_gesture
       @gesture_buffer.dot
+      @hu
     end
 
     def finished_gesture
@@ -94,8 +100,35 @@ module Objects
       @gesture_symbols = @gesture_symbols[-back..-1]
     end
 
+    # Interacts with the environment, for example triggers an attack.
+    def action
+      x,y = $window.mouse_x, $window.mouse_y
+
+      attack x,y
+    end
+
+    attr_accessor :spell
+
+    def x_window
+      self.x - @level.viewport.x
+    end
+
+    def y_window
+      self.y - @level.viewport.y
+    end
+
+    def attack x,y
+      @log.debug("Player") { "attacking evil point (#{x}, #{y})" }
+      @spell.activate x,y if @spell
+    end
+
     def new_word
       @gesture_symbols = []
+    end
+
+    def self.the
+      throw "Weird number of players: #{self.all}" if self.all.size != 1
+      self.all.first 
     end
   end
 end

@@ -21,6 +21,10 @@ module Chingu::Traits
       end
     end
 
+    def spell_name
+      self.class.spell_name
+    end
+
     def setup_trait(options)
       opts = {file: "#{self.class.spell_name}_ani.png"}.merge(self.class.options)
       @animation = Chingu::Animation.new( opts ) rescue nil
@@ -92,8 +96,8 @@ module Databases
       end
     end
 
-    def explode_on tower
-      tower.harm 10
+    def explode_on enemy
+      enemy.harm 10
       random_directions.each do |dir|
         ExplosionParticle.create(dir: dir, x: self.x, y: self.y, speed: Random.rand(5)+2)
       end
@@ -101,19 +105,21 @@ module Databases
     end
 
 
-    @@dir_to_vector = {
-      left:  [-5,0],
-      right: [ 5,0],
-      up:    [0,-5],
-      down:  [0, 5]
-    }
-
-
     def run player
       self.center_y = 0.75
-      self.x = player.x
-      self.y = player.y
-      self.velocity = @@dir_to_vector[player.current_dir]
+      player.spell = self
+      @player = player
+    end
+
+    @@speed = 5
+
+    def activate x,y
+      @player.spell = nil
+      self.x = @player.x
+      self.y = @player.y
+      dx, dy = x-@player.x_window, y-@player.y_window
+      phi = Math::atan2(dy,dx)
+      self.velocity = [@@speed * Math::cos(phi), @@speed * Math::sin(phi)]
       after(1000) { self.destroy }
     end
   end

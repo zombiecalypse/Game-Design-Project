@@ -39,28 +39,11 @@ module Interface
       y < 0 and x.abs < y.abs
     end
 
-=begin
-    def self.circ? xs,ys
-      begin
-        xavg,yavg = xs.inject(&:+)/xs.size, ys.inject(&:+)/ys.size
-        rel_xs, rel_ys = xs.collect {|x| x - xavg}, ys.collect {|y| y - yavg}
-        radi = rel_xs.zip(rel_ys).collect {|x,y| Math::hypot(x,y)}
-        avg_r = radi.inject(&:+)/radi.size
-        std_der = radi.collect{|r| (r-avg_r)**2}.inject(&:+)/(radi.size * (radi.size-1))/avg_r**2
-        p std_der
-        return nil if std_der.nan?
-        std_der < 0.009
-      rescue 
-        nil
-      end
-    end
-=end
-
     gesture :top_arc, 10 do |xs, ys|
       my = ys[ys.size/2]
       d = (xs[-1]-xs[0]).abs
 
-      if d > 30
+      if d > 100
         dy0 = (my - ys[0])/d
         dyn = (my - ys[-1])/d
         dy0 < -0.3 and dyn < -0.3
@@ -81,9 +64,9 @@ module Interface
       
       xs, ys = @buffer.transpose
 
-      return nil if xs.size < 5
+      return nil if xs.nil? or xs.size < 5
       
-      self.class.recognize(xs,ys)
+      self.class.recognize(xs,ys) rescue nil
     end
   end
 end

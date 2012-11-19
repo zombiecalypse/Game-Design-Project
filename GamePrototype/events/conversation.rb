@@ -37,10 +37,10 @@ class ConversationState < Chingu::GameState
 	end
 	
 	def update_text
-		@q_text = Chingu::Text.new(@dialog.question, x: 0, y: 3*@height/4, color: @qt_color)
-		@a1_text = Chingu::Text.new(@dialog.answers[0], x: 0, y: 13*@height/16, color: @at_color)
-		@a2_text = Chingu::Text.new(@dialog.answers[1], x: 0, y: 14*@height/16, color: @at_color)
-		@a3_text = Chingu::Text.new(@dialog.answers[2], x: 0, y: 15*@height/16, color: @at_color)	
+		@q_text = Chingu::Text.new(@dialog.question, x: 0, y: 3*@height/4, color: @qt_color, zorder: ZOrder::POPUP)
+		@a1_text = Chingu::Text.new(@dialog.answers[0], x: 0, y: 13*@height/16, color: @at_color, zorder: ZOrder::POPUP)
+		@a2_text = Chingu::Text.new(@dialog.answers[1], x: 0, y: 14*@height/16, color: @at_color, zorder: ZOrder::POPUP)
+		@a3_text = Chingu::Text.new(@dialog.answers[2], x: 0, y: 15*@height/16, color: @at_color, zorder: ZOrder::POPUP)	
 	end
 	
 	def choose_answer(x,y)
@@ -69,10 +69,10 @@ class ConversationState < Chingu::GameState
 			when (14*@height/16)...(15*@height/16-1) then answer2_color = @selected_color
 			when (15*@height/16)...(16*@height/16-1) then answer3_color = @selected_color
 		end
-		$window.fill_rect(@question_board, @qb_color, 1)
-		$window.fill_rect(@answer_board1, answer1_color, 1)
-		$window.fill_rect(@answer_board2, answer2_color, 1)
-		$window.fill_rect(@answer_board3, answer3_color, 1)
+		$window.fill_rect(@question_board, @qb_color, ZOrder::POPUP)
+		$window.fill_rect(@answer_board1, answer1_color, ZOrder::POPUP)
+		$window.fill_rect(@answer_board2, answer2_color, ZOrder::POPUP)
+		$window.fill_rect(@answer_board3, answer3_color, ZOrder::POPUP)
 		
 		@q_text.draw; @a1_text.draw; @a2_text.draw; @a3_text.draw;
 		

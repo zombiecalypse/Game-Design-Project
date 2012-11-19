@@ -43,7 +43,10 @@ module Levels
       @selected = options[:selected] || 0
       step(0)
       
-      self.input = {[:w, :up] => lambda{step(-1)}, [:s, :down] => lambda{step(1)}, [:return, :space, :mouse_left] => :select}
+      self.input = {
+        [:w, :up] => lambda{step(-1)}, 
+        [:s, :down] => lambda{step(1)}, 
+        [:return, :space, :mouse_left] => :select}
     end
     
     #

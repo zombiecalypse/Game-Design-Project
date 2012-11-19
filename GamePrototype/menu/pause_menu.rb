@@ -1,4 +1,5 @@
 require_relative 'menu'
+require_relative '../game_objects/player'
 module Levels
   class PauseMenu < Chingu::GameState
     def initialize(opts={})
@@ -6,13 +7,9 @@ module Levels
       @bg = Gosu::Color::BLACK
       @menu = Menu.create(menu_items: {
         "Continue" => lambda {pop_game_state(setup: false)},
-        "Exit" => :exit
+        "Journal"  => lambda {Objects::Player.the.journal.show},
+        "Exit"     => :exit
       })
-      @menu.input= {
-        [:w, :up]                      => lambda {@menu.step(1)},
-        [:s, :down]                    => lambda {@menu.step(-1)},
-        [:return, :space, :mouse_left] => lambda {@menu.select}
-      }
     end
 
     include Chingu::Helpers::GFX

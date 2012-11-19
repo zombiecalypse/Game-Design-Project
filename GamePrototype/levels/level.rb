@@ -12,9 +12,13 @@ require_relative '../interface/hud_interface'
 
 
 module Levels
+  LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id tortor a nunc convallis aliquam. Pellentesque velit velit, ornare a lacinia nec, egestas id augue. Suspendisse ac eros sem, vel molestie est. Aliquam velit massa, venenatis in tincidunt sit amet, posuere eget nibh. Integer bibendum auctor diam, eu condimentum sem convallis sed. Sed id odio ut massa tincidunt mollis placerat sit amet tellus. Morbi at odio felis, non luctus felis. Maecenas vehicula tortor nec nibh pulvinar hendrerit. Duis scelerisque viverra consequat.
+
+Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio nunc, ac viverra tortor. In hac habitasse platea dictumst. Phasellus aliquet urna vitae velit dignissim elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus nisi risus, mollis nec egestas at, sodales et magna. Sed diam ante, mollis in elementum fringilla, posuere eget nulla.
+"
   class Map < Chingu::GameObject
     def initialize opts={}
-      super opts
+      super({zorder: ZOrder::MAP}.merge(opts))
       @mask = opts[:mask] || self.image
     end
 
@@ -36,8 +40,7 @@ module Levels
       super(opts)
       @map = Map.create( x: 0, y: 0, \
                         image: Gosu::Image['maps/01_bg.png'], \
-                        mask: Gosu::Image['maps/01_mask.png'], \
-                        zorder: -1)
+                        mask: Gosu::Image['maps/01_mask.png'])
       @map.center = 0
       @level_width = 1000
       @level_height = 1000
@@ -47,7 +50,9 @@ module Levels
       load_events
       log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
-      puts @player
+      @player.journal.add_page("The History of Awesomevile", "It was and has always been")
+      @player.journal.add_page("The History of Suckvile", "It was empty, until Sucky McSuckerson moved in.")
+      @player.journal.add_page("The History of History", LOREM_IPSUM)
       @tower = Objects::SimpleTower.create x: 700, y: 700
       @hud = Interface::HudInterface.new(@player)
       log_info { "entering" }
@@ -105,6 +110,7 @@ module Levels
         mouse_left:            :new_word,
         holding_mouse_right:   :record_gesture,
         mouse_right:           :new_gesture,
+        mouse_left:            :action,
         released_mouse_right:  :finished_gesture}
     end
 
@@ -124,7 +130,7 @@ module Levels
     end
 
     def draw_background
-      fill(Gosu::Color::WHITE, -5)
+      fill(Gosu::Color::WHITE, ZOrder::BACKGROUND)
     end
 
     def update
