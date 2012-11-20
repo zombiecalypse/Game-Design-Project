@@ -47,7 +47,7 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
       self.viewport.lag = 0
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
       @log = Logger.new(STDOUT)
-      load_events
+      #load_events
       log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 550, y: 550, level: self
       @player.journal.add_page("The History of Awesomevile", "It was and has always been")

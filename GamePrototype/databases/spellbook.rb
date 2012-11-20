@@ -55,14 +55,13 @@ end
 
 module Databases
   class Fire < Chingu::GameObject
-    trait :spell, name: :fire, size: [200,400], delay: 125
+    trait :spell, name: :fire, size: [100,100], delay: 125
     traits :timer, :velocity, :collision_detection
     trait :bounding_circle, debug: true, scale: 0.5
 
     def update
       super
       @image = @animation.next if @animation
-      self.factor = 0.2
       each_collision(Objects::SimpleTower) do |s, tower|
         s.explode_on tower
       end
