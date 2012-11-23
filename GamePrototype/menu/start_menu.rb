@@ -9,16 +9,12 @@ module Levels
   class StartMenu < Chingu::GameState
     def initialize(opts={})
       super opts
-      @bg = Gosu::Image['title.png']
+      @bg = Chingu::GameObject.create(image: 'title.png', x: $window.width/2, y: $window.height/2)
+      @bg.scale = $window.width.to_f / @bg.width
       @menu= Menu.create(menu_items: {
         "Start" => TestLevel,
         "Exit"  => :exit
       }, size: 40)
-    end
-
-    def draw
-      super
-      @bg.draw(0,0,0)
     end
   end
 end
