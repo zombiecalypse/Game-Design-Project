@@ -10,7 +10,6 @@ require_relative '../menu/pause_menu'
 require_relative '../game_objects/simple_tower'
 require_relative '../interface/hud_interface'
 
-
 module Levels
   LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id tortor a nunc convallis aliquam. Pellentesque velit velit, ornare a lacinia nec, egestas id augue. Suspendisse ac eros sem, vel molestie est. Aliquam velit massa, venenatis in tincidunt sit amet, posuere eget nibh. Integer bibendum auctor diam, eu condimentum sem convallis sed. Sed id odio ut massa tincidunt mollis placerat sit amet tellus. Morbi at odio felis, non luctus felis. Maecenas vehicula tortor nec nibh pulvinar hendrerit. Duis scelerisque viverra consequat.
 
@@ -120,13 +119,13 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
 
     def update_hud
       @hud.update
+      viewport.center_around @camera
     end
     
     def draw
       draw_background
-      @hud.draw
-      viewport.center_around @camera
       super
+      @hud.draw
     end
 
     def draw_background

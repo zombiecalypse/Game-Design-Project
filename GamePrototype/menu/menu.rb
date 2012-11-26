@@ -1,3 +1,4 @@
+require_relative '../interface/color_theme'
 class Chingu::BasicGameObject
   def rect
     Chingu::Rect.new(self.x-self.width/2,self.y-self.height/2, self.width, self.height)
@@ -22,7 +23,7 @@ module Levels
       y = @y
       menu_items.each do |key, value|
         item = if key.is_a? String
-          Chingu::Text.new(key, options.dup)
+          Chingu::Text.new(key, {color: Colors::INACTIVE}.merge!(options.dup))
         elsif key.is_a? Image
           Chingu::GameObject.new(options.merge!(:image => key))
         elsif key.is_a? Chingu::GameObject
@@ -69,11 +70,11 @@ module Levels
     end
       
     def on_deselect(object)
-      object.color = ::Gosu::Color::WHITE
+      object.color = Colors::INACTIVE
     end
     
     def on_select(object)
-      object.color = ::Gosu::Color::RED
+      object.color = Colors::ACTIVE
     end
     
     def draw

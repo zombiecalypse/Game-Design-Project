@@ -9,7 +9,7 @@ module Interface
     class Opened < Chingu::GameState
       def initialize(opts={})
         super
-        @bg = Gosu::Color::BLACK
+        @bg = Colors::BACKGROUND
         @menu = Levels::Menu.create(menu_items: opts[:journal].pages)
         self.input = {
           esc: lambda {$window.pop_game_state}
@@ -34,18 +34,17 @@ module Interface
       class State < Chingu::GameState
         def initialize(opts = {})
           super
-          @bg = Gosu::Color::BLACK
-          @title = Chingu::Text.new(opts[:title], x: 50, y: 50, size: 40, max_width: 400, align: :center)
-          @text = Chingu::Text.new(opts[:text],  x: 50, y: 100, max_width: 400, align: :left)
+          @title = Chingu::Text.new(opts[:title], x: 50, y: 50, size: 40, max_width: 400, align: :center, color: Colors::DESCRIPTION)
+          @text = Chingu::Text.new(opts[:text],  x: 50, y: 100, max_width: 400, align: :left, color: Colors::DESCRIPTION)
           self.input = {
-            esc: lambda {$window.pop_game_state}
+            [:esc, :enter] => lambda {$window.pop_game_state}
           }
         end
         include Chingu::Helpers::GFX
 
         def draw
           super
-          fill(@bg, ZOrder::BACKGROUND)
+          fill(Colors::BACKGROUND, ZOrder::BACKGROUND)
           @title.draw
           @text.draw
         end
