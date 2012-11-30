@@ -1,0 +1,58 @@
+# Enemies
+## Types
+This section analyses what kind of enemies our hero could face and how they
+balance against each other and the player.
+
+### Tower
+Advantages:
+
+* Resilient
+* Ranged weapons
+* Decent damage
+
+Disadvantages:
+
+* Easy target
+* Immobile
+* Slow projectiles
+
+### Swarmer
+Advantages:
+
+* They attack in groups
+* Hard to hit
+* Fast
+
+Disadvantages:
+
+* Limited Damage
+* Near to no HP
+* Melee
+
+### Soldier
+
+Advantages:
+
+* Ranged or melee attacks
+* Quick projectiles
+
+Disadvantages:
+
+* Limited damage
+* Slower than player
+
+### Sniper
+
+Advantages:
+
+* Big damage
+* Ranged attack with quick projectile
+
+Disadvantages:
+
+* Panic in melee
+* Firing rate is low
+
+## Concrete Enemies
+
+## Bosses
