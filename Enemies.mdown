@@ -63,6 +63,8 @@ enters their territory.
 
 * **Type**: *Swarmer*
 
+![Bat](https://raw.github.com/zombiecalypse/Game-Design-Project/master/artwork/bat.png)
+
 #### Guards
 After they notice that the player is gone, they begin to search the cave, but
 are afraid of the spider. There is a short sequence describing that.
