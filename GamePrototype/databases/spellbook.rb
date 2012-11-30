@@ -59,6 +59,10 @@ module Databases
     traits :timer, :velocity, :collision_detection
     trait :bounding_circle, debug: true, scale: 0.5
 
+    def initialize(opts={})
+      super
+      self.center_y = 0.75
+    end
     def update
       super
       @image = @animation.next if @animation
@@ -105,7 +109,6 @@ module Databases
 
 
     def run player
-      self.center_y = 0.75
       player.spell = self
       @player = player
     end

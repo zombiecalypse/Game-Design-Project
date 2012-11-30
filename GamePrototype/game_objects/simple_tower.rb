@@ -30,7 +30,8 @@ module Objects
     trait :hp, hp: 50
 
     def initialize(opts={})
-      super(opts.merge image: Gosu::Image['tower.png'])
+      super(opts.merge image: Gosu::Image['spider_tower.png'])
+      self.center_y = 0.25
       every(1500, name: :shoot) do
         shoot(Player.the.x, Player.the.y)
       end
