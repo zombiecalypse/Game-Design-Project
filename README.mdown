@@ -68,4 +68,4 @@ affected.
 * Platform independence
 
 ## Group: Dark Ducks
-![Dark Ducks](dark_duck.png)
+![Dark Ducks](https://raw.github.com/zombiecalypse/Game-Design-Project/master/dark_duck.png)
