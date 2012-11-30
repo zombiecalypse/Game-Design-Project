@@ -55,4 +55,49 @@ Disadvantages:
 
 ## Concrete Enemies
 
+### Level 2
+
+#### Bat
+The bats in the cave under the prison are aggressive and attack anyone that
+enters their territory. 
+
+* **Type**: *Swarmer*
+
+#### Guards
+After they notice that the player is gone, they begin to search the cave, but
+are afraid of the spider. There is a short sequence describing that.
+
+* **Type**: *Soldier*
+* **Type**: *Sniper*
+
+#### Lair Defense Systems
+The mechanical spider ensured its safety by putting up some defense towers.
+
+* **Type**: *Tower*, lower damage output, but immobilizes target for short time
+* **Type**: *Swarmer*
+
 ## Bosses
+The magitech spider lives under the prison and steals items for repair from the
+clockwork soldiers that occationally come here. It was discarded here, after
+its state grew too unstable to be useful to the military.
+
+## Phases
+Playing with hero ==massive damage=> Retreat ==time=> Playing with hero
+==massive damage=> Retreat ==time=> All out
+### Playing with hero
+
+* The spider makes attacks with its arms, that take a long time to prepare (easy
+  to evade).
+* Occationally, it spits sticky webs.
+
+### Retreat
+
+* The spider only throws sticky balls.
+* There are lots of *Swarmers*, that are summoned.
+
+### All out
+
+* The spider attacks fast, but not with as much damage
+  - bites
+  - slashes
+  - stomps
