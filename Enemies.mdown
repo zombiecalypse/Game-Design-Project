@@ -74,7 +74,9 @@ are afraid of the spider. There is a short sequence describing that.
 The mechanical spider ensured its safety by putting up some defense towers.
 
 * **Type**: *Tower*, lower damage output, but immobilizes target for short time
-* **Type**: *Swarmer* ![Spider](https://raw.github.com/zombiecalypse/Game-Design-Project/master/artwork/spider.png)
+* **Type**: *Swarmer* 
+
+![Spider](https://raw.github.com/zombiecalypse/Game-Design-Project/master/artwork/spider.png)
 
 
 ## Bosses
