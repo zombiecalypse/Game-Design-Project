@@ -76,6 +76,7 @@ The mechanical spider ensured its safety by putting up some defense towers.
 * **Type**: *Tower*, lower damage output, but immobilizes target for short time
 * **Type**: *Swarmer* 
 
+![Tower](https://raw.github.com/zombiecalypse/Game-Design-Project/master/artwork/spider_tower.png)
 ![Spider](https://raw.github.com/zombiecalypse/Game-Design-Project/master/artwork/spider.png)
 
 
