@@ -1,60 +1,71 @@
-# Ideas
+# Anura 
+## Theme: The Price of Freedom
+## Story
+### 1: The Great Magitech War
+Fifty years ago it destroyed most of the civilization as we knew it and rendered
+the surface of our planet uninhabitable. We now live under the ocean in confined
+space. The two factions **Saphire** and **Achat** live in two different cities
+and are in a constant cold war against each other. 
 
-## Involve aesthetics into game play
-There are games, that make creating "art" the goal, for example through
-dynamically generated music, but the battle dance from games like Bayonetta
-might count as well.
+### 2: Putting back the "punk" in "steampunk"
+The citizens of **Achat** mastered the science of *Catena vitae*, which allows
+to change the way, animals and even humans bodies develop. In our society, it is
+frowned upon to have obvious modification, but it is also a thinly veiled
+secret, that most members of the high society enhanced their life-time, their
+intelligence and their looks. The *Zar* leads our nation unquestioned.
 
-### Draw a Route
-In jump and runs, you normally get to controll the little guy that jumps and
-runs. In this game however, you get to build a level by painting platforms. I
-imagine the game to be somewhat similar to Little Wings, except that you have a
-lot more actions.
+In **Saphire**, our mortal enemy, the magi-technical traditions are held high.
+We are not sure why, but many citizens are born with the *Spark* and can master
+technology to an incredible degree. Others develop magical abilities when
+becoming adults. The latter is the proof of noble birth, and thus a member of
+nobility must show great dexterity in this art. The elected king even more so,
+he must be able to best anyone who questions him -- even though this is seen as
+a barbaric custom and someone who loses such a duel is disgraced.
 
-## Boids!
-Everything's better with boids.
+### 3: Retrospective Storytelling
+As to allow in media res, questions about the past are determined by the
+reaction in the present (Bioware titles like KotOR2 use that).
 
-## Player can program helpers
-The helpers are as useful as the player manages them to make. Maybe you can earn
-new snipplets to use in regular play.
+## Aesthetic
+### 4: Steampunk Magitech
+**Saphire** features leaky steam pipes, floating crystal platforms and gas lights. 
+**Achat** is dominated by bio-technology and contains chitin structured
+buildings, huge transport wales and bio-luminecent lights.
 
-## Gestures
-In order to activate skills, the player needs to draw stuff. Instead of the
-difficult problem of pattern recognition, there are symbols (left, right, up,
-down, ...) that can be combined. The precision affects the efficiency of the
-skill.
+### 5: 2D
+3D is much easier to get wrong than 2D graphics. Neither of us can 3D model or
+do textures. We will use a 2D, freely explorable map.
 
-## Social
-The simulated conflict is not physical in nature, but rather social. This might
-be similar to Sims or less emergent and more scripted.
+### 6: Minimalism
+We currently experiment with a simplistic vector graphic style. Since we're not
+artists, we need something simple, that still brings the atmosphere across.
 
-### Contracts
-Contracts are interesting in that they can fuck any of the parties over, due to
-the incomplete information. The best implementation I've seen is Civilization.
+## Mechanic
+### 7: Gestures
+Actions and spells are controlled by gesture symbols - a sequence of 
+`right-click` =&gt; `drag` =&gt; `release` that is simplified to `left`,
+`right`, `up`, and `down` movement. For example, a simple attack spell might be
+`up-up`, which shoots in the direction we're clicking.
 
-## Collaborative
-There are AI and/or human actors, who need to cooperate in order to succeed.
+### 8: Real time fights
+The idea of freedom is much better conveyed by this smooth transition between
+fight, exploration and interaction.
 
-### Teams
-Three teams compete. This combines teamwork and competition and even politics in
-that it allows two parties to form alliances.
+### 9: WASD + mouse
+We can't do both movement and gestures with the mouse. Shooters prove that
+people can adapt to such controls, but we might need to experiment with it.
 
-## Abstract
-The game runs on a abstract level which has only few or no connections to the real world.
-Theme of the game may be open to interpretation. The experience is mostly emotional.
-Example: Colored thingies fight against black thingies.
+### 10: Fights on a distance
+Since the spells would be hard to aim, we should allow a certain area to be
+affected.
 
-## One level
-There is only one big level. The player can explore the realm freely.  
+## Technology
+### 11: Ruby with the Chingu engine
 
-## Acts
-The gameflow is devided into at least 3 but no more than 5 acts or chapters.
-Each Act can provide additonal rules, new enemies and of course a carload of DRAMA!
+* Efficient alpha channel support
+* GFX card support
+* Scripting
+* Platform independence
 
-## 2.5 Dimensions
-The levels consist of different layers (geographic or not). The player can switch layer in designated areas.
-
-## Obscure Story
-The Storyline gives very few informations in the beginning. As the player learns what is going one as he advances in the game.
-At the hole story may or may not be revealed at the end of the game.
-
+## Group: Dark Ducks
+![Dark Ducks](dark_duck.png)
