@@ -38,21 +38,21 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
     def initialize(opts = {})
       super(opts)
       @map = Map.create( x: 0, y: 0, \
-                        image: Gosu::Image['maps/01_bg.png'], \
-                        mask: Gosu::Image['maps/01_mask.png'])
+                        image: Gosu::Image['maps/Level1-1_map.png'], \
+                        mask: Gosu::Image['maps/Level1-1_mask.png'])
       @map.center = 0
-      @level_width = 1000
-      @level_height = 1000
+      @level_width = 802
+      @level_height = 586
       self.viewport.lag = 0
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
       @log = Logger.new(STDOUT)
       #load_events
       log_info {"Database loaded"}
-      @camera = @player = Objects::Player.create x: 550, y: 550, level: self
+      @camera = @player = Objects::Player.create x: 300, y: 400, level: self
       @player.journal.add_page("The History of Awesomevile", "It was and has always been")
       @player.journal.add_page("The History of Suckvile", "It was empty, until Sucky McSuckerson moved in.")
       @player.journal.add_page("The History of History", LOREM_IPSUM)
-      @tower = Objects::SimpleTower.create x: 700, y: 700
+      #@tower = Objects::SimpleTower.create x: 700, y: 700
       @hud = Interface::HudInterface.new(@player)
       log_info { "entering" }
     end
