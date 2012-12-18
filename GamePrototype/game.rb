@@ -2,9 +2,9 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 
-require_relative 'interface/gesture_controller.rb'
-require_relative 'menu/start_menu.rb'
-require_relative 'game_objects/events.rb'
+require_relative 'interface/gesture_controller'
+require_relative 'menu/start_menu'
+require_relative 'game_objects/events'
 
 class Game < Chingu::Window
   def setup

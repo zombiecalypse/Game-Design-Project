@@ -14,17 +14,13 @@ module Chingu::Traits
         @swarms = {}
         trait_options[:swarmer] = options
 
-        add_methods
+        self.on_notify do |e|
+          notify_swarm e
+        end
       end
 
       def log_debug(&b)
         @log.debug(self.to_s, &b)
-      end
-
-      def add_methods
-        self.on_notify do |e|
-          notify_swarm e
-        end
       end
     end
 

@@ -2,12 +2,16 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 require 'logger'
+require 'singleton'
 
 require_relative '../databases/spellbook'
 require_relative '../interface/gesture_controller'
 require_relative '../object_traits/hp'
 require_relative '../interface/journal'
 
+def the cl
+  cl.the
+end
 module Objects
   class Player < Chingu::GameObject
     attr_reader :current_dir, :journal

@@ -25,14 +25,13 @@ module Chingu::Traits
       end
     end
 
-    attr_reader :observation_range, :enemies, :speed
+    attr_reader :speed
+
+    def enemies
+      @enemies.inject([]) { |x,y| x+y.all }
+    end
 
     def setup_trait(opts={})
-      @enemies = trait_options[:mover][:enemies] || []
-      @enemies << Player if not @enemies.include? Player 
-      @damage = trait_options[:swarmer][:damage]
-      @observation_range = trait_options[:swarmer][:range] || 200
-      @attack_cooldown = trait_options[:mover][:attack_cooldown] || 2000
       @speed = trait_options[:mover][:speed] || 2000
     end
 
@@ -46,12 +45,8 @@ module Chingu::Traits
       move_along_path
     end
 
-    # fill AI here
+    # fill AI here, seriously... do!
     def recalculate_path_to; end
-
-    trait :bounding_circle
-    trait :collision_detection
-    trait :timer
 
     def move_along_path
       first = @path[0]
@@ -60,7 +55,7 @@ module Chingu::Traits
         @path = @path[1..-1]    # well-behaved suroundings
         move_along_path
       else
-        phi = Math.atan2(first.y - y, first.x - x)
+        phi = Math.atan2(first.y - y, first.x - x) # Directly at point
         x += Math.cos(phi) * speed
         y += Math.sin(phi) * speed
       end
@@ -69,47 +64,9 @@ module Chingu::Traits
     def update_trait
       super
       move
-      look_around
-      every(@attack_cooldown) { attack_reachable }
-    end
-
-    def attack e
-      on_attack e
-      e.harm @damage
     end
 
     private
-
-    def attack_reachable
-      each_collision(enemies) do |s, enemy|
-        attack enemy
-        log_debug {"#{self} attacks #{enemy}"}
-        return
-      end
-    end
-
-
-    def look_around
-      enemies.each do |enemy|
-        if d(enemy, self) <= observation_range
-          do_on_notice enemy 
-          log_debug {"#{self} found #{enemy}"}
-        end
-      end
-    end
-
-    def do_on_notice e
-      @@on_notice.each {|b| b.call e}
-    end
-
-    def do_on_attack e
-      @@on_attack.each {|b| b.call e}
-    end
-
-    def d a, b
-      Math.hypot (a.x - b.x), (a.y - b.y)
-    end
-
     def log_debug(&b)
       self.class.log_debug(&b)
     end

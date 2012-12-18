@@ -2,34 +2,19 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 require 'logger'
-require 'texplay'
 
 require_relative '../events/event'
 require_relative '../events/conversation'
 require_relative '../menu/pause_menu'
 require_relative '../game_objects/simple_tower'
 require_relative '../interface/hud_interface'
+require_relative 'map'
 
 module Levels
   LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id tortor a nunc convallis aliquam. Pellentesque velit velit, ornare a lacinia nec, egestas id augue. Suspendisse ac eros sem, vel molestie est. Aliquam velit massa, venenatis in tincidunt sit amet, posuere eget nibh. Integer bibendum auctor diam, eu condimentum sem convallis sed. Sed id odio ut massa tincidunt mollis placerat sit amet tellus. Morbi at odio felis, non luctus felis. Maecenas vehicula tortor nec nibh pulvinar hendrerit. Duis scelerisque viverra consequat.
 
 Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio nunc, ac viverra tortor. In hac habitasse platea dictumst. Phasellus aliquet urna vitae velit dignissim elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus nisi risus, mollis nec egestas at, sodales et magna. Sed diam ante, mollis in elementum fringilla, posuere eget nulla.
 "
-  class Map < Chingu::GameObject
-    def initialize opts={}
-      super({zorder: ZOrder::MAP}.merge(opts))
-      @mask = opts[:mask] || self.image
-    end
-
-    def blocked? x,y
-      is_wall?(@mask.get_pixel(x,y)) rescue false
-    end
-
-    def is_wall? pixel
-      r,g,b,a = pixel
-      r < 0.1 and g < 0.1 and b < 0.1 and a > 0.99
-    end
-  end
 
   class TestLevel < Chingu::GameState
     trait :viewport
