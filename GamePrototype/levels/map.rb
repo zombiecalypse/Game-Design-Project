@@ -10,6 +10,7 @@ module Levels
     attr_reader :objects, :startpoints
     def initialize opts={}, &block
       super(opts)
+      @debug= opts[:debug]
       @objects     = {}
       @startpoints = {}
       @events      = {}
@@ -32,7 +33,7 @@ module Levels
     #   at(350,200).object :spider
     # end
     #
-    # This works, except for behaviour
+    # This works
 
     def at(x,y)
       unless @finished
@@ -54,7 +55,7 @@ module Levels
     end
 
     def blocked? x,y
-      @masks.any? {|e| is_wall? e.image.get_pixel(x,y) rescue false}
+      @masks.any? {|e| is_wall? e.image.get_pixel(x-e.x,y-e.y) rescue false}
     end
 
     def is_wall? pixel
@@ -75,6 +76,13 @@ module Levels
       raise "Not editable" if @finished
     end
 
+    def draw
+      super
+      @masks.each do |e|
+        e.draw
+      end
+    end
+
     def add_event_definition name, colour
       editable
       @events[colour.to_s] = name
@@ -93,7 +101,7 @@ module Levels
 
     def add_mask_at(x,y, img)
       editable
-      mask=MaskPatch.new(image: MapResource[img], center: 0, x: x, y: y)
+      mask=MaskPatch.new(image: MapResource[img], center: 0, x: x, y: y, alpha: 120)
       mask.center=0
       @masks <<  mask
     end
