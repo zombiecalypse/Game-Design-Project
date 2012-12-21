@@ -62,7 +62,6 @@ module Databases
     def initialize(opts={})
       super
       self.center_y = 0.75
-      Gosu::Sample["fire_activate.mp3"].play
     end
     def update
       super
@@ -117,6 +116,7 @@ module Databases
     @@speed = 5
 
     def activate x,y
+    	Gosu::Sample["fire_activate.wav"].play
       @player.spell = nil
       self.x = @player.x
       self.y = @player.y
