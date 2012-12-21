@@ -22,14 +22,10 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
     attr_reader :player
     def initialize(opts = {})
       super(opts)
-      @map = Map.create( x: 0, y: 0, \
-                        image: Gosu::Image['maps/level one - 1.png'], \
-                        mask: Gosu::Image['maps/mask one - 1.png'])
-      @map2 = Map.create( x: 960, y: 0, \
-                        image: Gosu::Image['maps/level one - 2.png'], \
-                        mask: Gosu::Image['maps/mask one - 2.png'])
-      @map.center = 0
-      @map2.center = 0
+      @map = Map.create do
+        at(0,0).map('level one - 1.png', 'mask one - 1.png')
+        at(960,0).map('level one - 2.png', 'mask one - 2.png')
+      end
       @level_width = 1344
       @level_height = 640
       self.viewport.lag = 0
@@ -75,7 +71,6 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
       return true if x < 0 or y < 0
       return true if x > @level_width or y > @level_height
       return true if @map.blocked? x,y 
-      return true if (@map2.blocked? (x-960),y)
     end
 
     def can_move_to? x,y

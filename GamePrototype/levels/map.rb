@@ -86,16 +86,21 @@ module Levels
     class ImagePatch < Chingu::GameObject
     end
 
+    class MapResource < Gosu::Image
+      include Chingu::NamedResource
+      autoload_dirs << 'media/maps'
+    end
+
     def add_mask_at(x,y, img)
       editable
-      mask=MaskPatch.new(image: Gosu::Image[img], center: 0, x: x, y: y)
+      mask=MaskPatch.new(image: MapResource[img], center: 0, x: x, y: y)
       mask.center=0
       @masks <<  mask
     end
 
     def add_image_at(x,y,img)
       editable
-      img = ImagePatch.create(image: Gosu::Image[img], center: 0, x: x, y: y)
+      img = ImagePatch.create(image: MapResource[img], center: 0, x: x, y: y)
       img.center=0
       @images << img
     end
