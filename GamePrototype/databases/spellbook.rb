@@ -55,13 +55,14 @@ end
 
 module Databases
   class Fire < Chingu::GameObject
-    trait :spell, name: :fire, size: [100,100], delay: 125
+    trait :spell, name: :fire, size: [50,50], delay: 125
     traits :timer, :velocity, :collision_detection
     trait :bounding_circle, debug: true, scale: 0.5
 
     def initialize(opts={})
       super
       self.center_y = 0.75
+      Gosu::Sample["fire_activate.mp3"].play
     end
     def update
       super

@@ -23,17 +23,21 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
     def initialize(opts = {})
       super(opts)
       @map = Map.create( x: 0, y: 0, \
-                        image: Gosu::Image['maps/Level1-1_map.png'], \
-                        mask: Gosu::Image['maps/Level1-1_mask.png'])
+                        image: Gosu::Image['maps/level one - 1.png'], \
+                        mask: Gosu::Image['maps/mask one - 1.png'])
+      @map2 = Map.create( x: 960, y: 0, \
+                        image: Gosu::Image['maps/level one - 2.png'], \
+                        mask: Gosu::Image['maps/mask one - 2.png'])
       @map.center = 0
-      @level_width = 802
-      @level_height = 586
+      @map2.center = 0
+      @level_width = 1344
+      @level_height = 640
       self.viewport.lag = 0
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
       @log = Logger.new(STDOUT)
       #load_events
       log_info {"Database loaded"}
-      @camera = @player = Objects::Player.create x: 300, y: 400, level: self
+      @camera = @player = Objects::Player.create x: 160, y: 160, level: self
       @player.journal.add_page("The History of Awesomevile", "It was and has always been")
       @player.journal.add_page("The History of Suckvile", "It was empty, until Sucky McSuckerson moved in.")
       @player.journal.add_page("The History of History", LOREM_IPSUM)
@@ -69,7 +73,8 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
     def blocked? x,y
       return true if x < 0 or y < 0
       return true if x > @level_width or y > @level_height
-      return true if @map.blocked? x,y
+      return true if @map.blocked? x,y 
+      return true if (@map2.blocked? (x-960),y)
     end
 
     def can_move_to? x,y

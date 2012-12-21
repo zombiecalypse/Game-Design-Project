@@ -20,7 +20,7 @@ module Objects
     trait :collision_detection
     trait :hp, hp: 100
     def initialize(options = {})
-      @animation = Chingu::Animation.new( bounce: true, file: 'pc.png', size: 100, delay: 250)
+      @animation = Chingu::Animation.new( bounce: true, file: 'pc.png', size: 64, delay: 250)
       @animation.frame_names = {down: (0..2), up: (3..5), left: (6..8), right: (9..11)}
       @current_dir = :down
       @spell_book = Databases::SpellBook.new
