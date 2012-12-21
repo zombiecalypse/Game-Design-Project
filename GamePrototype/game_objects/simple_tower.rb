@@ -1,10 +1,11 @@
 require_relative '../object_traits/hp'
-require_relative '../object_traits/tower'
+require_relative '../object_traits/shooter'
+require_relative '../object_traits/aggro'
 
 
 module Objects
   class SimpleTower < Chingu::GameObject
-    class Projectile < Chingu::Traits::Tower::Projectile
+    class Projectile < Chingu::Traits::Shooter::Projectile
       trait :timer
 
       def timeout
@@ -24,17 +25,13 @@ module Objects
       end
     end
 
-    trait :tower, projectile: Projectile
-    trait :timer
+    trait :shooter, projectile: Projectile
     trait :bounding_box, debug: true
     trait :hp, hp: 50
 
     def initialize(opts={})
       super(opts.merge image: Gosu::Image['spider_tower.png'])
       self.center_y = 0.25
-      every(1500, name: :shoot) do
-        shoot(Player.the.x, Player.the.y)
-      end
     end
   end
 end

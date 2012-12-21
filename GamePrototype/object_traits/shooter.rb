@@ -1,17 +1,11 @@
-require 'rubygems'
-require 'chingu'
-require 'gosu'
-require 'logger'
 
 module Chingu::Traits
-  module Tower
+  module Shooter
     module ClassMethods
-      # A projectile producer (answers to `call` or `create`) can be given.
-      def initialize_trait(options={})
-        @projectile = options[:projectile] || Projectile
+      def initialize_trait(opts={})
+        @projectile = opts[:projectile] || Projectile
+        trait_options[:shooter] = opts
         @log = Logger.new(STDOUT)
-        @log.sev_threshold = Logger::INFO
-        self.on_attack {|e| shoot(e.x,e.y)}
       end
 
       def log_debug(&b)
@@ -49,7 +43,9 @@ module Chingu::Traits
         self.velocity_y = Math::sin(phi) * self.max_speed
       end
 
-      def max_speed; 5; end
+      def max_speed 
+        5
+      end
 
       def on_hit player
         player.harm 10

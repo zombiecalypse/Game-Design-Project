@@ -22,10 +22,9 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
     attr_reader :player
     def initialize(opts = {})
       super(opts)
-      @map = Map.create( x: 0, y: 0, \
-                        image: Gosu::Image['maps/Level1-1_map.png'], \
-                        mask: Gosu::Image['maps/Level1-1_mask.png'])
-      @map.center = 0
+      @map = Map.create do
+        at(0,0).map('maps/Level1-1_map.png', 'maps/Level1-1_mask.png')
+      end
       @level_width = 802
       @level_height = 586
       self.viewport.lag = 0
@@ -37,7 +36,7 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
       @player.journal.add_page("The History of Awesomevile", "It was and has always been")
       @player.journal.add_page("The History of Suckvile", "It was empty, until Sucky McSuckerson moved in.")
       @player.journal.add_page("The History of History", LOREM_IPSUM)
-      #@tower = Objects::SimpleTower.create x: 700, y: 700
+      @tower = Objects::SimpleTower.create x: 700, y: 300
       @hud = Interface::HudInterface.new(@player)
       log_info { "entering" }
     end
