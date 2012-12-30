@@ -30,7 +30,7 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
       @level_height = 640
       self.viewport.lag = 0
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
-      Gosu::Sample["level one.wav"].play(1,1,true)
+      Gosu::Song["level one.ogg"].play(true)
       @log = Logger.new(STDOUT)
       #load_events
       log_info {"Database loaded"}

@@ -116,7 +116,7 @@ module Databases
     @@speed = 5
 
     def activate x,y
-    	Gosu::Sample["fire_activate.wav"].play
+    	Gosu::Sample["fire_activate.ogg"].play
       @player.spell = nil
       self.x = @player.x
       self.y = @player.y
