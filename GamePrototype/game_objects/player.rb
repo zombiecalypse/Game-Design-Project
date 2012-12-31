@@ -20,14 +20,25 @@ module Objects
     trait :collision_detection
     trait :hp, hp: 100
     def initialize(options = {})
-      @animation = Chingu::Animation.new( bounce: true, file: 'main_char.png', size: 32, delay: 250)
-      @animation.frame_names = {down: (0..2), left: (3..5), right: (6..8), up: (9..11)}
+      @log = Logger.new(STDOUT)
+      @log.debug("PLAYER") { "initialized logger" }
       @current_dir = :down
       @spell_book = Databases::SpellBook.new
+      @log.debug("PLAYER") { "initialized spell book" }
       @speed = 3
-      @log = Logger.new(STDOUT)
       @journal = Interface::Journal.new
-      super(options.merge(:image => @animation[@current_dir][1]))
+      @log.debug("PLAYER") { "initialized journal" }
+      begin
+        @animation = Chingu::Animation.new( bounce: true, file: 'main_char.png', size: 32, delay: 250)
+        @animation.frame_names = {down: (0..2), left: (3..5), right: (6..8), up: (9..11)}
+        @log.debug("PLAYER") { "initialized animation frames" }
+        super(options.merge(image: @animation[@current_dir][1], zorder: ZOrder::PLAYER))
+        @log.debug("PLAYER") { "initialized rest" }
+      rescue
+        @log.warn("PLAYER") { "failed to initialize animation" }
+        super(options.merge( zorder: ZOrder::PLAYER ))
+        @log.debug("PLAYER") { "initialized rest" }
+      end
     end
     
     def setup(opts={})
@@ -85,7 +96,6 @@ module Objects
 
     def record_gesture
       @gesture_buffer.dot
-      @hu
     end
 
     def finished_gesture

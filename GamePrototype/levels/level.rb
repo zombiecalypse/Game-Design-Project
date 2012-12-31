@@ -8,6 +8,7 @@ require_relative '../events/conversation'
 require_relative '../menu/pause_menu'
 require_relative '../game_objects/simple_tower'
 require_relative '../interface/hud_interface'
+require_relative '../interface/z_orders'
 require_relative 'map'
 
 module Levels
@@ -28,7 +29,7 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
       end
       @level_width = 1344
       @level_height = 640
-      self.viewport.lag = 0
+      self.viewport.lag = 1
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
       Gosu::Song["level one.ogg"].play(true)
       @log = Logger.new(STDOUT)
@@ -38,7 +39,7 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
       @player.journal.add_page("The History of Awesomevile", "It was and has always been")
       @player.journal.add_page("The History of Suckvile", "It was empty, until Sucky McSuckerson moved in.")
       @player.journal.add_page("The History of History", LOREM_IPSUM)
-      #@tower = Objects::SimpleTower.create x: 700, y: 700
+      @tower = Objects::SimpleTower.create x: 200, y: 200
       @hud = Interface::HudInterface.new(@player)
       log_info { "entering" }
     end

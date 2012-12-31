@@ -5,16 +5,17 @@ require 'chingu'
 require 'gosu'
 require 'logger'
 
-def relative(path)
-  File.join(File.expand_path(File.dirname(__FILE__)), path)
+def relative(*path)
+  File.join(File.expand_path(File.dirname(__FILE__)), *path)
 end
 
 # Oh I f*ing love rspec
 include Levels
 describe Map do
-  before :all  do
-    Gosu::Image.autoload_dirs << relative('media/maps')
+  before :all do
+    Map::MapResource.autoload_dirs << relative('media', 'maps')
   end
+
   before :each do
     @game = Chingu::Window.new
   end

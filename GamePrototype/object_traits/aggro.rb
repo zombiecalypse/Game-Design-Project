@@ -1,12 +1,14 @@
+require_relative '../game_objects/player'
 module Chingu::Traits
   # Type of enemy that just shoots as soon as possible
   module Aggro
     module ClassMethods
+      attr_reader :all_on_notice, :all_on_attack
       def initialize_trait(options={})
         @log = Logger.new(STDOUT)
         @log.sev_threshold = Logger::INFO
-        @on_notice = []
-        @on_attack = []
+        @all_on_notice = []
+        @all_on_attack = []
         trait_options[:aggro] = options
         self.trait :timer
       end
@@ -16,11 +18,11 @@ module Chingu::Traits
       end
 
       def on_notice &b
-        @on_notice << b
+        @all_on_notice << b
       end
 
       def on_attack &b
-        @on_attack << b
+        @all_on_attack << b
       end
     end
 
@@ -31,18 +33,19 @@ module Chingu::Traits
     end
 
     def setup_trait(opts={})
-      @enemies           = trait_options[:aggro][:enemies]         || []
-      @damage            = trait_options[:aggro][:damage]          || 1
-      @observation_range = trait_options[:aggro][:range]           || 200
-      @attack_cooldown   = trait_options[:aggro][:attack_cooldown] || 2000
-      @range             = trait_options[:aggro][:range]           || 50
+      @enemies           = trait_options[:aggro][:enemies]            || []
+      @damage            = trait_options[:aggro][:damage]             || 1
+      @observation_range = trait_options[:aggro][:observation_range]  || 200
+      @attack_cooldown   = trait_options[:aggro][:attack_cooldown]    || 2000
+      @range             = trait_options[:aggro][:range]              || 50
 
-      @enemies << the(Player) if not @enemies.include? the(Player)
+      @enemies << Objects::Player if not @enemies.include? Objects::Player
       @can_attack = true
     end
 
     def update_trait
       super
+      look_around
       attack_reachable if @can_attack
     end
 
@@ -50,10 +53,11 @@ module Chingu::Traits
     private
 
     def attack_reachable
+      log_debug {"I'm looking for enemies"}
       enemy = enemies.detect {|e| can_attack? e}
       return unless enemy
+      log_debug {"I found #{enemy}"}
       attack enemy
-      log_debug {"#{self} attacks #{enemy}"}
     end
 
     def noticable? enemy
@@ -65,16 +69,16 @@ module Chingu::Traits
         .collect {|e| noticable? e}
         .each do |enemy|
           do_on_notice enemy 
-          log_debug {"#{self} found #{enemy}"}
+          log_debug {"I found #{enemy}"}
         end
     end
 
     def do_on_notice e
-      @@on_notice.each {|b| b.call e}
+      self.class.all_on_notice.each {|b| self.instance_exec(e,&b)}
     end
 
     def do_on_attack e
-      @@on_attack.each {|b| b.call e}
+      self.class.all_on_attack.each {|b| self.instance_exec(e,&b)}
     end
 
     def d a, b
@@ -83,13 +87,14 @@ module Chingu::Traits
 
     def attack e
       do_on_attack e
+      log_debug {"I attack #{e} for #{@damage} damage"}
       e.harm @damage
       @can_attack = false
       after(@attack_cooldown) { @can_attack = true }
     end
 
     def can_attack? enemy
-      d(enemy, self) < @reach
+      d(enemy, self) < @range rescue false
     end
 
     def log_debug(&b)

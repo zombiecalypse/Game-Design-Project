@@ -1,4 +1,5 @@
 require 'texplay'
+require_relative '../interface/z_orders'
 module Levels
   # TODO 
   #   1) Map will newly get multiple images as parameter, that lay 
@@ -7,6 +8,7 @@ module Levels
   #   3) Map will also get a cool syntax, because hell yeah, syntax.
   #
   class Map < Chingu::GameObject
+    include ZOrder
     attr_reader :objects, :startpoints
     def initialize opts={}, &block
       super(opts)
@@ -43,10 +45,15 @@ module Levels
       end
     end
 
-    def mask_colour x, y
-      mask=@masks.detect do |e| 
+    def mask_of x,y
+      @masks.detect do |e| 
         (x-e.x).between?(0, e.image.width) and (y-e.y).between?(0, e.image.height)
       end
+    end
+
+
+    def mask_colour x, y
+      mask = mask_of(x,y)
       mask.image.get_pixel(x-mask.x, y-mask.y, :color_mode => :gosu) if mask
     end
 
@@ -78,6 +85,7 @@ module Levels
 
     def draw
       super
+      return unless @debug
       @masks.each do |e|
         e.draw
       end
@@ -96,7 +104,7 @@ module Levels
 
     class MapResource < Gosu::Image
       include Chingu::NamedResource
-      autoload_dirs << 'media/maps'
+      autoload_dirs << File.join('media', 'maps')
     end
 
     def add_mask_at(x,y, img)
@@ -106,9 +114,9 @@ module Levels
       @masks <<  mask
     end
 
-    def add_image_at(x,y,img)
+    def add_image_at(x,y, z, img)
       editable
-      img = ImagePatch.create(image: MapResource[img], center: 0, x: x, y: y)
+      img = ImagePatch.create(image: MapResource[img], center: 0, x: x, y: y, zorder: z || MAP)
       img.center=0
       @images << img
     end
@@ -132,9 +140,14 @@ module Levels
         @parent = parent
       end
 
+      def in z
+        @z = z
+        self
+      end
+
       def map image, mask=nil
         @parent.add_mask_at(@x,@y, mask || image)
-        @parent.add_image_at(@x,@y, image)
+        @parent.add_image_at(@x,@y, @z, image)
       end
 
       def startpoint name

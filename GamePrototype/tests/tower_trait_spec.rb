@@ -1,32 +1,55 @@
-require_relative '../object_traits/tower.rb'
+require_relative '../object_traits/shooter'
+require_relative '../object_traits/aggro'
 require 'rubygems'
 require 'rspec'
 
-describe Chingu::Traits::Tower do
+class Target < Chingu::GameObject
+  trait :hp
+end
+class Enemy < Chingu::GameObject
+  trait :aggro, observation_range: 300, range: 100, enemies: [Target], damage: 5
+
+  attr_reader :attacked, :noticed
+
+  on_attack do |x|
+    @attacked ||= []
+    @attacked << x
+  end
+
+  on_notice do |x|
+    @noticed ||= []
+    @noticed << x
+  end
+
+end
+
+describe Chingu::Traits::Aggro do
   before :each do
     @game = Chingu::Window.new
-    @projectile_class = Class.new(Chingu::Traits::Tower::Projectile) do
-      def on_hit player
-        player.harm 20
-      end
-    end
-    @enemy_class = Class.new(Chingu::GameObject) do
-      trait :tower, projectile: @projectile_class
-    end
 
-    @tower = @enemy_class.new x: 50, y: 50
-    @player = Objects::Player.new x: 100, y: 80
+    @tower = Enemy.new x: 50, y: 50
+    @tower.x = 50
+    @tower.y = 50
   end
 
   after :each do
     @game.close
   end
 
-  it "should shoot at the player when possible" 
+  it "should shoot at the player when possible" do
+    @player = Target.create x: 100, y: 100
+    @tower.update_trait
 
-  it "should not shoot at the player if player not visible"
+    @player.hp.should_not eq @player.max_hp
 
-  it "should hit the player, if they don't move"
+    @tower.attacked.should eq [@player]
+  end
 
-  it "should harm the player when its projectile hits"
+  it "should not shoot at the player if player not visible" do
+    @player = Target.create x: 900, y: 190
+    @tower.update_trait
+
+    @player.hp.should eq @player.max_hp
+  end
+
 end

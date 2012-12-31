@@ -26,6 +26,7 @@ module Objects
     end
 
     trait :shooter, projectile: Projectile
+    trait :aggro, damage: 0, observation_range: 300
     trait :bounding_box, debug: true
     trait :hp, hp: 50
 
