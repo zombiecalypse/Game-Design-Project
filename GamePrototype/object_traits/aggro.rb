@@ -41,6 +41,7 @@ module Chingu::Traits
 
       @enemies << Objects::Player if not @enemies.include? Objects::Player
       @can_attack = true
+      super opts
     end
 
     def update_trait
@@ -100,6 +101,5 @@ module Chingu::Traits
     def log_debug(&b)
       self.class.log_debug(&b)
     end
-
   end
 end

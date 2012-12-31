@@ -27,13 +27,11 @@ describe Chingu::Traits::Aggro do
   before :each do
     @game = Chingu::Window.new
 
-    @tower = Enemy.new x: 50, y: 50
-    @tower.x = 50
-    @tower.y = 50
+    @tower = Enemy.create x: 50, y: 50
   end
 
   after :each do
-    @player.destroy rescue nil
+    [@tower, @player].each{ |e| e.destroy rescue nil}
     @game.close
   end
 
