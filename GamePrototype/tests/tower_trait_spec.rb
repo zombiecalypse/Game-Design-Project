@@ -33,6 +33,7 @@ describe Chingu::Traits::Aggro do
   end
 
   after :each do
+    @player.destroy rescue nil
     @game.close
   end
 
@@ -40,9 +41,14 @@ describe Chingu::Traits::Aggro do
     @player = Target.create x: 100, y: 100
     @tower.update_trait
 
-    @player.hp.should_not eq @player.max_hp
-
     @tower.attacked.should eq [@player]
+  end
+
+  it "should harm the player when attacking" do
+    @player = Target.create x: 100, y: 100
+    @tower.update_trait
+
+    @player.hp.should_not eq @player.max_hp
   end
 
   it "should not shoot at the player if player not visible" do
