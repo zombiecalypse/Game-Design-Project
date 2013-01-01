@@ -82,15 +82,34 @@ describe Level do
   end
 
   context "when defined" do
-    it "should have a map"
+    it "should trigger events, when the player hits a zone" do
+      level_class = Class.new(Level) do
+        def visited?; @visited; end
+        map do
+          at(0,0).map("test_level_marked.png", "test_level_marked.png")
+          link :cut_scene1, rgb(120,10,230)
+        end
+        zone :cut_scene1 do
+          @visited = true
+        end
+      end
+      level = level_class.new(camera: @camera)
+      level.enter(200,200)
+      level.should be_visited
+    end
 
-    it "should not be modifiable"
+    it "should block player from leaving the outer frame" do
+      level_class = Class.new(Level) do
+        map do
+          at(0,0).map("test_level_marked.png", "test_level_marked.png")
+        end
+      end
 
-    it "should trigger events, when the player hits a zone"
-
-    it "should have created objects for the map points"
-
-    it "should block player from leaving the outer frame"
+      level = level_class.new(camera: @camera)
+      level.should be_blocked(501, 500)
+      level.should be_blocked(500, 501)
+      level.should_not be_blocked(200, 200)
+    end
   end
 
 end

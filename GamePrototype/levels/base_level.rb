@@ -54,7 +54,7 @@ module Levels
     def setup(opts={})
       super opts
       self.viewport.lag = 1
-      self.viewport.game_area = [0.0, 0.0, width, height]
+      self.viewport.game_area = [0.0, 0.0, map.width, map.height]
       song.play(true) if song
       self.define_inputs
     end
@@ -78,12 +78,17 @@ module Levels
 
     def blocked? x,y
       return true if x < 0 or y < 0
-      return true if x > @level_width or y > @level_height
+      return true if x >= map.width or y >= map.height
       return true if @map.blocked? x,y 
     end
 
     def can_move_to? x,y
       not blocked? x,y
+    end
+
+    def enter x,y
+      event = map.at(x,y)
+      self.instance_exec(&zones[event]) if event and zones[event]
     end
 
     def open_menu
