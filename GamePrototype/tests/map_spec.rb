@@ -1,13 +1,6 @@
 require_relative '../levels/map'
-require 'rubygems'
-require 'rspec'
-require 'chingu'
-require 'gosu'
-require 'logger'
+require_relative 'test_helpers'
 
-def relative(*path)
-  File.join(File.expand_path(File.dirname(__FILE__)), *path)
-end
 
 # Oh I f*ing love rspec
 include Levels
@@ -33,6 +26,8 @@ describe Map do
     map.should_not be_blocked(300,200)
   end
 
+
+
   it "should take multiple images" do
     map = Map.create do
       at(0,0).map("test_level_map.png", "test_level_mask.png")
@@ -43,6 +38,17 @@ describe Map do
     map.should be_blocked(25,125) 
     map.should be_blocked(125,225)
     map.should_not be_blocked(325,425)
+  end
+
+  it "should have a width and height" do
+    map = Map.create do
+      at(0,0).map("test_mask.png", "test_mask.png") # is 500x500 in size
+      
+      at(100,0).map("test_mask.png", "test_mask.png")
+    end
+
+    map.height.should eq 500
+    map.width.should eq 600
   end
 
   it "can define startpoints" do

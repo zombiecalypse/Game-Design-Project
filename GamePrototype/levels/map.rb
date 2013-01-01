@@ -22,6 +22,19 @@ module Levels
       @finished = true
     end
 
+    def rect
+      return Chingu::Rect.new(0,0,0,0) if @masks.size == 0
+      @masks[0].rect.union_all @masks.drop(1)
+    end
+
+    def width
+      rect.width
+    end
+
+    def height
+      rect.height
+    end
+
     # GOAL:
 
     # Map.new do

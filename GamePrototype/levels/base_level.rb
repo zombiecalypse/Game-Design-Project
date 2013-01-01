@@ -17,20 +17,21 @@ module Levels
     include
     trait :viewport
 
-    attr_reader :song
+    attr_reader :song, :map
 
     # Preloading stuff
-    def initialize(opts = {})
+    def initialize(opts = {}, &b)
       super(opts)
+      @map = Map.create(&self.class.map_definition)
       @song = Gosu::Song[opts[:song]] if opts[:song]
-      @camera = the(Player)
+      @camera = opts[:camera] || the(Objects::Player)
     end
 
     def setup(opts={})
-      super
+      super opts
       self.viewport.lag = 1
       self.viewport.game_area = [0.0, 0.0, width, height]
-      song.play(true)
+      song.play(true) if song
       self.define_inputs
     end
 
@@ -68,6 +69,14 @@ module Levels
     def update
       super
       self.viewport.center_around @player
+    end
+    
+    class <<self
+      attr_reader :map_definition
+      def map &b
+        throw "duplicate map definition" if @map_definition
+        @map_definition = b
+      end
     end
   end
 end
