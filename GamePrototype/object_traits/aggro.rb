@@ -1,7 +1,11 @@
 require_relative '../game_objects/player'
+require_relative '../helpers/logging'
+
 module Chingu::Traits
   # Type of enemy that just shoots as soon as possible
   module Aggro
+    include Modularity::Does
+    does "helpers/logging"
     module ClassMethods
       attr_reader :all_on_notice, :all_on_attack
       def initialize_trait(options={})
@@ -11,10 +15,6 @@ module Chingu::Traits
         @all_on_attack = []
         trait_options[:aggro] = options
         self.trait :timer
-      end
-
-      def log_debug(&b)
-        @log.debug(self.to_s, &b)
       end
 
       def on_notice &b
@@ -50,6 +50,10 @@ module Chingu::Traits
       attack_reachable if @can_attack
     end
 
+
+    def cooldown!
+      @can_attack = true
+    end
 
     private
 
@@ -91,15 +95,11 @@ module Chingu::Traits
       log_debug {"I attack #{e} for #{@damage} damage"}
       e.harm @damage
       @can_attack = false
-      after(@attack_cooldown) { @can_attack = true }
+      after(@attack_cooldown) { cooldown! }
     end
 
     def can_attack? enemy
       d(enemy, self) < @range rescue false
-    end
-
-    def log_debug(&b)
-      self.class.log_debug(&b)
     end
   end
 end

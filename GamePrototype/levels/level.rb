@@ -20,6 +20,9 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
   class TestLevel < Chingu::GameState
     trait :viewport
 
+    include Modularity::Does
+    does "helpers/logging"
+
     attr_reader :player
     def initialize(opts = {})
       super(opts)
@@ -32,7 +35,6 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
       self.viewport.lag = 1
       self.viewport.game_area = [0.0, 0.0, @level_width, @level_height]
       Gosu::Song["level one.ogg"].play(true)
-      @log = Logger.new(STDOUT)
       #load_events
       log_info {"Database loaded"}
       @camera = @player = Objects::Player.create x: 160, y: 160, level: self
@@ -62,10 +64,6 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
 
     def finalize
       log_info { "exiting" }
-    end
-
-    def log_info &block                                                      
-      @log.info("TestLevel", &block)
     end
 
     def blocked? x,y
@@ -108,21 +106,5 @@ Quisque rutrum erat eget sapien sagittis et pharetra risus cursus. Etiam at odio
       @hud.update
       viewport.center_around @camera
     end
-    
-    def draw
-      draw_background
-      super
-      @hud.draw
-    end
-
-    def draw_background
-      fill(Gosu::Color::WHITE, ZOrder::BACKGROUND)
-    end
-
-    def update
-      super
-      self.viewport.center_around @player
-    end
-
   end
 end

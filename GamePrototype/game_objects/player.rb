@@ -8,37 +8,35 @@ require_relative '../databases/spellbook'
 require_relative '../interface/gesture_controller'
 require_relative '../object_traits/hp'
 require_relative '../interface/journal'
+require_relative '../helpers/the'
+require_relative '../helpers/logging'
 
-def the cl
-  cl.the
-end
 module Objects
   class Player < Chingu::GameObject
+    include Modularity::Does
+    does "helpers/logging"
     attr_reader :current_dir, :journal
     attr_accessor :vulnerability
     trait :bounding_box, debug: true
     trait :collision_detection
     trait :hp, hp: 100
     def initialize(options = {})
-      @log = Logger.new(STDOUT)
-      @log.debug("PLAYER") { "initialized logger" }
       @current_dir = :down
       @spell_book = Databases::SpellBook.new
-      @log.debug("PLAYER") { "initialized spell book" }
+      log_debug { "initialized spell book" }
       @speed = 3
       @journal = Interface::Journal.new
-      @log.debug("PLAYER") { "initialized journal" }
+      log_debug { "initialized journal" }
       begin
         @animation = Chingu::Animation.new( bounce: true, file: 'main_char.png', size: 32, delay: 250)
         @animation.frame_names = {down: (0..2), left: (3..5), right: (6..8), up: (9..11)}
-        @log.debug("PLAYER") { "initialized animation frames" }
+        log_debug { "initialized animation frames" }
         super(options.merge(image: @animation[@current_dir][1], zorder: ZOrder::PLAYER))
-        @log.debug("PLAYER") { "initialized rest" }
       rescue
-        @log.warn("PLAYER") { "failed to initialize animation" }
+        log_warn { "failed to initialize animation" }
         super(options.merge( zorder: ZOrder::PLAYER ))
-        @log.debug("PLAYER") { "initialized rest" }
       end
+      log_debug { "initialized rest" }
     end
     
     def setup(opts={})
@@ -53,7 +51,7 @@ module Objects
 
     def on_harm hrm
       parent.update_hud
-      @log.info("Player") { "ouch! I'm at #{hp}HP" }
+      log_info { "ouch! I'm at #{hp}HP" }
     end
 
     def on_heal hl
@@ -61,7 +59,7 @@ module Objects
     end
 
     def on_kill
-      @log.info("Player") { "X_x" }
+      log_info { "X_x" }
       $window.pop_game_state
     end
 
@@ -90,7 +88,7 @@ module Objects
     end
 
     def new_gesture
-      @log.debug("Player") { "New Gesture" }
+      log_debug { "New Gesture" }
       @gesture_buffer = Interface::GestureBuffer.new
     end
 
@@ -99,15 +97,15 @@ module Objects
     end
 
     def finished_gesture
-      @log.debug("Player") { "Finished Gesture" }
+      log_debug { "Finished Gesture" }
       @gesture_symbols << @gesture_buffer.read if @gesture_buffer.read
       spell_class = @spell_book.lookup @gesture_symbols
       if spell_class
-        @log.info("Player") { "Executing #{spell_class} for gesture #{@gesture_symbols}" }
+        log_info { "Executing #{spell_class} for gesture #{@gesture_symbols}" }
         spell_class.create.run(self)
         new_word
       else
-        @log.debug("Player") { "#{@gesture_symbols} is not a gesture in #{@spell_book.to_s}" }
+        log_debug { "#{@gesture_symbols} is not a gesture in #{@spell_book.to_s}" }
       end
       return if @gesture_symbols == []
       back = [[Databases::SpellBook.depth, @gesture_symbols.length].min, 1].max
@@ -132,7 +130,7 @@ module Objects
     end
 
     def attack x,y
-      @log.debug("Player") { "attacking evil point (#{x}, #{y})" }
+      log_debug { "attacking evil point (#{x}, #{y})" }
       @spell.activate x,y if @spell
     end
 

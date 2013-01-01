@@ -30,6 +30,7 @@ module Chingu::Traits
       @@swarms[name] << self
       @swarm = @@swarms[name]
       log_debug {"Created new swarmer of #{name}"}
+      super opts
     end
 
     def notify_swarm e

@@ -32,7 +32,8 @@ module Chingu::Traits
     end
 
     def setup_trait(opts={})
-      @speed = trait_options[:mover][:speed] || 2000
+      @speed = trait_options[:mover][:speed] || 20
+      super opts
     end
 
 

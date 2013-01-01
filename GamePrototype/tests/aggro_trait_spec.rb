@@ -1,7 +1,11 @@
-require_relative '../object_traits/shooter'
-require_relative '../object_traits/aggro'
 require 'rubygems'
 require 'rspec'
+require 'chingu'
+require 'gosu'
+require 'logger'
+
+require_relative '../object_traits/shooter'
+require_relative '../object_traits/aggro'
 
 class Target < Chingu::GameObject
   trait :hp
@@ -31,7 +35,7 @@ describe Chingu::Traits::Aggro do
   end
 
   after :each do
-    [@tower, @player].each{ |e| e.destroy rescue nil}
+    [@tower, @player].each {|e| e.destroy rescue nil}
     @game.close
   end
 
@@ -40,6 +44,19 @@ describe Chingu::Traits::Aggro do
     @tower.update_trait
 
     @tower.attacked.should eq [@player]
+  end
+
+  it "should shoot at the player only after cooldown" do
+    @player = Target.create x: 100, y: 100
+    @tower.update_trait
+    @tower.update_trait
+
+    @tower.attacked.should eq [@player]
+
+    @tower.cooldown!
+    @tower.update_trait
+
+    @tower.attacked.should eq [@player,@player]
   end
 
   it "should harm the player when attacking" do

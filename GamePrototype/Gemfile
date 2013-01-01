@@ -4,3 +4,4 @@ gem "chingu", "~> 0.9rc9"
 gem 'rspec'
 gem 'texplay'
 gem 'nokogiri'
+gem 'modularity'
