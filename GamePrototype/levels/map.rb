@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'chingu'
+require 'gosu'
 require 'texplay'
 require_relative '../interface/z_orders'
 module Levels
@@ -24,7 +27,8 @@ module Levels
 
     def rect
       return Chingu::Rect.new(0,0,0,0) if @masks.size == 0
-      @masks[0].rect.union_all @masks.drop(1)
+      first = @masks[0]
+      first.rect.union_all(@masks.drop(1))
     end
 
     def width
@@ -83,7 +87,7 @@ module Levels
       r < 0.1 and g < 0.1 and b < 0.1 and a > 0.99
     end
 
-    def define name, colour
+    def link name, colour
       add_event_definition name, colour
     end
 
@@ -110,9 +114,15 @@ module Levels
     end
 
     class MaskPatch < Chingu::GameObject
+      def rect
+        Chingu::Rect.new(x,y, width, height)
+      end
     end
 
     class ImagePatch < Chingu::GameObject
+      def rect
+        Chingu::Rect.new(x,y, width, height)
+      end
     end
 
     class MapResource < Gosu::Image

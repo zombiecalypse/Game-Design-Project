@@ -14,16 +14,45 @@ require_relative '../helpers/logging'
 
 module Levels
   class Level < Chingu::GameState
-    include
+    include Modularity::Does
+    does "helpers/logging"
     trait :viewport
 
     attr_reader :song, :map
 
+    def map_block
+      self.class.map_block 
+    end
+
+    def song_file
+      self.class.song_file
+    end 
+
+    def object_callbacks
+      self.class.object_callbacks
+    end 
     # Preloading stuff
     def initialize(opts = {}, &b)
       super(opts)
-      @map = Map.create(&self.class.map_definition)
-      @song = Gosu::Song[opts[:song]] if opts[:song]
+      if map_block
+        log_debug { "Loading map" }
+        @map = Map.create(&map_block)
+        log_debug { "Got map #{@map}" }
+        log_debug { "Load objects" }
+        @map.objects.each_pair do |key, instances|
+          return unless object_callbacks[key]
+          log_debug { "Load all #{key}" }
+          instances.each do |e| 
+            self.instance_exec(e, &object_callbacks[key])
+          end
+        end
+      end
+      song_name = opts[:song] || song_file
+      if song_name
+        log_debug { "Loading song #{song_name}" }
+        @song = Gosu::Song[song_name]
+        log_debug { "Got song #{@song}" }
+      end
       @camera = opts[:camera] || the(Objects::Player)
     end
 
@@ -70,12 +99,30 @@ module Levels
       super
       self.viewport.center_around @player
     end
-    
+
+    def zones
+      self.class.zones
+    end
+
     class <<self
-      attr_reader :map_definition
+      attr_reader :map_block, :song_file, :zones, :object_callbacks
+
       def map &b
-        throw "duplicate map definition" if @map_definition
-        @map_definition = b
+        @map_block = b
+      end
+
+      def music song
+        @song_file = song
+      end
+
+      def zone sym, &b
+        @zones ||= {}
+        @zones[sym] = b
+      end
+
+      def on sym, &b
+        @object_callbacks ||= {}
+        @object_callbacks[sym] = b
       end
     end
   end
