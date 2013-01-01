@@ -15,36 +15,39 @@ module Objects
   class Player < Chingu::GameObject
     include Modularity::Does
     does "helpers/logging"
-    attr_reader :current_dir, :journal
+    attr_reader :current_dir, :journal, :speed
     attr_accessor :vulnerability
     trait :bounding_box, debug: true
     trait :collision_detection
     trait :hp, hp: 100
-    def initialize(options = {})
-      @current_dir = :down
-      @spell_book = Databases::SpellBook.new
-      log_debug { "initialized spell book" }
-      @speed = 3
-      @journal = Interface::Journal.new
+    def initialize(opts = {})
+      @current_dir       = opts[:dir]          ||:down
+      @speed             = opts[:speed]        ||3
+      @hp                = opts[:hp]           ||100
+      @vulnerability     = opts[:vulnerability]||1
+      @gesture_symbols   = []
       log_debug { "initialized journal" }
       begin
         @animation = Chingu::Animation.new( bounce: true, file: 'main_char.png', size: 32, delay: 250)
         @animation.frame_names = {down: (0..2), left: (3..5), right: (6..8), up: (9..11)}
         log_debug { "initialized animation frames" }
-        super(options.merge(image: @animation[@current_dir][1], zorder: ZOrder::PLAYER))
+        super(opts.merge(image: @animation[@current_dir][1], zorder: ZOrder::PLAYER))
       rescue
         log_warn { "failed to initialize animation" }
-        super(options.merge( zorder: ZOrder::PLAYER ))
+        super(opts.merge( zorder: ZOrder::PLAYER ))
       end
       log_debug { "initialized rest" }
     end
-    
-    def setup(opts={})
-      @gesture_symbols = []
-      @level = options[:level]
-      @vulnerability = 1
-    end
 
+    def extract_info
+      {
+        hp: @hp,
+        dir: @current_dir,
+        speed: @speed,
+        vulnerability: @vulnerability
+      }
+    end
+    
     def harm h
       super((h * vulnerability).to_i)
     end

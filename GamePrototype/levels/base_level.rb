@@ -39,7 +39,7 @@ module Levels
         esc:                   :open_menu,
         F1:                    :debug_state
       }
-      @player.input = { 
+      the(Player).input = { 
         holding_a:             :move_left, 
         holding_d:             :move_right, 
         holding_w:             :move_up,
