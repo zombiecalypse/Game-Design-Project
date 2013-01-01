@@ -52,7 +52,7 @@ describe Level do
       end
 
       level = level_class.new(camera: @camera)
-      level.zones[:dragon].call.should eq :roar
+      level.instance_eval { zones[:dragon].call }.should eq :roar
     end
 
 
@@ -62,7 +62,6 @@ describe Level do
         music "level_one.ogg"
       end
       level = level_class.new(camera: @camera)
-      level.song_file.should eq "level_one.ogg"
       level.song.should_not be_nil
     end
 
