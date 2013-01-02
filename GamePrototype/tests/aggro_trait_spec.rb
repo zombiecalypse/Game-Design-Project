@@ -6,6 +6,7 @@ require 'logger'
 
 require_relative '../object_traits/shooter'
 require_relative '../object_traits/aggro'
+require_relative '../object_traits/hp'
 
 class Target < Chingu::GameObject
   trait :hp

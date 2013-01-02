@@ -4,7 +4,7 @@ module Helpers
   module LoggingTrait
     include Modularity::AsTrait
     as_trait do |opts = {}|
-      @@log ||= Logger.new(STDOUT)
+      @@log = Logger.new(STDOUT)
       @@log.sev_threshold = opts[:level] || Logger::INFO
 
       def log; @@log; end

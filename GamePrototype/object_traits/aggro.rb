@@ -1,4 +1,3 @@
-require_relative '../game_objects/player'
 require_relative '../helpers/logging'
 
 module Chingu::Traits

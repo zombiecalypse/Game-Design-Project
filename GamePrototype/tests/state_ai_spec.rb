@@ -22,31 +22,35 @@ describe Chingu::Traits::StateAi  do
         state = :weird
       end
     end
+    @instance = @ai.new
   end
 
   after :each do
+    @instance.destroy
     @game.close
   end
 
   it "is in :start state per default" do
-    @instance = @ai.new
     @instance.state.should be :start
   end
 
   it "executes the current state block" do
-    @instance = @ai.new
-    @instance.update
+    @instance.update_trait
     @instance.did_start.should be true
   end
 
   it "can switch states to change its behaviour" do
+    @instance.update_trait
     @instance.state.should be :other
-    @instance.update
+    @instance.update_trait
     @instance.did_other.should be true
     @instance.state.should be :weird
   end
 
   it "does nothing, if it is not in a valid state" do
-    @instance.update
+    @instance.update_trait
+    @instance.update_trait
+    @instance.update_trait
+    @instance.state.should be :weird
   end
 end
