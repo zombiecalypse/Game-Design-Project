@@ -9,6 +9,9 @@ module Levels
       at(750,650).object(:tower)
 
       at(500,500).object(:spider)
+      at(520,510).object(:spider)
+      at(510,520).object(:spider)
+      at(590,520).object(:spider)
 
       at(200,200).startpoint :start
     end

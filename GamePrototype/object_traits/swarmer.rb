@@ -33,10 +33,14 @@ module Chingu::Traits
       super opts
     end
 
+    def has_noticed?; @has_noticed; end
+
     def notify_swarm e
+      @has_noticed = true
       @swarm.each do |x|
-        x.notice e if x != self and d(self,x) <= observation_range
+        x.notice e if x != self and not x.has_noticed? and d(self,x) <= observation_range
       end
+      @has_noticed = nil
     end
   end
 end
