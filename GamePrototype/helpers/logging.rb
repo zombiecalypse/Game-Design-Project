@@ -4,10 +4,16 @@ module Helpers
   module LoggingTrait
     include Modularity::AsTrait
     as_trait do |opts = {}|
-      @@log = Logger.new(STDOUT)
-      @@log.sev_threshold = opts[:level] || Logger::INFO
-
-      def log; @@log; end
+      define_method('log_options') do
+        opts
+      end
+      def log
+        if not @log
+          @log = Logger.new(STDOUT)
+          @log.sev_threshold = log_options[:level] || Logger::INFO
+        end
+        @log
+      end
 
       def log_name
         "#{self.class.to_s}(#{self.__id__})"

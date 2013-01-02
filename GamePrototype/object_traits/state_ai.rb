@@ -8,7 +8,7 @@ require_relative '../helpers/logging'
 module Chingu::Traits
   module StateAi
     include Modularity::Does
-    does "helpers/logging", level: Logger::DEBUG
+    does "helpers/logging"
 
     module ClassMethods
       def initialize_trait(opts={})

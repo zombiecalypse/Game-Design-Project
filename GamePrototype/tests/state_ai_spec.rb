@@ -14,12 +14,12 @@ describe Chingu::Traits::StateAi  do
 
       when_in(:start) do
         @did_start = true
-        state = :other
+        self.state = :other
       end
 
       when_in(:other) do
         @did_other = true
-        state = :weird
+        self.state = :weird
       end
     end
     @instance = @ai.new
