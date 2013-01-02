@@ -2,7 +2,6 @@ require_relative '../object_traits/hp'
 require_relative '../object_traits/shooter'
 require_relative '../object_traits/aggro'
 
-
 module Objects
   class SimpleTower < Chingu::GameObject
     class Projectile < Chingu::Traits::Shooter::Projectile

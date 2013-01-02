@@ -36,7 +36,7 @@ module Chingu::Traits
     def has_noticed?; @has_noticed; end
 
     def notify_swarm e
-      @has_noticed = true
+      @has_noticed = true # prevent infinite A-notifies-B-notifies-A loop
       @swarm.each do |x|
         x.notice e if x != self and not x.has_noticed? and d(self,x) <= observation_range
       end
