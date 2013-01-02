@@ -2,7 +2,7 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 
-require_relative '../game_objects/simple_tower'
+require_relative '../databases/enemies'
 
 module Chingu::Traits
   module Spell
@@ -68,7 +68,7 @@ module Databases
       
       self.explode if @active and parent.blocked?(x,y)
       @image = @animation.next if @animation
-      each_collision(Objects::SimpleTower) do |s, tower|
+      each_collision(*Enemies::all) do |s, tower|
         s.explode_on tower
       end
     end

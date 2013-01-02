@@ -5,49 +5,45 @@ module Chingu::Traits
   module Mover
     module ClassMethods
       def initialize_trait(options={})
-        @log = Logger.new(STDOUT)
-        @log.sev_threshold = Logger::INFO
-        @on_notice = []
-        @on_attack = []
         trait_options[:mover] = options
-      end
-
-      def log_debug(&b)
-        @log.debug(self.to_s, &b)
-      end
-
-      def on_notice &b
-        @on_notice << b
-      end
-
-      def on_attack &b
-        @on_attack << b
+        self.on_notice do |p|
+          @goal = p
+        end
       end
     end
 
     attr_reader :speed
 
-    def enemies
-      @enemies.inject([]) { |x,y| x+y.all }
-    end
-
     def setup_trait(opts={})
-      @speed = trait_options[:mover][:speed] || 20
+      @speed = trait_options[:mover][:speed] || 6
       super opts
     end
 
+    class P
+      attr_reader :x,:y
+      def initialize x,y
+        @x, @y = x,y
+      end
+
+      def self.[] x,y
+        self.new x,y
+      end
+    end
 
     def move
-      if @goal.position != @old_goal_position
+      return unless @goal
+      if P[@goal.x,@goal.y] != @old_goal_position
         @path = recalculate_path_to @goal
-        @old_goal_position = @goal.position
+        @old_goal_position = P[@goal.x, @goal.y]
       end
 
       move_along_path
     end
 
     # fill AI here, seriously... do!
-    def recalculate_path_to; end
+    def recalculate_path_to g
+      @path = [g]
+    end
 
     def move_along_path
       first = @path[0]
@@ -57,8 +53,8 @@ module Chingu::Traits
         move_along_path
       else
         phi = Math.atan2(first.y - y, first.x - x) # Directly at point
-        x += Math.cos(phi) * speed
-        y += Math.sin(phi) * speed
+        @x += Math.cos(phi) * speed
+        @y += Math.sin(phi) * speed
       end
     end
 

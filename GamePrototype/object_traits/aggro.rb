@@ -53,6 +53,10 @@ module Chingu::Traits
       @can_attack = true
     end
 
+    def notice p
+      do_on_notice p
+    end
+
     private
 
     def attack_reachable
@@ -69,7 +73,7 @@ module Chingu::Traits
 
     def look_around
       enemies
-        .collect {|e| noticable? e}
+        .select {|e| noticable? e}
         .each do |enemy|
           do_on_notice enemy 
           log_debug {"I found #{enemy}"}
