@@ -60,11 +60,13 @@ module Databases
     trait :bounding_circle, debug: true, scale: 0.5
 
     def initialize(opts={})
-      super
+      super opts
       self.center_y = 0.75
     end
     def update
       super
+      
+      self.explode if @active and parent.blocked?(x,y)
       @image = @animation.next if @animation
       each_collision(Objects::SimpleTower) do |s, tower|
         s.explode_on tower
@@ -99,12 +101,16 @@ module Databases
       end
     end
 
-    def explode_on enemy
-      enemy.harm 10
+    def explode
       random_directions.each do |dir|
         ExplosionParticle.create(dir: dir, x: self.x, y: self.y, speed: Random.rand(5)+2)
       end
       self.destroy
+    end
+
+    def explode_on enemy
+      enemy.harm 10
+      explode
     end
 
 
@@ -118,6 +124,7 @@ module Databases
     def activate x,y
     	Gosu::Sample["fire_activate.ogg"].play
       @player.spell = nil
+      @active = true
       self.x = @player.x
       self.y = @player.y
       dx, dy = x-@player.x_window, y-@player.y_window

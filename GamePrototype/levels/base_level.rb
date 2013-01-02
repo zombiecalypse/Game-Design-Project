@@ -47,12 +47,15 @@ module Levels
       initialize_map
       initialize_objects if @map
       initialize_song(opts[:song] || song_file)
-      @camera = opts[:camera] || the(Objects::Player)
+      @camera = opts[:camera]
     end
 
+    def camera
+      @camera ||= the(Objects::Player)
+    end
 
-    def setup(opts={})
-      super opts
+    def setup
+      super
       self.viewport.lag = 1
       self.viewport.game_area = [0.0, 0.0, map.width, map.height]
       song.play(true) if song
@@ -64,22 +67,12 @@ module Levels
         esc:                   :open_menu,
         F1:                    :debug_state
       }
-      the(Player).input = { 
-        holding_a:             :move_left, 
-        holding_d:             :move_right, 
-        holding_w:             :move_up,
-        holding_s:             :move_down,
-        mouse_left:            :new_word,
-        holding_mouse_right:   :record_gesture,
-        mouse_right:           :new_gesture,
-        mouse_left:            :action,
-        released_mouse_right:  :finished_gesture}
     end
 
     def blocked? x,y
       return true if x < 0 or y < 0
       return true if x >= map.width or y >= map.height
-      return true if @map.blocked? x,y 
+      return true if map.blocked? x,y 
     end
 
     def can_move_to? x,y
@@ -97,9 +90,13 @@ module Levels
 
     def update
       super
-      self.viewport.center_around @player
+      self.viewport.center_around camera
+      the(PlayerDaemon).update
     end
 
+    def [] teleport
+      map.startpoints[teleport]
+    end
 
     class <<self
       attr_reader :map_block, :song_file, :zones, :object_callbacks
@@ -123,6 +120,15 @@ module Levels
         @object_callbacks ||= {}
         @object_callbacks[sym] = b
       end
+    end
+
+    def debug_state
+      push_game_state Chingu::GameStates::Debug
+    end
+
+    def draw
+      super
+      the(PlayerDaemon).hud.draw
     end
 
     private 

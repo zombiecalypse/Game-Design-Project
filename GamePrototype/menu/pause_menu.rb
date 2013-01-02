@@ -8,7 +8,7 @@ module Levels
       @bg = Colors::BACKGROUND
       @menu = Menu.create(menu_items: {
         "Continue" => lambda {pop_game_state(setup: false)},
-        "Journal"  => lambda {Objects::Player.the.journal.show},
+        "Journal"  => lambda {the(PlayerDaemon).journal.show},
         "Save"     => lambda {$window.push_game_state Interface::SaveScreen},
         "Load"     => lambda {$window.push_game_state Interface::LoadScreen},
         "Exit"     => :exit

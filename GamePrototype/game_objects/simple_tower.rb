@@ -26,13 +26,17 @@ module Objects
     end
 
     trait :shooter, projectile: Projectile
-    trait :aggro, damage: 0, observation_range: 300
+    trait :aggro, damage: 0, observation_range: 300, range: 300
     trait :bounding_box, debug: true
     trait :hp, hp: 50
 
     def initialize(opts={})
       super(opts.merge image: Gosu::Image['spider_tower.png'])
       self.center_y = 0.25
+    end
+
+    on_attack do |p|
+      shoot p.x, p.y
     end
   end
 end

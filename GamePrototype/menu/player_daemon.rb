@@ -7,12 +7,15 @@ require_relative '../interface/hud_interface'
 class PlayerDaemon
   include Singleton
 
+  def the; instance; end
+
   attr_reader :level, :journal, :hud, :player, :spellbook
 
   def initialize
     @hud = Interface::HudInterface.new
     @spellbook = Databases::SpellBook.new
     @journal = Interface::Journal.new
+    @journal.add_page("Hi", "I'm from the empire of Rubinus.")
   end
 
   # Teleports the player to the new position, which might be in a different
@@ -27,10 +30,13 @@ class PlayerDaemon
   #                  pair or else the unset parameter is 0.
   def teleport opts={}
     level = opts[:level]
+    point = opts[:point]
     x,y   = opts[:position] || [(opts[:x] || 0), (opts[:y] || 0)]
     if need_planeshift? level
-      do_planeshift(level, x,y)
+      do_planeshift(level, x,y, point)
     else
+      state =$window.current_game_state 
+      x,y = state[point] if point and state.respond_to? :[]
       @player.x,@player.y = x,y
     end
   end
@@ -57,10 +63,25 @@ class PlayerDaemon
     @player.nil? or (not level.nil? and $window.current_game_state != level)
   end
 
-  def do_planeshift level, x,y
+  def do_planeshift level, x,y, point
     info = extract_info @player
     @player.destroy if @player
     $window.switch_game_state level
-    @player = Objects::Player.create(info.merge! x: x, y: y)
+    state = $window.current_game_state
+
+    x,y = state[point] if point and state.respond_to?(:[])
+
+    @player = Objects::Player.create(info.merge! x: x, y: y, level: state)
+    @hud.player = @player
+    @player.input = { 
+      holding_a:             :move_left, 
+      holding_d:             :move_right, 
+      holding_w:             :move_up,
+      holding_s:             :move_down,
+      mouse_left:            :new_word,
+      holding_mouse_right:   :record_gesture,
+      mouse_right:           :new_gesture,
+      mouse_left:            :action,
+      released_mouse_right:  :finished_gesture}
   end
 end

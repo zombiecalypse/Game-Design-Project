@@ -9,8 +9,6 @@ module Chingu::Traits
     module ClassMethods
       attr_reader :all_on_notice, :all_on_attack
       def initialize_trait(options={})
-        @log = Logger.new(STDOUT)
-        @log.sev_threshold = Logger::INFO
         @all_on_notice = []
         @all_on_attack = []
         trait_options[:aggro] = options

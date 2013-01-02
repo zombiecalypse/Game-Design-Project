@@ -39,6 +39,7 @@ describe PlayerDaemon do
     end
 
     it "should create player by teleport" do
+      @player.should_receive :input=
       @daemon.teleport level: @level, x: 100, y: 100
       @daemon.player.should eq @player
     end
@@ -47,6 +48,7 @@ describe PlayerDaemon do
   context "after player is created" do
     before :each do
       $window.stub(current_game_state: @level)
+      @player.should_receive :input=
       @daemon.teleport level: @level, x: 100, y: 100
       @new_level = Class.new(Chingu::GameState)
       @player.stub(extract_info: { hp: 100, dir: :down, speed: 3, vulnerability: 1 })
@@ -65,11 +67,13 @@ describe PlayerDaemon do
     it "should switch level on teleport" do
       @player.as_null_object
       $window.should_receive(:switch_game_state).with(@new_level)
+      @new_player.should_receive :input=
       @daemon.teleport level: @new_level, x: 100, y: 100
     end
 
     it "should change destroy and recreate on teleport between levels" do
       @player.should_receive(:destroy)
+      @new_player.should_receive :input=
       @daemon.teleport level: @new_level, x: 100, y: 100
       @daemon.player.should eq @new_player
     end

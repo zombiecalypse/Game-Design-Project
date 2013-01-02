@@ -1,6 +1,11 @@
+require 'modularity'
+require_relative '../helpers/logging'
+
 
 module Chingu::Traits
   module Shooter
+    include Modularity::Does
+    does "helpers/logging"
     module ClassMethods
       def initialize_trait(opts={})
         @projectile = opts[:projectile] || Projectile
@@ -8,15 +13,7 @@ module Chingu::Traits
         @log = Logger.new(STDOUT)
       end
 
-      def log_debug(&b)
-        @log.debug(self.to_s, &b)
-      end
-
       attr_reader :projectile
-    end
-
-    def log_debug(&b)
-      self.class.log_debug(&b)
     end
 
     def shoot x,y
@@ -53,6 +50,7 @@ module Chingu::Traits
 
       def update
         super
+        self.destroy if parent.blocked?(x,y)
         each_collision(Objects::Player) do |s, player|
           on_hit(player)
           self.destroy

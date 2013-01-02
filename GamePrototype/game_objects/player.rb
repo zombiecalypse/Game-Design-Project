@@ -25,6 +25,7 @@ module Objects
       @speed             = opts[:speed]        ||3
       @hp                = opts[:hp]           ||100
       @vulnerability     = opts[:vulnerability]||1
+      @level             = opts[:level]
       @gesture_symbols   = []
       log_debug { "initialized journal" }
       begin
@@ -53,16 +54,16 @@ module Objects
     end
 
     def on_harm hrm
-      parent.update_hud
-      log_info { "ouch! I'm at #{hp}HP" }
+      the(PlayerDaemon).update
+      log_debug { "ouch! I'm at #{hp}HP" }
     end
 
     def on_heal hl
-      parent.update_hud
+      the(PlayerDaemon).update
     end
 
     def on_kill
-      log_info { "X_x" }
+      log_debug { "X_x" }
       $window.pop_game_state
     end
 
@@ -70,24 +71,28 @@ module Objects
       @x -= @speed unless @level and @level.blocked? @x-@speed, @y
       @current_dir = :left
       @image = @animation[@current_dir].next
+      @level.enter x,y
     end
 
     def move_right
       @x += @speed unless @level and @level.blocked? @x+@speed, @y
       @current_dir = :right
       @image = @animation[@current_dir].next
+      @level.enter x,y
     end
 
     def move_up
       @y -= @speed unless @level and @level.blocked? @x, @y-@speed
       @current_dir = :up
       @image = @animation[@current_dir].next
+      @level.enter x,y
     end
 
     def move_down
       @y += @speed unless @level and @level.blocked? @x, @y+@speed
       @current_dir = :down
       @image = @animation[@current_dir].next
+      @level.enter x,y
     end
 
     def new_gesture
@@ -102,9 +107,9 @@ module Objects
     def finished_gesture
       log_debug { "Finished Gesture" }
       @gesture_symbols << @gesture_buffer.read if @gesture_buffer.read
-      spell_class = @spell_book.lookup @gesture_symbols
+      spell_class = the(PlayerDaemon).spellbook.lookup @gesture_symbols
       if spell_class
-        log_info { "Executing #{spell_class} for gesture #{@gesture_symbols}" }
+        log_debug { "Executing #{spell_class} for gesture #{@gesture_symbols}" }
         spell_class.create.run(self)
         new_word
       else

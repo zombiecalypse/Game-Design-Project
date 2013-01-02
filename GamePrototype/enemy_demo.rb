@@ -3,7 +3,7 @@ require 'chingu'
 require 'gosu'
 
 require_relative 'interface/gesture_controller'
-require_relative 'menu/start_menu'
+require_relative 'menu/player_daemon'
 require_relative 'game_objects/events'
 require_relative 'levels/enemy_test_level'
 
@@ -11,7 +11,7 @@ class Game < Chingu::Window
   def setup
     super
     self.input = { :i => :info}
-    push_game_state(Levels::EnemyTestLevel)
+    the(PlayerDaemon).teleport(level: Levels::EnemyTestLevel, point: :start)
   end
   
   def info

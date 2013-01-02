@@ -12,5 +12,5 @@ class <<Singleton
   alias_method :included, :included_with_reset
 end
 def the cl
-  cl.the || cl.instance
+  cl.instance rescue cl.the
 end
