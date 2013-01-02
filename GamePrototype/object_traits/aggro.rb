@@ -44,8 +44,10 @@ module Chingu::Traits
     def update_trait
       super
       look_around
-      attack_reachable if @can_attack
+      attack_reachable if @can_attack and aggressive?
     end
+
+    def aggressive?; true; end
 
 
     def cooldown!

@@ -16,7 +16,7 @@ module Chingu::Traits
         @states = {}
       end
 
-      def when_in(sym, &block)
+      def while_in(sym, &block)
         @states[sym] = block
       end
       attr_reader :states
@@ -24,7 +24,7 @@ module Chingu::Traits
 
     def setup_trait(opts={})
       super opts
-      @state = :start
+      @state = trait_options[:state_ai][:start] || :start
     end
 
     attr_reader :state

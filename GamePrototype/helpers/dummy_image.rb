@@ -1,0 +1,1 @@
+DummyImage = 'dummy.png'

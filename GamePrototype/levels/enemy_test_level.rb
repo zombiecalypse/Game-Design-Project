@@ -1,5 +1,6 @@
 require_relative 'base_level'
 require_relative '../game_objects/spider'
+require_relative '../game_objects/sniper'
 module Levels
   class EnemyTestLevel < Level
     map do
@@ -13,6 +14,8 @@ module Levels
       at(510,520).object(:spider)
       at(590,520).object(:spider)
 
+      at(700, 400).object(:sniper)
+
       at(200,200).startpoint :start
     end
 
@@ -23,5 +26,10 @@ module Levels
     on(:spider) do |x,y| 
       Objects::Spider.create x: x, y: y
     end
+
+    on(:sniper) do |x,y| 
+      Objects::Sniper.create x: x, y: y
+    end
+
   end
 end

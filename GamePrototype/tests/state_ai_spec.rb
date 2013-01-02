@@ -12,12 +12,12 @@ describe Chingu::Traits::StateAi  do
 
       attr_reader :did_start, :did_other
 
-      when_in(:start) do
+      while_in(:start) do
         @did_start = true
         self.state = :other
       end
 
-      when_in(:other) do
+      while_in(:other) do
         @did_other = true
         self.state = :weird
       end

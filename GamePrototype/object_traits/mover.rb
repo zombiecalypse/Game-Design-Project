@@ -16,6 +16,7 @@ module Chingu::Traits
 
     def setup_trait(opts={})
       @speed = trait_options[:mover][:speed] || 6
+      @goal_distance = 10
       super opts
     end
 
@@ -30,14 +31,35 @@ module Chingu::Traits
       end
     end
 
-    def move
-      return unless @goal
-      if P[@goal.x,@goal.y] != @old_goal_position
-        @path = recalculate_path_to @goal
-        @old_goal_position = P[@goal.x, @goal.y]
-      end
+    def move_away_from p
+      keep_distance p, Float::INFINITY
+    end
 
-      move_along_path
+    def move_to p
+      keep_distance p, 0
+    end
+
+    def keep_distance p, dist
+      @goal = p
+      @goal_distance = dist
+    end
+
+    def move 
+      return unless @goal 
+      dist = d(self, @goal)
+      return if (dist - @goal_distance).abs < 3*speed
+      if dist < @goal_distance
+        phi = Math.atan2(y - @goal.y, x - @goal.x) # Directly away from point
+        @x += Math.cos(phi) * speed
+        @y += Math.sin(phi) * speed
+      else
+        if P[@goal.x,@goal.y] != @old_goal_position
+          @path = recalculate_path_to @goal
+          @old_goal_position = P[@goal.x, @goal.y]
+        end
+
+        move_along_path
+      end
     end
 
     # fill AI here, seriously... do!
