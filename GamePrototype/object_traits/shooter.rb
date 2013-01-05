@@ -1,5 +1,6 @@
 require 'modularity'
 require_relative '../helpers/logging'
+require_relative '../helpers/dist'
 
 
 module Chingu::Traits

@@ -1,4 +1,5 @@
 require_relative '../helpers/logging'
+require_relative '../helpers/dist'
 
 module Chingu::Traits
   # Type of enemy that just shoots as soon as possible
@@ -87,10 +88,6 @@ module Chingu::Traits
 
     def do_on_attack e
       self.class.all_on_attack.each {|b| self.instance_exec(e,&b)}
-    end
-
-    def d a, b
-      Math.hypot (a.x - b.x), (a.y - b.y)
     end
 
     def attack e

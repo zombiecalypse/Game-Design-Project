@@ -1,6 +1,5 @@
-require 'rubygems'
-require 'chingu'
-require 'gosu'
+require 'bundler'
+Bundler.require
 
 require_relative 'interface/gesture_controller'
 require_relative 'menu/start_menu'

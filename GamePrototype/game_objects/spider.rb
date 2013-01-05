@@ -13,6 +13,12 @@ module Objects
     def initialize(opts={})
       super(opts.merge image: Gosu::Image['spider.png'])
     end
+
+    blocked_if do |x,y|
+      parent.blocked? x,y
+    end
+
+    on_notice { |p| move_to p }
   end
 
 end

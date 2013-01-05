@@ -33,7 +33,7 @@ module Objects
     trait :aggro, damage: 0, range: 400
     trait :mover
     trait :hp, hp: 20
-    trait :bounding_circle, debug: true
+    trait :bounding_box, debug: true
     trait :state_ai, start: :exploration
     trait :timer
 
@@ -50,6 +50,10 @@ module Objects
       end
     end
 
+    blocked_if do |x,y|
+      parent.blocked? x,y
+    end
+
     while_in(:exploration) do
     end
 
@@ -61,7 +65,7 @@ module Objects
     def aggressive?; state == :attacking; end
 
     while_in(:panic) do
-      during(500) do
+      during(1500) do
         move_away_from @enemy
       end.then do
         self.state = :attacking
