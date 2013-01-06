@@ -22,20 +22,10 @@ module Levels
       at(200,200).startpoint :start
     end
 
-    on(:tower) do |x,y|
-      Objects::SimpleTower.create x: x, y: y
-    end
-
-    on(:bat) do |x,y| 
-      Objects::Bat.create x: x, y: y
-    end
-
-    on(:sniper) do |x,y| 
-      Objects::Clockwork::Sniper.create x: x, y: y
-    end
-
-    on(:soldier) do |x,y| 
-      Objects::Clockwork::Soldier.create x: x, y: y
-    end
+    create_on \
+      tower:   Objects::SimpleTower,
+      bat:     Objects::Bat,
+      sniper:  Objects::Clockwork::Sniper,
+      soldier: Objects::Clockwork::Soldier
   end
 end

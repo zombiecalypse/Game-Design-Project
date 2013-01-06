@@ -120,6 +120,13 @@ module Levels
         @object_callbacks ||= {}
         @object_callbacks[sym] = b
       end
+
+      def create_on(opts={})
+        @object_callbacks ||= {}
+        opts.each_pair do |sym, clazz|
+          @object_callbacks[sym] = proc {|x,y| clazz.create x: x, y: y}
+        end
+      end
     end
 
     def debug_state
