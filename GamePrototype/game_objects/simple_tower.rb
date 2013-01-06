@@ -35,7 +35,7 @@ module Objects
     end
 
     on_attack do |p|
-      shoot p.x, p.y
+      shoot p
     end
   end
 end

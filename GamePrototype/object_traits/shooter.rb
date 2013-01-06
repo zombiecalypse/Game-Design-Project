@@ -17,7 +17,8 @@ module Chingu::Traits
       attr_reader :projectile
     end
 
-    def shoot x,y
+    def shoot p
+      x,y = p.x, p.y
       log_debug {"Shooting at #{[x,y]}"}
       dx, dy = x - self.x, y - self.y
       proj = produce_projectile x: self.x, y: self.y, at_x: dx, at_y: dy

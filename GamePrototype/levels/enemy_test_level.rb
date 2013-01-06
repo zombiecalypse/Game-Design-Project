@@ -1,6 +1,7 @@
 require_relative 'base_level'
-require_relative '../game_objects/spider'
+require_relative '../game_objects/bat'
 require_relative '../game_objects/sniper'
+
 module Levels
   class EnemyTestLevel < Level
     map do
@@ -9,12 +10,14 @@ module Levels
       at(650,750).object(:tower)
       at(750,650).object(:tower)
 
-      at(500,500).object(:spider)
-      at(520,510).object(:spider)
-      at(510,520).object(:spider)
-      at(590,520).object(:spider)
+      at(500,500).object(:bat)
+      at(520,510).object(:bat)
+      at(510,520).object(:bat)
+      at(590,520).object(:bat)
 
       at(700, 400).object(:sniper)
+
+      at(400, 700).object(:soldier)
 
       at(200,200).startpoint :start
     end
@@ -23,13 +26,16 @@ module Levels
       Objects::SimpleTower.create x: x, y: y
     end
 
-    on(:spider) do |x,y| 
-      Objects::Spider.create x: x, y: y
+    on(:bat) do |x,y| 
+      Objects::Bat.create x: x, y: y
     end
 
     on(:sniper) do |x,y| 
-      Objects::Sniper.create x: x, y: y
+      Objects::Clockwork::Sniper.create x: x, y: y
     end
 
+    on(:soldier) do |x,y| 
+      Objects::Clockwork::Soldier.create x: x, y: y
+    end
   end
 end

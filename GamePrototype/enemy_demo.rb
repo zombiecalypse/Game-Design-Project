@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'chingu'
 require 'gosu'
+require 'perftools'
 
 require_relative 'interface/gesture_controller'
 require_relative 'menu/player_daemon'
