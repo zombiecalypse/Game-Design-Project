@@ -28,11 +28,9 @@ module Chingu::Traits
     def setup_trait(options)
       opts = {file: "#{self.class.spell_name}_ani.png"}.merge(self.class.options)
       @animation = Chingu::Animation.new( opts ) rescue nil
-      if @animation
-        @image = @animation.next
-      else
-        @image ||= Gosu::Image["#{self.class.spell_name}.png"]
-      end
+      @image = @animation.next if @animation
+      @image ||= Gosu::Image["#{self.class.spell_name}.png"]
+      the(Interface::HudInterface).spell_notification(opts[:icon]) if opts[:icon]
       super
     end
   end
@@ -55,7 +53,7 @@ end
 
 module Databases
   class Fire < Chingu::GameObject
-    trait :spell, name: :fire, size: [50,50], delay: 125
+    trait :spell, name: :fire, size: [50,50], delay: 125, icon: 'cogsplosion.png'
     traits :timer, :velocity, :collision_detection
     trait :bounding_circle, debug: true, scale: 0.5
 
@@ -135,7 +133,7 @@ module Databases
   end
 
   class Shield < Chingu::GameObject
-    trait :spell, name: :shield
+    trait :spell, name: :shield, icon: 'bolt-shield.png'
     trait :timer
 
     def run player

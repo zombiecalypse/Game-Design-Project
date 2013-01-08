@@ -146,6 +146,10 @@ module Objects
       @gesture_symbols = []
     end
 
+    def current_gesture
+      @gesture_symbols.dup
+    end
+
     def self.the
       throw "Weird number of players: #{self.all}" if self.all.size != 1
       self.all.first 

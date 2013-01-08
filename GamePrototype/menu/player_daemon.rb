@@ -12,7 +12,7 @@ class PlayerDaemon
   attr_reader :level, :journal, :hud, :player, :spellbook
 
   def initialize
-    @hud = Interface::HudInterface.new
+    @hud = Interface::HudInterface.instance
     @spellbook = Databases::SpellBook.new
     @journal = Interface::Journal.new
     @journal.add_page("Hi", "I'm from the empire of Rubinus.")
