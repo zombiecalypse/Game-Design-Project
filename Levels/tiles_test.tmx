@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="15" height="16" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Cave Tile set" tilewidth="32" tileheight="32">
+  <image source="../tilesets/Cave Tile set.png" width="256" height="7249"/>
+ </tileset>
+ <layer name="Ground" width="15" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBzFo3gUD0kMAMevAPE=
+  </data>
+ </layer>
+ <layer name="Walls" width="15" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzTZWBgMCID6wCxNgN5QHNU76heIvUqArESFCuTqBfE14JiQu7Bp1cVyQ3YsAqaGhUkvbTGAEVSDrQ=
+  </data>
+ </layer>
+ <objectgroup name="Movement" width="15" height="16">
+  <object x="281" y="39">
+   <polygon points="0,0 -8,373 -45,372 -48,308 -190,310 -193,408 -239,405 -238,-2"/>
+  </object>
+  <object x="277" y="43">
+   <polygon points="0,0 164,-3 160,369 -16,369"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="events" width="15" height="16">
+  <object name="evt1" x="314" y="57">
+   <polygon points="0,0 -8,115 113,117 110,2"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="enemies" width="15" height="16">
+  <object type="Bat" x="111" y="90"/>
+  <object type="Bat" x="108" y="196"/>
+ </objectgroup>
+</map>

@@ -59,6 +59,11 @@ class PlayerDaemon
     player.extract_info
   end
 
+  def reset_instance
+    @hud.reset_instance
+    super
+  end
+
   def need_planeshift? level
     @player.nil? or (not level.nil? and $window.current_game_state != level)
   end

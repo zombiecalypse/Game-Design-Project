@@ -6,9 +6,10 @@ require 'gosu'
 
 describe PlayerDaemon do
   before :each do
+    @game = Chingu::Window.new
+    Chingu::Animation.stub(:new){ double.as_null_object }
     @daemon = PlayerDaemon.instance
     @level  = Class.new(Chingu::GameState)
-    @game = Chingu::Window.new
     @player = double :player
     @new_player = double :new_player
     Objects::Player.stub(:create).and_return( @player, @new_player )

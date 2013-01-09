@@ -8,7 +8,7 @@ require_relative 'z_orders'
 module Interface
   class HudInterface
     include Singleton
-    attr_accessor :player
+    attr_accessor :player, :gesture_icons
 
     def initialize
       @gesture_icons = Chingu::Animation.new(file: 'arrow.png', size: 100)
@@ -31,6 +31,7 @@ module Interface
     def draw
       @hp_text.draw if @hp_text
       x = 400
+      return unless @gesture_icons
       @player.current_gesture.each do |sym|
         arrow = @gesture_icons[sym]
         if arrow
