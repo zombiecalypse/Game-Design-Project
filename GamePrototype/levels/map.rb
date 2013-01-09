@@ -31,13 +31,9 @@ module Levels
       first.rect.union_all(@masks.drop(1))
     end
 
-    def width
-      rect.width
-    end
+    def width; rect.width; end
 
-    def height
-      rect.height
-    end
+    def height; rect.height; end
 
     # GOAL:
 

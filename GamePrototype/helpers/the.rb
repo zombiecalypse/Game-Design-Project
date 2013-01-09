@@ -12,5 +12,6 @@ class <<Singleton
   alias_method :included, :included_with_reset
 end
 def the cl
-  cl.instance rescue cl.the
+  return cl.instance if cl.respond_to? :instance
+  return cl.the if cl.respond_to? :the
 end

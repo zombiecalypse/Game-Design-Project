@@ -7,6 +7,7 @@ require_relative '../interface/hud_interface'
 class PlayerDaemon
   include Singleton
 
+  public
   def the; instance; end
 
   attr_reader :level, :journal, :hud, :player, :spellbook

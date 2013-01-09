@@ -23,7 +23,7 @@ module Levels
     end
 
     def start
-      the(PlayerDaemon).teleport(level: Level2, point: :start)
+      the(PlayerDaemon).teleport(level: Level1, point: :start)
     end
   end
 end

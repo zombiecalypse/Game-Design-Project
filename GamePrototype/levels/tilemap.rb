@@ -83,24 +83,31 @@ module Levels
     def initialize filename
       # super if false # not compartible
       map = open(filename) {|f| JSON.load f.read}
-      @width_in_tiles = map["width"]
-      @height_in_tiles = map["height"]
-      @tilewidth = map['tilewidth'] || 32
-      @tileheight = map['tileheight'] || 32
-      @events = []
+      @width_in_tiles    = map["width"]
+      @height_in_tiles   = map["height"]
+      @tilewidth         = map['tilewidth']  || 32
+      @tileheight        = map['tileheight'] || 32
+      @events            = []
       @movement_polygons = []
-      @startpoints = {}
-      @objects = {}
-      @ground_tiles = []
-      @wall_tiles = []
-      @vp_width, @vp_height = ($window.width/@tilewidth).to_i, ($window.height/@tileheight).to_i
+      @startpoints       = {}
+      @objects           = {}
+      @ground_tiles      = []
+      @wall_tiles        = []
       load_tileset map['tilesets'].first['image']
-      load_layers map['layers']
+      load_layers  map['layers']
+    end
+
+    def vp_width
+      @vp_width ||= ($window.width/@tilewidth).to_i
+    end
+
+    def vp_height
+      @vp_height ||= ($window.height/@tileheight).to_i
     end
 
     def load_tileset image_path
       begin
-        @tileset = Chingu::Animation.new image: Gosu::Image[image_path], size: [@tilewidth, @tileheight]
+        @tileset = Gosu::Image.load_tiles($window, Gosu::Image[image_path], @tilewidth, @tileheight, true)
       rescue Exception => e
         log_error { "Couldn't load #{image_path}, out of #{Gosu::Image.autoload_dirs}" }
         throw e
@@ -113,45 +120,27 @@ module Levels
       end
     end
 
-    def all_tiles lvl
-      lvl.each do |fold|
-        fold.values.each do |row| 
-          row.values.each do |x|
-            yield x
-          end
-        end
-      end
+    def xi; @viewport.x.to_i/@tilewidth; end
+
+    def yi; @viewport.y.to_i/@tileheight; end
+
+    def coord col,row
+      row * @width_in_tiles + col
     end
 
-    # SLOOOOOW
-    def draw_everything
-      all_tiles(@ground_tiles, &:draw)
-      all_tiles(@wall_tiles, &:draw)
-    end
-
-    # not too quick
-    def draw_selective
-      all_tiles(@ground_tiles) {|t| t.draw unless @viewport.outside? t}
-      all_tiles(@wall_tiles) {|t| t.draw unless @viewport.outside? t}
-    end
-
-    def xi
-      @viewport.x.to_i/@tilewidth
-    end
-
-    def yi
-      @viewport.y.to_i/@tileheight
-    end
-
+    # Heavily optimized code
     def draw_layer layer
+      bot_row = yi +  3*vp_height/2
+      rh_col  = xi +  3*vp_width/2
+      col_min = xi -    vp_width/2
       layer.each do |layer|
-        row = yi-@vp_height/2
-        col = xi-@vp_width/2
-        while row < yi+3*@vp_height/2
-          layer[col][row].draw if layer[col] and layer[col][row]
+        row =   yi -    vp_height/2
+        col = col_min
+        while row < bot_row
+          layer[coord(col,row)].draw if layer[coord(col,row)]
           col += 1
-          if col >= xi+3*@vp_width/2
-            col = xi-@vp_width/2
+          if col >= rh_col
+            col = col_min
             row += 1
           end
         end
@@ -193,18 +182,17 @@ module Levels
     def enemies; @objects; end
 
     def load_tiles data, z
-      hash = Hash.new
+      list = []
       enum = data.to_enum
       (0...@height_in_tiles).each do |yi|
         (0...@width_in_tiles).each do |xi|
           index = enum.next
           unless index == 0
-            hash[xi] ||= {}
-            hash[xi][yi] = Tile.new(image: @tileset[index - 1], zorder: z, x: xi*@tilewidth, y: yi*@tileheight)
+            list[coord(xi,yi)] = Tile.new(image: @tileset[index - 1], zorder: z, x: xi*@tilewidth, y: yi*@tileheight)
           end
         end
       end
-      hash 
+      list 
     end
 
     def load_ground layer

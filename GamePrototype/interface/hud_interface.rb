@@ -11,6 +11,10 @@ module Interface
     attr_accessor :player, :gesture_icons
 
     def initialize
+      @bar = Chingu::GameObject.new x: 20, y: 20, image: Gosu::Image['health_bar.png']
+      @out = Chingu::GameObject.new x: 20, y: 20, image: Gosu::Image['health_bar_out.png']
+      @bar.center = 0
+      @out.center = 0
       @gesture_icons = Chingu::Animation.new(file: 'arrow.png', size: 100)
       @gesture_icons.frame_names = {
         left:  0,
@@ -21,22 +25,14 @@ module Interface
     end
 
     def update
-      if changed
-        @hp_text = Chingu::Text.new(hp_string, x: 20, y: 20, color: Gosu::Color::BLACK, zorder: ZOrder::HUD) 
-        @old = @player.hp
-      end
-    end
-
-    def changed
-      @player.hp != @old
-    end
-
-    def hp_string
-      "HP: #{@player.hp}/#{@player.max_hp}" rescue "No Player"
+      @bar.factor_x = @player.hp.to_f/@player.max_hp
+      @icon.update if @icon
     end
 
     def draw
-      @hp_text.draw if @hp_text
+      @bar.draw
+      @out.draw
+      @icon.draw if @icon
       x = 400
       return unless @gesture_icons
       @player.current_gesture.each do |sym|
@@ -49,18 +45,27 @@ module Interface
     end
 
     def spell_notification icon
-      Icon.create icon
+      Icon.new icon, self
     end
 
-    class Icon < Chingu::Particle
-      trait :timer
+    attr_accessor :icon
 
-      def initialize(img)
+    class Icon < Chingu::GameObject
+      trait :timer
+      trait :effect
+
+      def initialize(img, parent)
         super({image: img}.merge(x: $window.width/2, y: 2*$window.height/3,
                               scale_rate: 0.2,
                               fade_rate: -10,
                               mode: :default))
-        after(1000) {self.destroy}
+        parent.icon = self
+        after(1000) { destroy; parent.icon = nil}
+      end
+
+      def update
+        update_trait
+        super
       end
     end
   end
