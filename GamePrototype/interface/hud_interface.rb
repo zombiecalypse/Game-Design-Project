@@ -21,7 +21,14 @@ module Interface
     end
 
     def update
-      @hp_text = Chingu::Text.new(hp_string, x: 20, y: 20, color: Gosu::Color::BLACK, zorder: ZOrder::HUD)
+      if changed
+        @hp_text = Chingu::Text.new(hp_string, x: 20, y: 20, color: Gosu::Color::BLACK, zorder: ZOrder::HUD) 
+        @old = @player.hp
+      end
+    end
+
+    def changed
+      @player.hp != @old
     end
 
     def hp_string

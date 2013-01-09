@@ -3,6 +3,7 @@ require 'chingu'
 require 'gosu'
 
 require_relative '../levels/level'
+require_relative '../levels/level2'
 require_relative 'menu'
 require_relative 'player_daemon'
 require_relative '../interface/color_theme'
@@ -22,7 +23,7 @@ module Levels
     end
 
     def start
-      the(PlayerDaemon).teleport(level: Level1, point: :start)
+      the(PlayerDaemon).teleport(level: Level2, point: :start)
     end
   end
 end

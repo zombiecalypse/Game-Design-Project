@@ -54,12 +54,31 @@ module Levels
     #   an objectlayer "Enemies", that contains objects with types corresponding
     #     to the enemy types.
     #
+    #
+    #
+    # OMG we have a performance problem with the maps if sufficiently huge! I'm
+    # so exited! Do *all* the quad-trees!
+    #
+    # Findings so far: 
+    #  * bottle-necks are:
+    #     - updates for all tiles, which should really not be
+    #       necessary.
+    #     - drawing of tiles, which could for the most part be avoided
+    #     - loading of the tiles is slow, but does not impair the game in any
+    #       way
+    #     - The garbage collector seems to struggle with something.
+    # * solutions:
+    #     - Quad-tree for drawing and updating
+    #     - finding out, what objects are created all the time only to be
+    #       destroyed.
     include Modularity::Does
-    does 'helpers/logging'
+    does 'helpers/logging', level: Logger::DEBUG
     attr_reader :width_in_tiles, :height_in_tiles, :tilewidth, :tileheight
 
     attr_reader :tileset, :ground_tiles, :wall_tiles
     attr_reader :movement_polygons, :events, :objects
+
+    attr_accessor :viewport
 
     def initialize filename
       # super if false # not compartible
@@ -68,6 +87,13 @@ module Levels
       @height_in_tiles = map["height"]
       @tilewidth = map['tilewidth'] || 32
       @tileheight = map['tileheight'] || 32
+      @events = []
+      @movement_polygons = []
+      @startpoints = {}
+      @objects = {}
+      @ground_tiles = []
+      @wall_tiles = []
+      @vp_width, @vp_height = ($window.width/@tilewidth).to_i, ($window.height/@tileheight).to_i
       load_tileset map['tilesets'].first['image']
       load_layers map['layers']
     end
@@ -81,54 +107,113 @@ module Levels
       end
     end
 
+    def draw
+      @viewport.apply do 
+        draw_smartly
+      end
+    end
+
+    def all_tiles lvl
+      lvl.each do |fold|
+        fold.values.each do |row| 
+          row.values.each do |x|
+            yield x
+          end
+        end
+      end
+    end
+
+    # SLOOOOOW
+    def draw_everything
+      all_tiles(@ground_tiles, &:draw)
+      all_tiles(@wall_tiles, &:draw)
+    end
+
+    # not too quick
+    def draw_selective
+      all_tiles(@ground_tiles) {|t| t.draw unless @viewport.outside? t}
+      all_tiles(@wall_tiles) {|t| t.draw unless @viewport.outside? t}
+    end
+
+    def xi
+      @viewport.x.to_i/@tilewidth
+    end
+
+    def yi
+      @viewport.y.to_i/@tileheight
+    end
+
+    def draw_layer layer
+      layer.each do |layer|
+        row = yi-@vp_height/2
+        col = xi-@vp_width/2
+        while row < yi+3*@vp_height/2
+          layer[col][row].draw if layer[col] and layer[col][row]
+          col += 1
+          if col >= xi+3*@vp_width/2
+            col = xi-@vp_width/2
+            row += 1
+          end
+        end
+      end
+    end
+
+    # Somewhat quick, but not quick enough
+    def draw_smartly
+      draw_layer @ground_tiles
+      draw_layer @wall_tiles
+    end
+
+
     def destroy
-      (@ground_tiles + @wall_tiles).each {|e| e.destroy rescue nil}
+      (@ground_tiles.values + @wall_tiles.values).each {|e| e.destroy rescue nil}
     end
 
     def load_layers layers
-      layers
-        .select {|m| m['name'] =~ /ground/i}
-        .each   {|m| load_ground m}
-      layers
-        .select {|m| m['name'] =~ /walls/i}
-        .each   {|m| load_walls m}
-      layers
-        .select {|m| m['name'] =~ /movement/i}
-        .each   {|m| load_movement m}
-      layers
-        .select {|m| m['name'] =~ /startpoints/i}
-        .each   {|m| load_startpoints m}
-      layers
-        .select {|m| m['name'] =~ /events/i}
-        .each   {|m| load_events m}
-      layers
-        .select {|m| m['name'] =~ /enemies/i or m['name'] =~ /objects/i}
-        .each   {|m| load_objects m}
+      layers.each do |m|
+        case m['name']
+        when /ground/i
+          load_ground m
+        when /walls/i
+          load_walls m
+        when /movement/i
+          load_movement m
+        when /startpoints/i
+          load_startpoints m
+        when /events/i
+          load_events m
+        when /objects/i
+          load_objects m
+        when /enemies/i
+          load_objects m
+        end
+      end
     end
 
     def enemies; @objects; end
 
     def load_tiles data, z
-      arr = []
+      hash = Hash.new
       enum = data.to_enum
       (0...@height_in_tiles).each do |yi|
         (0...@width_in_tiles).each do |xi|
           index = enum.next
           unless index == 0
-            arr << Tile.create(image: @tileset[index - 1], zorder: z, x: xi*@tilewidth, y: yi*@tileheight)
+            hash[xi] ||= {}
+            hash[xi][yi] = Tile.new(image: @tileset[index - 1], zorder: z, x: xi*@tilewidth, y: yi*@tileheight)
           end
         end
       end
-      arr 
+      hash 
     end
 
     def load_ground layer
-      @ground_tiles = load_tiles layer['data'], ZOrder::MAP
+      @ground_tiles << load_tiles(layer['data'], ZOrder::MAP)
       log_debug {"loaded #{@ground_tiles.size} ground tiles"}
     end
 
     def load_walls layer
-      @wall_tiles = load_tiles layer['data'], ZOrder::PLAYER
+      @wall_tiles << load_tiles(layer['data'], ZOrder::PLAYER)
       log_debug {"loaded #{@wall_tiles.size} wall tiles"}
     end
 
@@ -141,7 +226,6 @@ module Levels
     end
 
     def load_startpoints layer
-      @startpoints = {}
       layer['objects'].each {|o| @startpoints[o['name'].downcase.to_sym] = [o['x'],o['y']]}
       log_debug {"loaded #{@startpoints.size} start points"}
       log_debug { @startpoints.keys.join(" ") }
@@ -156,7 +240,6 @@ module Levels
     end
 
     def load_objects layer
-      @objects = {}
       layer['objects'].each do |o|
         type = o['type'].downcase.to_sym
         @objects[type] ||= []
@@ -187,6 +270,11 @@ module Levels
     end
 
     class Tile < Chingu::GameObject
+      def initialize(opts={})
+        super opts
+        pause
+      end
+
       def rect
         Chingu::Rect.new(x,y, width, height)
       end

@@ -142,6 +142,7 @@ module Levels
     def draw
       super
       the(PlayerDaemon).hud.draw
+      @map.draw
     end
 
     private 
@@ -176,6 +177,7 @@ module Levels
       elsif tilemap_file
         log_debug { "Loading tilemap" }
         @map = Tilemap[tilemap_file]
+        @map.viewport = self.viewport
       elsif create_map?
         log_debug { "Creating map" }
         @map = create_map
