@@ -30,4 +30,7 @@
   <object type="Bat" x="111" y="90"/>
   <object type="Bat" x="108" y="196"/>
  </objectgroup>
+ <objectgroup name="startpoints" width="15" height="16">
+  <object name="start1" x="325" y="257"/>
+ </objectgroup>
 </map>

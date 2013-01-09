@@ -86,6 +86,9 @@ module Levels
         .select {|m| m['name'] =~ /movement/i}
         .each   {|m| load_movement m}
       layers
+        .select {|m| m['name'] =~ /startpoints/i}
+        .each   {|m| load_startpoints m}
+      layers
         .select {|m| m['name'] =~ /events/i}
         .each   {|m| load_events m}
       layers
@@ -109,22 +112,35 @@ module Levels
 
     def load_ground layer
       @ground_tiles = load_tiles layer['data'], ZOrder::MAP
+      log_debug {"loaded #{@ground_tiles.size} ground tiles"}
     end
 
     def load_walls layer
       @wall_tiles = load_tiles layer['data'], ZOrder::PLAYER
+      log_debug {"loaded #{@wall_tiles.size} wall tiles"}
     end
 
     def load_movement layer
       @movement_polygons = layer['objects'].collect do |o|
-        Polygon.new o['polygon']
+        next unless o['polygon']
+          Polygon.new o['x'], o['y'], o['polygon']
       end
+      log_debug {"loaded #{@movement_polygons.size} movement zones"}
+    end
+
+    def load_startpoints layer
+      @startpoints = {}
+      layer['objects'].each {|o| @startpoints[o['name'].downcase.to_sym] = P[o['x'],o['y']]}
+      log_debug {"loaded #{@startpoints.size} start points"}
+      log_debug { @startpoints.keys.join(" ") }
+
     end
 
     def load_events layer
       @events = layer['objects'].collect do |o|
-        Polygon.new o['polygon']
+        {name: o['name'].downcase.to_sym, poly: Polygon.new(o['x'], o['y'], o['polygon'])}
       end
+      log_debug {"loaded #{@events.size} events"}
     end
 
     def load_enemies layer
@@ -134,6 +150,7 @@ module Levels
         @enemies[type] ||= []
         @enemies[type] << P[o['x'],o['y']]
       end
+      log_debug {"loaded #{@enemies.keys.size} types of enemies, to a total of #{@enemies.values.inject(0){|x,y| x+y.size}}"}
     end
 
     def width
@@ -144,6 +161,18 @@ module Levels
       @height_in_tiles * @tileheight
     end
 
+    def blocked? x,y
+      not @movement_polygons.any? {|p| p.collide_point? x,y}
+    end
+
+    def at(x,y)
+      event = @events.detect {|e| e[:poly].collide_point?(x,y)}
+      event[:name] if event
+    end
+
+    def startpoints
+      @startpoints
+    end
 
     class Tile < Chingu::GameObject
       def rect
@@ -152,9 +181,35 @@ module Levels
     end
 
     class Polygon
-      def initialize list
-        @points = list.collect {|p| P[p['x'],p['y']]}
+      attr_reader :bounding_box
+      def initialize off_x, off_y, list
+        @points = list.collect {|p| P[off_x+p['x'],off_y + p['y']]}
         build_bounding_box
+      end
+
+      def collide_point? x,y
+        return false unless @bounding_box.collide_point? x,y
+        point = P[x,y]
+
+        contains_point = false
+        adjacent_points = @points.zip(@points.rotate 1)
+        cuts = adjacent_points.select do |from, to|
+          next unless point_is_between_the_ys_of_the_line_segment?(point, from, to)
+          ray_crosses_through_line_segment?(point, from, to)
+        end
+        cuts.size.odd?
+      end
+
+      private
+
+      def point_is_between_the_ys_of_the_line_segment?(point, from, to)
+        return true if to.y <= point.y and point.y < from.y
+        return true if from.y <= point.y and point.y < to.y
+      end
+
+      def ray_crosses_through_line_segment?(point, from, to)
+        (point.x < (from.x - to.x) * (point.y - to.y) / 
+         (from.y - to.y) + to.x) rescue false
       end
 
       def build_bounding_box

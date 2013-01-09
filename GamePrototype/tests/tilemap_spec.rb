@@ -41,7 +41,9 @@ describe Levels::Tilemap do
       @tilemap.events.size.should be 1
     end
 
-    it 'loads startpoints'
+    it 'loads startpoints' do
+      @tilemap.startpoints.keys.should include :start1
+    end
 
     it 'loads enemies' do
       @tilemap.enemies.values
@@ -58,15 +60,19 @@ describe Levels::Tilemap do
 
     it "reports movement possibilities" do
       @tilemap.should_not be_blocked(150,150)
-      @tilemap.should be_blocked(350, 400)
+      @tilemap.should be_blocked(160, 448)
     end
 
     it "reports events" do
-      @tilemap.at(480, 40).should be :evt1
+      @tilemap.at(384, 128).should be :evt1
     end
 
     it "defines enemies" do
       @tilemap.enemies[:bat].should eq [P[111,90],P[108,196]]
+    end
+
+    it "defines startpoints" do
+      @tilemap.startpoints[:start1].should eq P[325,257]
     end
   end
 end

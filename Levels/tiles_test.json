@@ -99,6 +99,18 @@
                  "width":0,
                  "x":277,
                  "y":43
+                }, 
+                {
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":332,
+                 "y":332
                 }],
          "opacity":1,
          "type":"objectgroup",

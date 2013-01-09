@@ -181,6 +181,29 @@
          "width":15,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":16,
+         "name":"startpoints",
+         "objects":[
+                {
+                 "height":0,
+                 "name":"start1",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":325,
+                 "y":257
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":15,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
@@ -191,7 +214,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"cave.png",
+         "image":"..\/..\/..\/tilesets\/Cave Tile set.png",
          "imageheight":7249,
          "imagewidth":256,
          "margin":0,
