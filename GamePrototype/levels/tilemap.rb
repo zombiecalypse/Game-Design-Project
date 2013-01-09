@@ -9,6 +9,16 @@ require_relative '../helpers/dist'
 
 module Levels
   class Tilemap < Map
+    include Chingu::NamedResource
+    self.autoload_dirs = [File.join('media', 'maps')]
+
+    def self.autoload name
+      path = find_file(name)
+      raise "No such file #{name} in any of #{self.autoload_dirs}" unless path
+      self.new path
+    end
+
+
     # TODO: Load JSON
     #
     # Tiled JSON export format:
@@ -49,7 +59,7 @@ module Levels
     attr_reader :width_in_tiles, :height_in_tiles, :tilewidth, :tileheight
 
     attr_reader :tileset, :ground_tiles, :wall_tiles
-    attr_reader :movement_polygons, :events, :enemies
+    attr_reader :movement_polygons, :events, :objects
 
     def initialize filename
       # super if false # not compartible
@@ -92,9 +102,11 @@ module Levels
         .select {|m| m['name'] =~ /events/i}
         .each   {|m| load_events m}
       layers
-        .select {|m| m['name'] =~ /enemies/i}
-        .each   {|m| load_enemies m}
+        .select {|m| m['name'] =~ /enemies/i or m['name'] =~ /objects/i}
+        .each   {|m| load_objects m}
     end
+
+    def enemies; @objects; end
 
     def load_tiles data, z
       arr = []
@@ -103,7 +115,7 @@ module Levels
         (0...@width_in_tiles).each do |xi|
           index = enum.next
           unless index == 0
-            arr << Tile.new(image: @tileset[index - 1], z_order: z, x: xi*@tilewidth, y: yi*@tileheight)
+            arr << Tile.create(image: @tileset[index - 1], zorder: z, x: xi*@tilewidth, y: yi*@tileheight)
           end
         end
       end
@@ -130,7 +142,7 @@ module Levels
 
     def load_startpoints layer
       @startpoints = {}
-      layer['objects'].each {|o| @startpoints[o['name'].downcase.to_sym] = P[o['x'],o['y']]}
+      layer['objects'].each {|o| @startpoints[o['name'].downcase.to_sym] = [o['x'],o['y']]}
       log_debug {"loaded #{@startpoints.size} start points"}
       log_debug { @startpoints.keys.join(" ") }
 
@@ -143,14 +155,14 @@ module Levels
       log_debug {"loaded #{@events.size} events"}
     end
 
-    def load_enemies layer
-      @enemies = {}
+    def load_objects layer
+      @objects = {}
       layer['objects'].each do |o|
         type = o['type'].downcase.to_sym
-        @enemies[type] ||= []
-        @enemies[type] << P[o['x'],o['y']]
+        @objects[type] ||= []
+        @objects[type] << [o['x'],o['y']]
       end
-      log_debug {"loaded #{@enemies.keys.size} types of enemies, to a total of #{@enemies.values.inject(0){|x,y| x+y.size}}"}
+      log_debug {"loaded #{@objects.keys.size} types of enemies, to a total of #{@objects.values.inject(0){|x,y| x+y.size}}"}
     end
 
     def width

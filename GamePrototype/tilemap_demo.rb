@@ -4,13 +4,13 @@ Bundler.require
 require_relative 'interface/gesture_controller'
 require_relative 'menu/player_daemon'
 require_relative 'game_objects/events'
-require_relative 'levels/enemy_test_level'
+require_relative 'levels/tilemap_test_level'
 
 class Game < Chingu::Window
   def setup
     super
     self.input = { :i => :info}
-    the(PlayerDaemon).teleport(level: Levels::EnemyTestLevel, point: :start)
+    the(PlayerDaemon).teleport(level: Levels::TilemapTestLevel, point: :start1)
   end
   
   def info

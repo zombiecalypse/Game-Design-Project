@@ -10,6 +10,7 @@ require_relative '../game_objects/player'
 require_relative '../interface/hud_interface'
 require_relative '../interface/z_orders'
 require_relative 'map'
+require_relative 'tilemap'
 require_relative '../helpers/logging'
 
 module Levels
@@ -99,11 +100,16 @@ module Levels
     end
 
     class <<self
-      attr_reader :map_block, :song_file, :zones, :object_callbacks
+      attr_reader :map_block, :song_file, :zones, :object_callbacks, :tilemap_file
 
       def map &b
-        throw "Already defined map for #{self}" if @map_block
+        throw "Already defined map for #{self}" if @map_block or @tilemap_file
         @map_block = b
+      end
+
+      def tilemap f
+        throw "Already defined map for #{self}" if @map_block or @tilemap_file
+        @tilemap_file = f
       end
 
       def music song
@@ -143,6 +149,10 @@ module Levels
       self.class.map_block 
     end
 
+    def tilemap_file
+      self.class.tilemap_file
+    end
+
     def song_file
       self.class.song_file
     end 
@@ -163,18 +173,20 @@ module Levels
       if map_block
         log_debug { "Loading map" }
         @map = Map.create(&map_block)
-        log_debug { "Got map #{@map}" }
+      elsif tilemap_file
+        log_debug { "Loading tilemap" }
+        @map = Tilemap[tilemap_file]
       elsif create_map?
         log_debug { "Creating map" }
         @map = create_map
-        log_debug { "Got map #{@map}" }
       end
+      log_debug { "Got map #{@map}" }
     end
 
     def initialize_objects
       log_debug { "Load objects" }
       @map.objects.each_pair do |key, instances|
-        return unless object_callbacks[key]
+        next unless object_callbacks and object_callbacks[key]
         log_debug { "Load all #{key}" }
         instances.each do |e| 
           self.instance_exec(e, &object_callbacks[key])
