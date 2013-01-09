@@ -1,16 +1,6 @@
 require 'logger'
 require_relative '../helpers/dist'
 
-class P
-  attr_reader :x,:y
-  def initialize x,y
-    @x, @y = x,y
-  end
-
-  def self.[] x,y
-    self.new x,y
-  end
-end
 module Chingu::Traits
   # Type of enemy that moves towart the player and hits them.
   module Mover

@@ -5,6 +5,7 @@ require 'json'
 require_relative 'map'
 require_relative '../helpers/logging'
 require_relative '../interface/z_orders'
+require_relative '../helpers/dist'
 
 module Levels
   class Tilemap < Map
@@ -129,10 +130,20 @@ module Levels
     def load_enemies layer
       @enemies = {}
       layer['objects'].each do |o|
-        @enemies[o['type'].downcase.to_sym] ||= []
-        @enemies[o['type'].downcase.to_sym] << P[o['x'],o['y']]
+        type = o['type'].downcase.to_sym
+        @enemies[type] ||= []
+        @enemies[type] << P[o['x'],o['y']]
       end
     end
+
+    def width
+      @width_in_tiles * @tilewidth
+    end
+
+    def height
+      @height_in_tiles * @tileheight
+    end
+
 
     class Tile < Chingu::GameObject
       def rect

@@ -41,10 +41,32 @@ describe Levels::Tilemap do
       @tilemap.events.size.should be 1
     end
 
+    it 'loads startpoints'
+
     it 'loads enemies' do
       @tilemap.enemies.values
         .inject(0) {|x,y| x+y.size}
         .should be 2
+    end
+  end
+
+  context "implementing the map interface" do
+    it "has dimensions" do
+      @tilemap.width.should be 480
+      @tilemap.height.should be 512
+    end
+
+    it "reports movement possibilities" do
+      @tilemap.should_not be_blocked(150,150)
+      @tilemap.should be_blocked(350, 400)
+    end
+
+    it "reports events" do
+      @tilemap.at(480, 40).should be :evt1
+    end
+
+    it "defines enemies" do
+      @tilemap.enemies[:bat].should eq [P[111,90],P[108,196]]
     end
   end
 end
