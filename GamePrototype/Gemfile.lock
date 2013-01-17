@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    algorithms (0.5.0)
     chingu (0.9rc9)
       gosu (>= 0.7.45)
       gosu (>= 0.7.45)
@@ -23,6 +24,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  algorithms
   chingu (~> 0.9rc9)
   modularity
   nokogiri

@@ -16,7 +16,6 @@
    eJzt1EEKwjAQBdCsiqtCQXf1Xh7bpUuPYgMTCKaUIkoovgefzHL4TJsSAAAAAMB/myK0zksuMU9JV1vmJdeYdcWvDBFaY6TuR1frci+nai6vvlrlrt5nXbWG5I72yh2N1Zvdku7WlJuqvz+2+a8DAAAAAAAA8A333gscyKP3Ageiq/2evRcAAAAAAD7yAsGcBa8=
   </data>
  </layer>
- <objectgroup name="Enemies" width="75" height="75"/>
  <objectgroup name="movement" width="75" height="75">
   <object x="0" y="672">
    <polygon points="0,0 59,1 91,-32 109,0 173,1 195,-35 195,-91 275,-93 271,43 383,48 399,65 400,195 379,211 337,204 336,285 -3,285"/>
@@ -33,5 +32,11 @@
  </objectgroup>
  <objectgroup name="startpoints" width="75" height="75">
   <object name="start" x="107" y="849"/>
+ </objectgroup>
+ <objectgroup name="Enemies" width="75" height="75">
+  <object type="Bat" x="252" y="206" width="22" height="20"/>
+  <object type="Bat" x="283" y="207"/>
+  <object type="Bat" x="255" y="194"/>
+  <object type="Bat" x="226" y="212" width="22" height="20"/>
  </objectgroup>
 </map>

@@ -1,4 +1,5 @@
 require 'chingu'
+require_relative '../interface/color_theme'
 
 class Conversation
 	attr_accessor :dialog, :block
@@ -23,11 +24,11 @@ class ConversationState < Chingu::GameState
 		@conversation = conversation
 		@dialog = conversation.dialog
 		@height, @width = $window.height, $window.width
-		@qb_color = Gosu::Color.new(0xdc000000)
-		@ab_color = Gosu::Color.new(0xa0c3c3c3)
-		@qt_color = Gosu::Color::WHITE
-		@at_color = Gosu::Color::BLACK
-		@selected_color = Gosu::Color.new(0xffffba00)
+		@qb_color = Colors::BACKGROUND
+		@ab_color = Colors::INACTIVE
+		@qt_color = Colors::DESCRIPTION
+		@at_color = Colors::ACTIVE
+		@selected_color = Colors::ACTIVE_BACKGROUND
 		update_text
 	end
 	

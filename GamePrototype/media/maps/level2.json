@@ -35,17 +35,6 @@
         }, 
         {
          "height":75,
-         "name":"Enemies",
-         "objects":[],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "width":75,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "height":75,
          "name":"movement",
          "objects":[
                 {
@@ -310,6 +299,65 @@
                  "width":0,
                  "x":107,
                  "y":849
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":75,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "height":75,
+         "name":"Enemies",
+         "objects":[
+                {
+                 "height":20,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"Bat",
+                 "width":22,
+                 "x":252,
+                 "y":206
+                }, 
+                {
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"Bat",
+                 "width":0,
+                 "x":283,
+                 "y":207
+                }, 
+                {
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"Bat",
+                 "width":0,
+                 "x":255,
+                 "y":194
+                }, 
+                {
+                 "height":20,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"Bat",
+                 "width":22,
+                 "x":226,
+                 "y":212
                 }],
          "opacity":1,
          "type":"objectgroup",
