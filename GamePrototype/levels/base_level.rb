@@ -218,30 +218,22 @@ module Levels
     		}
     	}
     	@nodes.each{|n|
-     	  n.neighbours << mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 - 1] if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 - 1] &&
-     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x - 4, :y => n.pos.y - 4) if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 - 1] && 
-     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x-32,n.pos.y-32),self)))
-     	  n.neighbours << mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 - 1] if (mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 - 1] &&
-     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x, :y => n.pos.y - 4) if (mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 - 1]  &&
-     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x,n.pos.y-32),self)))
-     	  n.neighbours << mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 - 1] if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 - 1] &&
-     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x + 4, :y => n.pos.y - 4) if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 - 1]  &&
-     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x+32,n.pos.y-32),self)))
-     	  n.neighbours << mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32] if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32] &&
-     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x + 4, :y => n.pos.y) if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32]  &&
-     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x+32,n.pos.y),self)))
-     	  n.neighbours << mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 + 1] if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 + 1] &&
-     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x + 4, :y => n.pos.y + 4) if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 + 1]  &&
-     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x+32,n.pos.y+32),self)))
-     	  n.neighbours << mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 + 1] if (mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 + 1] &&
-     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x, :y => n.pos.y + 4) if (mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 + 1]  &&
-     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x,n.pos.y+32),self)))
-     	  n.neighbours << mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 + 1] if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 + 1] &&
-     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x - 4, :y => n.pos.y + 4) if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 + 1]  &&
-     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x-32,n.pos.y+32),self)))
-     	  n.neighbours << mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32] if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32] &&
-     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x - 4, :y => n.pos.y) if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32]  &&
-     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x-32,n.pos.y),self)))
+    	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 - 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 - 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 - 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 + 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 + 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 + 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32] 
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
     	}
     end
   end

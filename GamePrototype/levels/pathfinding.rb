@@ -84,11 +84,11 @@ module Pathfinding
     	return (not @parent.nil?)
     end
     
-    def line_blocked?(other_pos, level)
-      distance = [(other_pos.x - pos.x).abs , (other_pos.y - pos.y).abs].max
+    def line_blocked?(node, level)
+      distance = [(node.pos.x - pos.x).abs , (node.pos.y - pos.y).abs].max
       for i in 0..distance
-        c_x = Integer(pos.x + i*(Float(other_pos.x - pos.x)/distance))
-        c_y = Integer(pos.y + i*(Float(other_pos.y - pos.y)/distance))
+        c_x = Integer(pos.x + i*(Float(node.pos.x - pos.x)/distance))
+        c_y = Integer(pos.y + i*(Float(node.pos.y - pos.y)/distance))
         return true if level.blocked? c_x, c_y
       end
       return false

@@ -65,7 +65,7 @@ module Chingu::Traits
       end
     end
 
-    # fill AI here, seriously... do!
+    # AI
     def recalculate_path_to g
       bfs = Pathfinding::BFS.new(Pathfinding::Pos.new(x,y),g,parent.nodes)
       @path = bfs.path
