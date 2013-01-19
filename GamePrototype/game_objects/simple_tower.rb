@@ -35,6 +35,7 @@ module Objects
     end
 
     on_attack do |p|
+      Gosu::Sample["energy.ogg"].play
       shoot p
     end
   end

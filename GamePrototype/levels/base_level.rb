@@ -11,6 +11,7 @@ require_relative '../interface/hud_interface'
 require_relative '../interface/z_orders'
 require_relative 'map'
 require_relative 'tilemap'
+require_relative 'pathfinding'
 require_relative '../helpers/logging'
 
 module Levels
@@ -19,7 +20,7 @@ module Levels
     does "helpers/logging"
     trait :viewport
 
-    attr_reader :song, :map
+    attr_reader :song, :map, :nodes
 
     # Preloading stuff
     #
@@ -48,6 +49,7 @@ module Levels
       initialize_map
       initialize_objects if @map
       initialize_song(opts[:song] || song_file)
+      initialize_pathfinding
       @camera = opts[:camera]
     end
 
@@ -99,7 +101,7 @@ module Levels
       map.startpoints[teleport]
     end
 
-    class <<self
+    class << self
       attr_reader :map_block, :song_file, :zones, :object_callbacks, :tilemap_file
 
       def map &b
@@ -202,6 +204,45 @@ module Levels
         @song = Gosu::Song[song_name]
         log_debug { "Got song #{@song}" }
       end
+    end
+    
+    def initialize_pathfinding
+    	@nodes = []
+    	mapper = Array.new((@map.width-16)/32 + 2) {Array.new((@map.height-16)/32 + 2)}
+    	(16..@map.width).step(32) { |i|
+    		(16..@map.height).step(32) { |j|
+    			if (not blocked? i, j)
+    				@nodes << Pathfinding::Node.new(nil,Pathfinding::Pos.new(i,j))
+    				mapper[(i-16)/32][(j-16)/32] = @nodes[-1]
+    			end
+    		}
+    	}
+    	@nodes.each{|n|
+     	  n.neighbours << mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 - 1] if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 - 1] &&
+     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x - 4, :y => n.pos.y - 4) if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 - 1] && 
+     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x-32,n.pos.y-32),self)))
+     	  n.neighbours << mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 - 1] if (mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 - 1] &&
+     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x, :y => n.pos.y - 4) if (mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 - 1]  &&
+     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x,n.pos.y-32),self)))
+     	  n.neighbours << mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 - 1] if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 - 1] &&
+     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x + 4, :y => n.pos.y - 4) if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 - 1]  &&
+     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x+32,n.pos.y-32),self)))
+     	  n.neighbours << mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32] if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32] &&
+     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x + 4, :y => n.pos.y) if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32]  &&
+     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x+32,n.pos.y),self)))
+     	  n.neighbours << mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 + 1] if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 + 1] &&
+     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x + 4, :y => n.pos.y + 4) if (mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 + 1]  &&
+     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x+32,n.pos.y+32),self)))
+     	  n.neighbours << mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 + 1] if (mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 + 1] &&
+     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x, :y => n.pos.y + 4) if (mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 + 1]  &&
+     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x,n.pos.y+32),self)))
+     	  n.neighbours << mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 + 1] if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 + 1] &&
+     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x - 4, :y => n.pos.y + 4) if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 + 1]  &&
+     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x-32,n.pos.y+32),self)))
+     	  n.neighbours << mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32] if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32] &&
+     	  #Pathfinding::Edge_Mark.create(:x => n.pos.x - 4, :y => n.pos.y) if (mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32]  &&
+     	  not(n.line_blocked?(Pathfinding::Pos.new(n.pos.x-32,n.pos.y),self)))
+    	}
     end
   end
 end
