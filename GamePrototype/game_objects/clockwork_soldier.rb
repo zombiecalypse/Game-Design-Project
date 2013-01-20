@@ -24,6 +24,7 @@ module Objects
       end
 
       def on_move dx, dy
+        return unless dx.abs > 1 or dy.abs > 1
         if dx.abs < dy.abs
           if dy >= 0
             @current_animation = @animation[:down]
@@ -37,10 +38,6 @@ module Objects
             @current_animation = @animation[:left]
           end
         end
-      end
-
-      def update
-        super
         @image = @current_animation.next
       end
 

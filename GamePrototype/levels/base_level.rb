@@ -11,6 +11,7 @@ require_relative '../interface/hud_interface'
 require_relative '../interface/z_orders'
 require_relative 'map'
 require_relative 'tilemap'
+require_relative 'pathfinding'
 require_relative '../helpers/logging'
 
 module Levels
@@ -19,7 +20,7 @@ module Levels
     does "helpers/logging"
     trait :viewport
 
-    attr_reader :song, :map
+    attr_reader :song, :map, :nodes
 
     # Preloading stuff
     #
@@ -48,6 +49,7 @@ module Levels
       initialize_map
       initialize_objects if @map
       initialize_song(opts[:song] || song_file)
+      initialize_pathfinding
       @camera = opts[:camera]
     end
 
@@ -99,7 +101,7 @@ module Levels
       map.startpoints[teleport]
     end
 
-    class <<self
+    class << self
       attr_reader :map_block, :song_file, :zones, :object_callbacks, :tilemap_file
 
       def map &b
@@ -202,6 +204,37 @@ module Levels
         @song = Gosu::Song[song_name]
         log_debug { "Got song #{@song}" }
       end
+    end
+    
+    def initialize_pathfinding
+    	@nodes = []
+    	mapper = Array.new((@map.width-16)/32 + 2) {Array.new((@map.height-16)/32 + 2)}
+    	(16..@map.width).step(32) { |i|
+    		(16..@map.height).step(32) { |j|
+    			if (not blocked? i, j)
+    				@nodes << Pathfinding::Node.new(nil,Pathfinding::Pos.new(i,j))
+    				mapper[(i-16)/32][(j-16)/32] = @nodes[-1]
+    			end
+    		}
+    	}
+    	@nodes.each{|n|
+    	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 - 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 - 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 - 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 + 1][(n.pos.y-16)/32 + 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32][(n.pos.y-16)/32 + 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 + 1]
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+     	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32] 
+     	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
+    	}
     end
   end
 end
