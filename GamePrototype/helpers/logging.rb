@@ -1,5 +1,10 @@
 require 'rubygems'
 require 'modularity'
+
+class Object
+  include Modularity::Does
+end
+
 module Helpers
   module LoggingTrait
     include Modularity::AsTrait

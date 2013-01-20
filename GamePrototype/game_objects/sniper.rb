@@ -19,7 +19,6 @@ module Objects
           player.harm 10
         end
       end
-      include Modularity::Does
       does 'helpers/logging'
 
       trait :shooter, projectile: Projectile
@@ -33,7 +32,15 @@ module Objects
       def speed; 2; end
 
       def initialize(opts={})
-        super(opts.merge image: Gosu::Image[DummyImage])
+        @animation = Chingu::Animation.new file: 'clockwork.png', size: 32, delay: 250
+        @animation.frame_names = { 
+          down: 3..5,
+          left: 9..11,
+          right: 15..17,
+          up: 22..24
+        }
+        @current_animation = @animation[:down]
+        super(opts.merge image: @current_animation.next)
       end
 
       on_notice do |p|

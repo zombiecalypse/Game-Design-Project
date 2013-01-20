@@ -13,7 +13,6 @@ require_relative '../helpers/logging'
 
 module Objects
   class Player < Chingu::GameObject
-    include Modularity::Does
     does "helpers/logging"
     attr_reader :current_dir, :journal, :speed
     attr_accessor :vulnerability

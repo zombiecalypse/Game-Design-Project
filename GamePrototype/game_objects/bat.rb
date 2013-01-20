@@ -4,7 +4,6 @@ require_relative '../object_traits/hp'
 require_relative '../object_traits/aggro'
 module Objects
   class Bat < Chingu::GameObject
-    include Modularity::Does
     does 'helpers/logging'
 
     trait :aggro, damage: 1
