@@ -55,6 +55,7 @@ module Chingu::Traits
         return if blocked?(@x+dx, @y+dy)
         @x += dx
         @y += dy
+        on_move dx, dy
       else
         if P[@goal.x,@goal.y] != @old_goal_position
           @path = recalculate_path_to @goal if (@path.nil? || @path.empty?)
@@ -64,6 +65,8 @@ module Chingu::Traits
         move_along_path
       end
     end
+
+    def on_move dx,dy; end
 
     # fill AI here, seriously... do!
     def recalculate_path_to g
@@ -83,6 +86,7 @@ module Chingu::Traits
         return if blocked?(@x+dx, @y+dy)
         @x += dx
         @y += dy
+        on_move dx, dy
       end
     end
 

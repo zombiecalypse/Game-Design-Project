@@ -12,7 +12,36 @@ module Objects
       def speed; 2; end
 
       def initialize(opts={})
-        super(opts.merge image: Gosu::Image[DummyImage])
+        @animation = Chingu::Animation.new file: 'clockwork.png', size: 32, delay: 250
+        @animation.frame_names = { 
+          down: 0..2,
+          left: 6..8,
+          right: 12..14,
+          up: 18..21
+        }
+        @current_animation = @animation[:down]
+        super(opts.merge image: @current_animation.next)
+      end
+
+      def on_move dx, dy
+        if dx.abs < dy.abs
+          if dy >= 0
+            @current_animation = @animation[:down]
+          else
+            @current_animation = @animation[:up]
+          end
+        else
+          if dx >= 0
+            @current_animation = @animation[:right]
+          else
+            @current_animation = @animation[:left]
+          end
+        end
+      end
+
+      def update
+        super
+        @image = @current_animation.next
       end
 
       on_notice do |p|
