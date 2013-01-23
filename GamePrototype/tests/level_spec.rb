@@ -59,6 +59,10 @@ describe Level do
 
     it "can have a tune" do
       level_class = Class.new(Level) do
+        map do
+          at(0,0).map("test_level.png", "test_level.png")
+        end
+
         music "level_one.ogg"
       end
       level = level_class.new(camera: @camera)

@@ -10,6 +10,7 @@ require_relative '../object_traits/hp'
 
 class Target < Chingu::GameObject
   trait :hp
+  trait :timer
 end
 class Enemy < Chingu::GameObject
   trait :aggro, observation_range: 300, range: 100, enemies: [Target], damage: 5

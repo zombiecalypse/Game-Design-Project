@@ -108,6 +108,7 @@ module Levels
 
     def load_tile_properties props
       @tile_properties = {}
+      return unless props
       props.each_pair do |index, properties|
         @tile_properties[index.to_i] = parse_properties properties
       end

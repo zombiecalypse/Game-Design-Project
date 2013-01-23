@@ -22,15 +22,15 @@ describe Levels::Tilemap do
     end
 
     it 'loads tileset' do
-      @tilemap.tileset.size.should eq [32,32]
+      @tilemap.tileset.size.should eq 1808
     end
 
     it 'loads ground' do
-      @tilemap.ground_tiles.size.should be 240
+      @tilemap.ground_tiles.first.size.should be 240
     end
 
     it 'loads walls' do
-      @tilemap.wall_tiles.size.should be 90
+      @tilemap.wall_tiles.first.size.should be 240
     end
 
     it 'loads movement' do
@@ -68,11 +68,11 @@ describe Levels::Tilemap do
     end
 
     it "defines enemies" do
-      @tilemap.enemies[:bat].should eq [P[111,90],P[108,196]]
+      @tilemap.enemies[:bat].should eq [[111,90],[108,196]]
     end
 
     it "defines startpoints" do
-      @tilemap.startpoints[:start1].should eq P[325,257]
+      @tilemap.startpoints[:start1].should eq [325,257]
     end
   end
 end
