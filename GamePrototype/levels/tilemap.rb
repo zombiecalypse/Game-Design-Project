@@ -206,8 +206,6 @@ module Levels
       @tile_properties[index] || {}
     end
 
-    # TODO allow z override by tile property (have to find out, where this is
-    # stored.
     def load_tiles data, z
       list = []
       enum = data.to_enum

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="30" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="cave.tsx"/>
+ <layer name="ground" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztziEBAAAMAjCo8/4BXwMxMb8mKQAAjLiBgx8AbHmrYQUs
+  </data>
+ </layer>
+ <layer name="walls" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzNlEtOAzEMQM1R+GxmCoiPRAucgN9BYFa0K9oV7a7dlQuTMLGwrHESexKplt5uYj/bI7cAcOG4qcS5ozXU8O8gvJ04HirRGGs0zO+5Eo2xBverFdRP+w6Mb7V1DtnvGvr//Vb5LuZ37DhxnI5T+4t76P/3R+U7nPuQn3UnQ/EE/f/+onwX87PuJHfu+F2Ms4jf2J2k5o7959z1oTlZd5I7d+w/565b5pSqm8qH/efcdcucUnVL5EO/nCh5b3JD46e9NyX60fhp743UD78rMX+smRPaeyP1Q29uah9Y8yijnva/l/rhdy+2D42fNqR++N2T9nHl+AjU8JOC3z1pH95vHigRb46pwKshn/dbBkoE3Qfn0pBv5lgHeO/Wfkv5ebfOsQ3MRuZDv7nAHci756CbZx/omJ8mH827FHgHebYcdFvA/43sWL+afDTvWkDr591WxG8xol+adyvwGdk9B902xG/F+tXko3n3Al+R3XPQbUf8NqxfTT6atxX4juyeg24/5P2O9avJR/NKfm1k9xzu5vkFmQS8fQ==
+  </data>
+ </layer>
+ <objectgroup name="movement" width="40" height="30">
+  <object x="72" y="422">
+   <polygon points="0,0 7,-310 357,-311 355,-171 180,-222 85,-218 73,6"/>
+  </object>
+  <object x="269" y="203">
+   <polygon points="0,0 0,235 169,224 152,35"/>
+  </object>
+  <object x="274" y="358">
+   <polygon points="0,0 -135,-3 -143,73 28,76"/>
+  </object>
+  <object x="416" y="270">
+   <polygon points="0,0 140,2 140,154 -12,159"/>
+  </object>
+  <object x="425" y="113">
+   <polygon points="0,0 329,-2 325,153 -13,166"/>
+  </object>
+  <object x="585" y="261">
+   <polygon points="0,0 9,393 -188,397 -192,150"/>
+  </object>
+  <object x="399" y="591">
+   <polygon points="0,0 -397,-5 -394,122 14,139"/>
+  </object>
+  <object x="392" y="641">
+   <polygon points="0,0 -2,131 155,126 170,-25"/>
+  </object>
+  <object x="424" y="703">
+   <polygon points="0,0 -266,2 -264,70 19,64"/>
+  </object>
+  <object x="659" y="430">
+   <polygon points="0,0 1,225 -130,213 -102,3"/>
+  </object>
+  <object x="748" y="224">
+   <polygon points="0,0 90,76 108,523 45,512 28,225"/>
+  </object>
+  <object x="774" y="446">
+   <polygon points="0,0 -123,3 -123,-21 17,-34"/>
+  </object>
+  <object x="710" y="424">
+   <polygon points="0,0 -7,-174 60,-175 72,3"/>
+  </object>
+  <object x="869" y="247">
+   <polygon points="0,0 52,45 57,219 -46,228 -68,38"/>
+  </object>
+  <object x="919" y="399">
+   <polygon points="0,0 275,-3 279,268 136,278 116,87 -19,67"/>
+  </object>
+  <object x="1196" y="663">
+   <polygon points="0,0 -73,80 -360,79 -376,-14 -110,-22"/>
+  </object>
+  <object x="871" y="253">
+   <polygon points="0,0 2,-149 331,-146 330,-3"/>
+  </object>
+  <object x="940" y="245">
+   <polygon points="0,0 -31,49 -75,18 -47,-28"/>
+  </object>
+  <object x="273" y="417">
+   <polygon points="0,0 -3,218 -267,190 -269,14 -165,-10"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="startpoints" width="40" height="30">
+  <object name="start" x="48" y="451"/>
+  <object name="retreat" x="1046" y="170"/>
+ </objectgroup>
+ <objectgroup name="enemies" width="40" height="30">
+  <object name="Boss" type="Boss" x="974" y="179"/>
+ </objectgroup>
+</map>
