@@ -2,6 +2,8 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 
+require_relative '../interface/color_theme'
+
 module Chingu::Traits
   module Hp
     module ClassMethods
@@ -39,6 +41,7 @@ module Chingu::Traits
       destroy
     end
 
+
     def heal hl
       raise "Negative heal" if hl < 0
       new_hp = [@hp + hl, max_hp].min
@@ -47,8 +50,20 @@ module Chingu::Traits
       on_heal d_hp if d_hp != 0
     end
 
-    def on_harm(dmg) ; end
-    def on_heal(hl) ; end
+    def on_harm(dmg)
+      flash Colors::HARM
+    end
+    def on_heal(hl) 
+      flash Colors::HEAL
+    end
     def on_kill ; end
+
+    def flash(c)
+      during(100) do 
+        @color = c
+      end.then do
+        @color = Gosu::Color::WHITE
+      end
+    end
   end
 end

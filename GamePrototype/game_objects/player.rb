@@ -52,12 +52,17 @@ module Objects
       super((h * vulnerability).to_i)
     end
 
+    trait :timer
+
     def on_harm hrm
+      super
       the(PlayerDaemon).update
       log_debug { "ouch! I'm at #{hp}HP" }
     end
 
+
     def on_heal hl
+      super
       the(PlayerDaemon).update
     end
 

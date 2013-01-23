@@ -5,4 +5,6 @@ module Colors
   BACKGROUND        = Gosu::Color.from_ahsv 255,   THEME_HUE,  0.1,             0.95
   ACTIVE_BACKGROUND = Gosu::Color.from_ahsv 255,   THEME_HUE,  0.1,             0.85
   DESCRIPTION       = ACTIVE
+  HARM              = Gosu::Color.new(0xFFFF0000)
+  HEAL              = Gosu::Color.new(0xFF00FFFF)
 end

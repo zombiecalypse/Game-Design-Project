@@ -1,10 +1,10 @@
 require 'bundler'
 Bundler.require
 
-require_relative 'interface/gesture_controller'
-require_relative 'menu/player_daemon'
-require_relative 'game_objects/events'
-require_relative 'levels/enemy_test_level'
+require_relative '../interface/gesture_controller'
+require_relative '../menu/player_daemon'
+require_relative '../game_objects/events'
+require_relative '../levels/enemy_test_level'
 
 class Game < Chingu::Window
   def setup
