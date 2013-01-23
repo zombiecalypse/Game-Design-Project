@@ -93,6 +93,7 @@ module Levels
       @objects           = {}
       @ground_tiles      = []
       @wall_tiles        = []
+      load_tile_properties map['tilesets'].first['tileproperties']
       load_tileset map['tilesets'].first['image']
       load_layers  map['layers']
     end
@@ -103,6 +104,26 @@ module Levels
 
     def vp_height
       @vp_height ||= ($window.height/@tileheight).to_i
+    end
+
+    def load_tile_properties props
+      @tile_properties = {}
+      props.each_pair do |index, properties|
+        @tile_properties[index.to_i] = parse_properties properties
+      end
+    end
+
+    def parse_properties properties
+      hash = {}
+      properties.each_pair do |key, val|
+        key = key.to_sym
+        hash[key] =  integer_property?(key) ? val.to_i : val
+      end
+      hash
+    end
+
+    def integer_property? key
+      key == :zorder
     end
 
     def load_tileset image_path
@@ -181,14 +202,21 @@ module Levels
 
     def enemies; @objects; end
 
+    def tile_properties index
+      @tile_properties[index] || {}
+    end
+
+    # TODO allow z override by tile property (have to find out, where this is
+    # stored.
     def load_tiles data, z
       list = []
       enum = data.to_enum
       (0...@height_in_tiles).each do |yi|
         (0...@width_in_tiles).each do |xi|
-          index = enum.next
-          unless index == 0
-            list[coord(xi,yi)] = Tile.new(image: @tileset[index - 1], zorder: z, x: xi*@tilewidth, y: yi*@tileheight)
+          index = enum.next - 1
+          unless index == -1
+            prop = tile_properties index
+            list[coord(xi,yi)] = Tile.new(image: @tileset[index], zorder: prop[:zorder] || z, x: xi*@tilewidth, y: yi*@tileheight)
           end
         end
       end
