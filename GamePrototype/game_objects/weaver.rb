@@ -11,6 +11,7 @@ module Objects
       trait :state_ai, start: :playing_with_hero
       trait :bounding_box
       trait :timer
+      trait :asynchronous
 
       def initialize(opts={})
         @animation = Chingu::Animation.new file: 'weaver.png', size: 192, delay: 250

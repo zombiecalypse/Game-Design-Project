@@ -39,10 +39,19 @@ module Chingu::Traits
       hits
     end
 
+    def range
+      trait_options[:attack][:range]
+    end
+
+    def speed
+      trait_options[:attack][:speed]
+    end
+
+    def dir
+      @dir
+    end
+
     def moves
-      dir = @dir
-      speed = trait_options[:attack][:speed]
-      range = trait_options[:attack][:range]
       return unless dir
       return unless speed
       self.x += Math::cos(dir) * speed

@@ -28,6 +28,7 @@ module Objects
       trait :bounding_box, debug: true
       trait :state_ai, start: :exploration
       trait :timer
+      trait :asynchronous
 
       def speed; 2; end
 

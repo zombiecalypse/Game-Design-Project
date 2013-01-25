@@ -18,6 +18,7 @@ module Objects
     attr_accessor :vulnerability
     trait :bounding_box, debug: true
     trait :collision_detection
+    trait :asynchronous
     trait :hp, hp: 100
     def initialize(opts = {})
       @current_dir       = opts[:dir]          ||:down

@@ -3,6 +3,7 @@ require 'chingu'
 require 'gosu'
 require_relative 'spells/fire'
 require_relative 'spells/shield'
+require_relative 'spells/burst'
 
 class Array
   def has_prefix? b
@@ -67,5 +68,6 @@ module Databases
 
     spell [:up, :right], Shield
     spell [:up, :down],  Fire
+    spell [:left, :right, :down], Burst
   end
 end

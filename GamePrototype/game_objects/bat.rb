@@ -11,6 +11,7 @@ module Objects
     trait :swarmer
     trait :hp, hp: 1
     trait :bounding_circle, debug: true
+    trait :asynchronous
 
     def initialize(opt={})
       @animation = Chingu::Animation.new file: 'bat.png', size: [90,30], delay: 150, bounce: true

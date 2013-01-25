@@ -9,6 +9,7 @@ module Objects
     trait :swarmer
     trait :hp, hp: 1
     trait :bounding_circle, debug: true
+    trait :asynchronous
 
     def initialize(opts={})
       super(opts.merge image: Gosu::Image['spider.png'])
