@@ -7,5 +7,5 @@ module Colors
   DESCRIPTION       = ACTIVE
   HARM              = Gosu::Color.new(0xFFFF0000)
   HEAL              = Gosu::Color.new(0xFF00FFFF)
-  SHIELD            = Gosu::Color.new(0xAA00DDDD)
+  SHIELD            = Gosu::Color.new(0xAA66DDDD)
 end
