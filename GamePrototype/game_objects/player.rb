@@ -111,10 +111,10 @@ module Objects
     def finished_gesture
       log_debug { "Finished Gesture" }
       @gesture_symbols << @gesture_buffer.read if @gesture_buffer.read
-      spell_class = the(PlayerDaemon).spellbook.lookup @gesture_symbols
-      if spell_class
-        log_debug { "Executing #{spell_class} for gesture #{@gesture_symbols}" }
-        spell_class.create.run(self)
+      spell = the(PlayerDaemon).spellbook.lookup @gesture_symbols
+      if spell
+        log_debug { "Executing #{spell} for gesture #{@gesture_symbols}" }
+        spell.run(self)
         new_word
       else
         log_debug { "#{@gesture_symbols} is not a gesture in #{@spell_book.to_s}" }

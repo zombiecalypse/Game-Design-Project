@@ -1,40 +1,63 @@
 require 'rubygems'
 require 'chingu'
 require 'gosu'
+require 'modularity'
 
 require_relative '../databases/enemies'
+require_relative '../object_traits/attack'
 
-module Chingu::Traits
-  module Spell
-    module ClassMethods
-      def initialize_trait(options)
-        @spell_name = options[:name] 
-        @options = options
-        super
-      end
-      def spell_name
-        @spell_name
-      end
+class Spell
+  attr_reader :name
+  # Options:
+  #   name: Used for display
+  #   activation: Is the spell held back until the player clicks somewhere?
+  #   icon: Is displayed when the gesture is complete to inform the player
+  #   sound: The sound played on activation (if it is used) or running
+  #
+  # block: is executed on activation (if used) or running with the following
+  #        parameters:
+  #   x,y: the point, where the player clicked if activation
+  #   dx, dy: difference to the player coordinates
+  #   phi: the angle in which the player clicked
+  #   player: the player object
+  def initialize opts={}, &block
+    @name = opts[:name]
+    @activation = opts[:activation]
+    @icon = opts[:icon]
+    @sound = opts[:sound]
+    @block = block
+    invariant
+  end
 
-      def options
-        @options
-      end
-    end
+  def invariant
+    raise "No name" unless @name
+    raise "No icon" unless @icon
+    raise "No block" unless @block
+  end
 
-    def spell_name
-      self.class.spell_name
-    end
-
-    def setup_trait(options)
-      opts = {file: "#{self.class.spell_name}_ani.png"}.merge(self.class.options)
-      @animation = Chingu::Animation.new( opts ) rescue nil
-      @image = @animation.next if @animation
-      @image ||= Gosu::Image["#{self.class.spell_name}.png"]
-      the(Interface::HudInterface).spell_notification(opts[:icon]) if opts[:icon]
-      super
+  def run player
+    the(Interface::HudInterface).spell_notification(@icon)
+    if @activation
+      player.spell = self
+      @player = player
+    else
+      @sound.play if @sound
+      @block.call player: player
     end
   end
-end                 
+
+  def activate x,y
+    @sound.play if @sound
+    @player.spell = nil
+    dx = x - @player.x_window
+    dy = y - @player.y_window
+    phi = Math::atan2(dy,dx)
+    @block.call player: @player, 
+      x: x, y: y, 
+      dx: dx, dy: dy,
+      phi: phi
+  end
+end
 
 class Array
   def has_prefix? b
@@ -52,23 +75,22 @@ end
 
 
 module Databases
-  class Fire < Chingu::GameObject
-    trait :spell, name: :fire, size: [50,50], delay: 125, icon: 'cogsplosion.png'
-    traits :timer, :velocity, :collision_detection
+  class FireShot < Chingu::GameObject
     trait :bounding_circle, debug: true, scale: 0.5
+    traits :velocity, :collision_detection, :timer
+
+    trait :attack, enemies: Enemies::all, damage: 10, speed: 5, range: 500, destroy_on_hit: true
 
     def initialize(opts={})
       super opts
+      @animation = Chingu::Animation.new file: 'fire_ani.png'
+      @image = @animation.next
       self.center_y = 0.75
     end
+
     def update
       super
-      
-      self.explode if @active and parent.blocked?(x,y)
       @image = @animation.next if @animation
-      each_collision(*Enemies::all) do |s, tower|
-        s.explode_on tower
-      end
     end
 
     def random_directions
@@ -86,66 +108,45 @@ module Databases
           rotation_rate: +9,
           mode: :default}.merge(opts))
         @dir = opts[:dir]
-        @speed = opts[:speed] || 5
+        @speed = opts[:speed]
+      end
+
+      def setup
+        super
+        after(500) {self.destroy}
       end
 
       def update
         super
-        every(50) do
-          self.x += Math::cos(@dir)*@speed
-          self.y += Math::sin(@dir)*@speed
-        end
-        after(500) {self.destroy}
+        self.x += Math::cos(@dir)*@speed
+        self.y += Math::sin(@dir)*@speed
       end
+    end
+
+    def on_destroy
+      explode
     end
 
     def explode
       random_directions.each do |dir|
-        ExplosionParticle.create(dir: dir, x: self.x, y: self.y, speed: Random.rand(5)+2)
+        ExplosionParticle.create(dir: dir, x: self.x, y: self.y, speed: Random.rand(15)+2)
       end
-      self.destroy
-    end
-
-    def explode_on enemy
-      enemy.harm 10
-      explode
-    end
-
-
-    def run player
-      player.spell = self
-      @player = player
-    end
-
-    @@speed = 5
-
-    def activate x,y
-    	Gosu::Sample["fire_activate.ogg"].play
-      @player.spell = nil
-      @active = true
-      self.x = @player.x
-      self.y = @player.y
-      dx, dy = x-@player.x_window, y-@player.y_window
-      phi = Math::atan2(dy,dx)
-      self.velocity = [@@speed * Math::cos(phi), @@speed * Math::sin(phi)]
-      after(1000) { self.destroy }
     end
   end
 
-  class Shield < Chingu::GameObject
-    trait :spell, name: :shield, icon: 'bolt-shield.png'
-    trait :timer
+  Fire = Spell.new name: :fire, icon: 'cogsplosion.png', activation: true do |opts|
+    FireShot.create(x: opts[:player].x, y: opts[:player].y, dir: opts[:phi])
+  end
 
-    def run player
-      self.x, self.y = player.x, player.y
-      player.vulnerability = 0.2
-      during(2000) do
-        self.x, self.y = player.x, player.y
-        self.alpha *= 0.99
-      end.then do
-        player.vulnerability = 1
-        self.destroy 
-      end
+  Shield = Spell.new name: :shield, icon: 'bolt-shield.png' do |opts|
+    player = opts[:player]
+    player.vulnerability = 0.2
+    player.color = Colors::SHIELD
+    player.during(2000) do
+      player.color.alpha *= 0.99
+    end.then do
+      player.color = nil
+      player.vulnerability = 1
     end
   end
 
@@ -155,7 +156,7 @@ module Databases
   class SpellBook
     class << self
       attr_reader :depth, :dict
-      def spell s, combination
+      def spell combination, s
         @dict  ||= {}
         @depth ||= 0
         conflicts = @dict.keys \
@@ -194,7 +195,7 @@ module Databases
       self.class.lookup_spell combination
     end
 
-    spell Shield, [:top_arc] 
-    spell Fire, [:up, :down]
+    spell [:up, :right], Shield
+    spell [:up, :down], Fire
   end
 end

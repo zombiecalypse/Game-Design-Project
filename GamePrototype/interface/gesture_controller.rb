@@ -39,17 +39,6 @@ module Interface
       y < 0 and x.abs < y.abs
     end
 
-    gesture :top_arc, 10 do |xs, ys|
-      my = ys[ys.size/2]
-      d = (xs[-1]-xs[0]).abs
-
-      if d > 100
-        dy0 = (my - ys[0])/d
-        dyn = (my - ys[-1])/d
-        dy0 < -0.3 and dyn < -0.3
-      end
-    end
-
     def initialize(window = $window)
       @buffer = []
       @window = window
