@@ -146,6 +146,12 @@
   <object x="2095" y="1099">
    <polygon points="0,0 0,50 301,51 299,-34 188,-33 181,-3"/>
   </object>
+  <object x="1882" y="329">
+   <polygon points="0,0 33,51 -39,53 -55,-3"/>
+  </object>
+  <object x="1966" y="511">
+   <polygon points="0,0 39,59 -33,69 -42,-41 -43,-41"/>
+  </object>
  </objectgroup>
  <objectgroup name="startpoints" width="75" height="75">
   <object name="start" x="107" y="849"/>
@@ -155,24 +161,25 @@
   <object type="Bat" x="283" y="207"/>
   <object type="Bat" x="255" y="194"/>
   <object type="Bat" x="226" y="212" width="22" height="20"/>
+  <object type="Bat" x="283" y="207"/>
  </objectgroup>
  <objectgroup name="events" width="75" height="75">
-  <object name="to1" x="145" y="491">
+  <object name="to1" type="event" x="145" y="491">
    <polygon points="0,0 213,-87 28,-222"/>
   </object>
-  <object name="guards_entry" x="811" y="1235">
+  <object name="guards_entry" type="event" x="811" y="1235">
    <polygon points="0,0 41,-93 301,13 82,125"/>
   </object>
-  <object name="guards_afraid" x="726" y="2224">
+  <object name="guards_afraid" type="event" x="726" y="2224">
    <polygon points="0,0 150,-135 -117,-305 -222,-263"/>
   </object>
-  <object name="guards_spider" x="1356" y="831">
+  <object name="guards_spider" type="event" x="1356" y="831">
    <polygon points="0,0 330,45 290,178 -36,103 -34,104 -35,105"/>
   </object>
-  <object name="spider" x="2185" y="987">
+  <object name="spider" type="event" x="2185" y="987">
    <polygon points="0,0 -25,280 -185,247 -57,-111 -40,-88"/>
   </object>
-  <object name="teleport_spider" x="2232" y="947">
+  <object name="teleport_spider" type="teleport" x="2232" y="947">
    <polygon points="0,0 -10,307 155,261 108,5 -37,-21"/>
   </object>
  </objectgroup>
