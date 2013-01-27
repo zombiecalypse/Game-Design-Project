@@ -22,7 +22,7 @@ module Chingu::Traits
     module ClassMethods
       def initialize_trait(opts={})
        trait_options[:attack] = opts 
-       trait_options[:enemies] ||= [opts[:enemy]]
+       trait_options[:attack][:enemies] ||= [opts[:enemy]] if opts[:enemy]
       end
     end
 
@@ -60,8 +60,12 @@ module Chingu::Traits
       self.destroy if range and @moved > range
     end
 
+    def enemies
+      trait_options[:attack][:enemies] || [Objects::Player]
+    end
+
     def hits
-      each_collision(*trait_options[:attack][:enemies]) do |s, enemy|
+      each_collision(*enemies) do |s, enemy|
         unless @has_hit.include? enemy
           hit enemy
           @has_hit << enemy
@@ -80,7 +84,7 @@ module Chingu::Traits
     def on_destroy; end
 
     def hit enemy
-      enemy.notice(the Objects::Player) if enemy.respond_to?(:notice)
+      enemy.notice the Objects::Player if enemy.respond_to?(:notice)
       enemy.harm trait_options[:attack][:damage]
     end
   end
