@@ -2,6 +2,7 @@ require 'singleton'
 require_relative '../helpers/the'
 require_relative '../interface/hud_interface'
 require_relative '../databases/weapons/pistol'
+require_relative '../databases/weapons/sword'
 # Does the book-keeping for the player. Has the persistent instances for the
 # player's connections and can then be connected to different Player instances
 # across levels.
@@ -78,7 +79,7 @@ class PlayerDaemon
 
     x,y = state[point] if point and state.respond_to?(:[])
 
-    @player = Objects::Player.create(info.merge! x: x, y: y, level: state, weapon: Pistol.new)
+    @player = Objects::Player.create(info.merge! x: x, y: y, level: state, weapon: Sword.new)
     @hud.player = @player
     @player.input = { 
       holding_a:             :move_left, 

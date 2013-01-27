@@ -12,10 +12,14 @@ class Pistol < Weapon
     end
   end
 
+  def random_jitter
+    (Random.rand - 0.5)/5
+  end
+
   def attack x,y
     player = the Objects::Player
     dx = x - player.x_window
     dy = y - player.y_window
-    Shot.create x: player.x, y: player.y, dir: Math::atan2(dy,dx)
+    Shot.create x: player.x, y: player.y, dir: Math::atan2(dy,dx)+random_jitter
   end
 end

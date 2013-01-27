@@ -9,7 +9,7 @@ module Objects
     trait :aggro, damage: 1
     trait :mover
     trait :swarmer
-    trait :hp, hp: 1
+    trait :hp, hp: 5
     trait :bounding_circle, debug: true
     trait :asynchronous
 
