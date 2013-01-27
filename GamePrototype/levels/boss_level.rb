@@ -1,12 +1,14 @@
 require_relative 'base_level'
-require_relative '../game_objects/bat'
-require_relative '../game_objects/sniper'
+require_relative '../game_objects/spider'
 
 module Levels
-  class BossTestLevel < Level
+  class BossLevel < Level
     tilemap 'boss_lvl2.json'
 
     create_on \
       boss: Objects::Boss::Weaver
+
+    def create_spider
+    end
   end
 end

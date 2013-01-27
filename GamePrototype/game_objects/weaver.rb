@@ -119,7 +119,13 @@ module Objects
 
       def summon_spiders
         log_debug {"Summoning new spiders"}
+        (1..5).each { parent.create_spider }
       end
+
+      blocked_if do |x,y|
+        parent.blocked? x,y
+      end
+
 
       while_in(:playing_with_hero) { playing_with_hero }
 
@@ -180,8 +186,6 @@ module Objects
         traits :velocity, :collision_detection
 
         trait :attack, damage: 3, speed: 20, range: 250
-
-        attr_accessor :speed
 
         def initialize(opts={})
           super({image: 'projectile.png'}.merge! opts)

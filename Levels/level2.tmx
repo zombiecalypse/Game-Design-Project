@@ -156,4 +156,9 @@
   <object type="Bat" x="255" y="194"/>
   <object type="Bat" x="226" y="212" width="22" height="20"/>
  </objectgroup>
+ <objectgroup name="events" width="75" height="75">
+  <object name="to1" x="145" y="491">
+   <polygon points="0,0 213,-87 28,-222"/>
+  </object>
+ </objectgroup>
 </map>

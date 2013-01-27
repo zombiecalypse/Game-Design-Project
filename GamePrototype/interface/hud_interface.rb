@@ -29,9 +29,15 @@ module Interface
       @icon.update if @icon
     end
 
+    def textover txt
+      @textover = TextOver.new texts: txt, x: 600, y: 300
+      @textover.activate
+    end
+
     def draw
       @bar.draw
       @out.draw
+      @textover.draw if @textover
       @icon.draw if @icon
       x = 400
       return unless @gesture_icons

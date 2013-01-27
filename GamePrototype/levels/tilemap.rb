@@ -243,7 +243,7 @@ module Levels
     def load_startpoints layer
       layer['objects'].each {|o| @startpoints[o['name'].downcase.to_sym] = [o['x'],o['y']]}
       log_debug {"loaded #{@startpoints.size} start points"}
-      log_debug { @startpoints.keys.join(" ") }
+      log_debug { "\t"+@startpoints.keys.join(" ") }
 
     end
 

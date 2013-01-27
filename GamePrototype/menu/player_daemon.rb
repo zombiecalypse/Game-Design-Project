@@ -47,6 +47,10 @@ class PlayerDaemon
     @hud.update
   end
 
+  def textover txt
+    @hud.textover txt
+  end
+
   private
   @@default_options = {
     hp: 100,
