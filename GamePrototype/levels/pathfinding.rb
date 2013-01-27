@@ -58,26 +58,21 @@ module Pathfinding
 	  end
 	  
 	  def pos_to_node pos
-	    @nodes.each{|n| return n if n.pos.equal? pos}
+	    result = nil
+	    @nodes.each{|n| result = n if n.pos.equal? pos}
+	    @nodes.each{|n| result = n if n.pos.distance(pos) < 46} unless result
+	    return result
 	  end
 	end
   
   class Node
-	  attr_accessor :pos, :parent, :children, :neighbours
+	  attr_accessor :pos, :parent, :children, :neighbours, :d
   
     def initialize parent, pos
     	@pos = pos
       @parent = parent
       @children = []
       @neighbours = []
-    end
-    
-    def d=(int)
-      @d = int
-    end
-    
-    def d
-      return @d
     end
     	
     def parent?
@@ -109,6 +104,10 @@ module Pathfinding
     def initialize x, y
   	  @x = x.round
       @y = y.round
+    end
+    
+    def distance other
+      Math.sqrt((other.x - @x)**2 + (other.y - @y)**2)
     end
     	
     def equal? other
