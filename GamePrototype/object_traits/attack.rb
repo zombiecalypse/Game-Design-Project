@@ -36,7 +36,7 @@ module Chingu::Traits
     def update_trait
       super
       moves
-      hits
+      hits rescue nil
     end
 
     def range
@@ -80,6 +80,7 @@ module Chingu::Traits
     def on_destroy; end
 
     def hit enemy
+      enemy.notice(the Objects::Player) if enemy.respond_to?(:notice)
       enemy.harm trait_options[:attack][:damage]
     end
   end

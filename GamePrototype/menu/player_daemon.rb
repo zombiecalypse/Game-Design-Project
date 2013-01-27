@@ -52,7 +52,8 @@ class PlayerDaemon
     hp: 100,
     dir: :down,
     speed: 3,
-    vulnerability: 1
+    vulnerability: 1,
+    weapon: Weapons::default.new
   }
 
   def extract_info player
@@ -78,7 +79,7 @@ class PlayerDaemon
 
     x,y = state[point] if point and state.respond_to?(:[])
 
-    @player = Objects::Player.create(info.merge! x: x, y: y, level: state, weapon: Weapons::default.new)
+    @player = Objects::Player.create(info.merge! x: x, y: y, level: state)
     @hud.player = @player
     @player.input = { 
       holding_a:             :move_left, 

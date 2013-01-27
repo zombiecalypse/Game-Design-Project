@@ -46,7 +46,8 @@ module Objects
         hp: @hp,
         dir: @current_dir,
         speed: @speed,
-        vulnerability: @vulnerability
+        vulnerability: @vulnerability,
+        weapon: @weapon
       }
     end
     
@@ -130,7 +131,7 @@ module Objects
     def action
       x,y = $window.mouse_x, $window.mouse_y
 
-      attack x,y
+      attack x,y if (parent.attack? rescue true)
     end
 
     attr_accessor :spell

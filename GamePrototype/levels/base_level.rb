@@ -147,6 +147,11 @@ module Levels
       @map.draw
     end
 
+    # Can be overwritten, if weapons are not allowed in level (e.g. town)
+    def attack?
+      true
+    end
+
     private 
     def map_block
       self.class.map_block 
