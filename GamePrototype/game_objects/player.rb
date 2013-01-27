@@ -26,6 +26,7 @@ module Objects
       @hp                = opts[:hp]           ||100
       @vulnerability     = opts[:vulnerability]||1
       @level             = opts[:level]
+      @weapon            = opts[:weapon]
       @gesture_symbols   = []
       log_debug { "initialized journal" }
       begin
@@ -144,7 +145,8 @@ module Objects
 
     def attack x,y
       log_debug { "attacking evil point (#{x}, #{y})" }
-      @spell.activate x,y if @spell
+      return @spell.activate x,y if @spell
+      return @weapon.attack x,y if @weapon
     end
 
     def new_word
