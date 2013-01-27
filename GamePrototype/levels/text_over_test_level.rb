@@ -4,16 +4,6 @@ module Levels
   class TextOverTestLevel < Level
     tilemap 'text_test.json'
 
-
-    def self.once sym, &b
-      zone sym do
-        @seen ||= {}
-        next if @seen[sym]
-        instance_exec(&b)
-        @seen[sym] = true
-      end
-    end
-
     once :to1 do
       textover ["text over 1", "...and 2"]
     end

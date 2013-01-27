@@ -160,5 +160,20 @@
   <object name="to1" x="145" y="491">
    <polygon points="0,0 213,-87 28,-222"/>
   </object>
+  <object name="guards_entry" x="811" y="1235">
+   <polygon points="0,0 41,-93 301,13 82,125"/>
+  </object>
+  <object name="guards_afraid" x="726" y="2224">
+   <polygon points="0,0 150,-135 -117,-305 -222,-263"/>
+  </object>
+  <object name="guards_spider" x="1356" y="831">
+   <polygon points="0,0 330,45 290,178 -36,103 -34,104 -35,105"/>
+  </object>
+  <object name="spider" x="2185" y="987">
+   <polygon points="0,0 -25,280 -185,247 -57,-111 -40,-88"/>
+  </object>
+  <object name="teleport_spider" x="2232" y="947">
+   <polygon points="0,0 -10,307 155,261 108,5 -37,-21"/>
+  </object>
  </objectgroup>
 </map>

@@ -157,6 +157,15 @@ module Levels
       self.class.map_block 
     end
 
+    def self.once sym, &b
+      zone sym do
+        @seen ||= {}
+        next if @seen[sym]
+        instance_exec(&b)
+        @seen[sym] = true
+      end
+    end
+
     def tilemap_file
       self.class.tilemap_file
     end
