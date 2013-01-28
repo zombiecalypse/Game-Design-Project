@@ -129,6 +129,7 @@ module Levels
 
     def load_tileset image_path
       begin
+        Gosu::Image.autoload_dirs << "/home/clood/Game/GamePrototype/media/maps"
         @tileset = Gosu::Image.load_tiles($window, Gosu::Image[image_path], @tilewidth, @tileheight, true)
       rescue Exception => e
         log_error { "Couldn't load #{image_path}, out of #{Gosu::Image.autoload_dirs}" }
