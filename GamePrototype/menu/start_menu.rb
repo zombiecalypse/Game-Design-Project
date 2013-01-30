@@ -14,7 +14,7 @@ module Levels
       super opts
       @bg = Chingu::GameObject.create(image: 'title.png', x: $window.width/2, y: $window.height/2, zorder: ZOrder::BACKGROUND)
       @bg.scale = $window.width.to_f / @bg.width
-      @title = Chingu::Text.create("Anura", x: 150, y: 50, size: 60, color: Colors::INACTIVE)
+      #@title = Chingu::Text.create("Anura", x: 150, y: 50, size: 60, color: Colors::INACTIVE)
       @menu= Menu.create(menu_items: {
         "Start" => :start,
         "Load"  => Interface::LoadScreen,
@@ -23,7 +23,7 @@ module Levels
     end
 
     def start
-      the(PlayerDaemon).teleport(level: Level1, point: :start)
+      the(PlayerDaemon).teleport(level: Level2, point: :start)
     end
   end
 end
