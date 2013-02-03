@@ -94,7 +94,7 @@ module Levels
       @ground_tiles      = []
       @wall_tiles        = []
       load_tile_properties map['tilesets'].first['tileproperties']
-      load_tileset map['tilesets'].first['image']
+      load_tileset map['tilesets']
       load_layers  map['layers']
     end
 
@@ -128,9 +128,12 @@ module Levels
     end
 
     def load_tileset image_path
+      @tileset = []
+      Gosu::Image.autoload_dirs << "/home/clood/Game/GamePrototype/media/maps"
       begin
-        Gosu::Image.autoload_dirs << "/home/clood/Game/GamePrototype/media/maps"
-        @tileset = Gosu::Image.load_tiles($window, Gosu::Image[image_path], @tilewidth, @tileheight, true)
+        image_path.each{|p|
+          @tileset = @tileset + Gosu::Image.load_tiles($window, Gosu::Image[p['image']], p['tilewidth'], p['tileheight'], true)
+        }
       rescue Exception => e
         log_error { "Couldn't load #{image_path}, out of #{Gosu::Image.autoload_dirs}" }
         throw e
