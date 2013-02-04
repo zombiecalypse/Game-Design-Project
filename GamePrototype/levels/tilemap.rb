@@ -61,8 +61,6 @@ module Levels
     #
     # Findings so far: 
     #  * bottle-necks are:
-    #     - updates for all tiles, which should really not be
-    #       necessary.
     #     - drawing of tiles, which could for the most part be avoided
     #     - loading of the tiles is slow, but does not impair the game in any
     #       way
@@ -75,7 +73,7 @@ module Levels
     does 'helpers/logging', level: Logger::DEBUG
     attr_reader :width_in_tiles, :height_in_tiles, :tilewidth, :tileheight
 
-    attr_reader :tileset, :ground_tiles, :wall_tiles
+    attr_reader :tilesets, :ground_tiles, :wall_tiles
     attr_reader :movement_polygons, :events, :objects
 
     attr_accessor :viewport
@@ -93,7 +91,7 @@ module Levels
       @objects           = {}
       @ground_tiles      = []
       @wall_tiles        = []
-      load_tile_properties map['tilesets'].first['tileproperties']
+      map['tilesets'].each {|e| load_tile_properties e['tileproperties']}
       load_tileset map['tilesets']
       load_layers  map['layers']
     end
@@ -107,10 +105,11 @@ module Levels
     end
 
     def load_tile_properties props
+      gid = props['firstgid'] - 1
       @tile_properties = {}
       return unless props
       props.each_pair do |index, properties|
-        @tile_properties[index.to_i] = parse_properties properties
+        @tile_properties[index.to_i + gid] = parse_properties properties
       end
     end
 
@@ -128,12 +127,8 @@ module Levels
     end
 
     def load_tileset image_path
-      @tileset = []
-      Gosu::Image.autoload_dirs << "/home/clood/Game/GamePrototype/media/maps"
       begin
-        image_path.each{|p|
-          @tileset = @tileset + Gosu::Image.load_tiles($window, Gosu::Image[p['image']], p['tilewidth'], p['tileheight'], true)
-        }
+        @tileset = Gosu::Image.load_tiles($window, Gosu::Image[image_path], @tilewidth, @tileheight, true)
       rescue Exception => e
         log_error { "Couldn't load #{image_path}, out of #{Gosu::Image.autoload_dirs}" }
         throw e

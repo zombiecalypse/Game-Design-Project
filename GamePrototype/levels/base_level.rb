@@ -87,6 +87,10 @@ module Levels
       self.instance_exec(&zones[event]) if event and zones[event]
     end
 
+    def healing_blocked?
+      false
+    end
+
     def open_menu
       push_game_state PauseMenu
     end

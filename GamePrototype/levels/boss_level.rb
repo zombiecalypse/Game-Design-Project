@@ -10,5 +10,9 @@ module Levels
 
     def create_spider
     end
+
+    def healing_blocked?
+      true
+    end
   end
 end

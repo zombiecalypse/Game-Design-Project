@@ -60,6 +60,8 @@ module Objects
     def on_harm hrm
       super
       the(PlayerDaemon).update
+      @healing_blocked = true
+      after(5000, name: :heal_reactivate) { @healing_blocked = nil }
       log_debug { "ouch! I'm at #{hp}HP" }
     end
 
@@ -67,6 +69,12 @@ module Objects
     def on_heal hl
       super
       the(PlayerDaemon).update
+    end
+
+    def update
+      super
+      return if @healing_blocked or parent.healing_blocked?
+      heal 0.1
     end
 
     def on_kill

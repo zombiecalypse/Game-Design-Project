@@ -7,7 +7,10 @@ module Levels
     tilemap 'level2.json'
     music "level one.ogg"
 
-    create_on bat: Objects::Bat
+    create_on \
+      bat: Objects::Bat,
+      soldier: Objects::Clockwork::Soldier,
+      sniper: Objects::Clockwork::Sniper
 
     once :to1 do
       textover ["Bats swarm you", "but are easily killed by a fireball"]

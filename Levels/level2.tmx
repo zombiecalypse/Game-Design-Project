@@ -162,6 +162,54 @@
   <object type="Bat" x="255" y="194"/>
   <object type="Bat" x="226" y="212" width="22" height="20"/>
   <object type="Bat" x="283" y="207"/>
+  <object type="Bat" x="972" y="291"/>
+  <object type="Bat" x="1003" y="289"/>
+  <object type="Bat" x="974" y="266"/>
+  <object type="Bat" x="698" y="713"/>
+  <object type="Bat" x="618" y="722"/>
+  <object type="Bat" x="640" y="681"/>
+  <object type="Bat" x="662" y="706"/>
+  <object type="Bat" x="674" y="670"/>
+  <object type="Bat" x="531" y="1188"/>
+  <object type="Bat" x="523" y="1160"/>
+  <object type="Bat" x="611" y="1164"/>
+  <object type="Bat" x="583" y="1188"/>
+  <object type="Bat" x="676" y="1203"/>
+  <object type="Bat" x="588" y="1530"/>
+  <object type="soldier" x="197" y="1896"/>
+  <object type="soldier" x="155" y="1929"/>
+  <object type="soldier" x="151" y="2189"/>
+  <object type="sniper" x="199" y="2223"/>
+  <object type="sniper" x="405" y="2230"/>
+  <object type="Bat" x="782" y="1995"/>
+  <object type="Bat" x="723" y="1949"/>
+  <object type="Bat" x="884" y="1801"/>
+  <object type="sniper" x="1488" y="1940"/>
+  <object type="sniper" x="1546" y="1897"/>
+  <object type="soldier" x="1498" y="1818"/>
+  <object type="soldier" x="1206" y="1803"/>
+  <object type="soldier" x="1524" y="1238"/>
+  <object type="soldier" x="1578" y="1223"/>
+  <object type="sniper" x="1556" y="1184"/>
+  <object type="sniper" x="1517" y="1183"/>
+  <object type="Bat" x="1612" y="802"/>
+  <object type="Bat" x="1635" y="801"/>
+  <object type="Bat" x="1662" y="799"/>
+  <object type="Bat" x="1624" y="815"/>
+  <object type="Bat" x="1650" y="812"/>
+  <object type="Bat" x="1415" y="384"/>
+  <object type="Bat" x="1422" y="427"/>
+  <object type="soldier" x="1537" y="340"/>
+  <object type="sniper" x="1568" y="379"/>
+  <object type="soldier" x="1605" y="459"/>
+  <object type="sniper" x="1553" y="471"/>
+  <object type="soldier" x="1613" y="404"/>
+  <object type="sniper" x="1550" y="408"/>
+  <object type="Bat" x="2045" y="585"/>
+  <object type="Bat" x="1969" y="602"/>
+  <object type="Bat" x="1967" y="734"/>
+  <object type="Bat" x="1979" y="802"/>
+  <object type="Bat" x="2010" y="935"/>
  </objectgroup>
  <objectgroup name="events" width="75" height="75">
   <object name="to1" type="event" x="145" y="491">
