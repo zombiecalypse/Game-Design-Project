@@ -30,7 +30,7 @@ module Interface
     end
 
     def textover txt
-      @textover = TextOver.new texts: txt, x: 600, y: 300
+      @textover = TextOver.new texts: txt, x: 500, y: 300
       @textover.activate
     end
 
