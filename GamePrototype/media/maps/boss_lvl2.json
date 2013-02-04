@@ -647,6 +647,30 @@
                  "width":0,
                  "x":1046,
                  "y":170
+                }, 
+                {
+                 "height":0,
+                 "name":"spider_spawn2",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":554,
+                 "y":600
+                }, 
+                {
+                 "height":0,
+                 "name":"spider_spawn1",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":554,
+                 "y":146
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -659,18 +683,6 @@
          "height":30,
          "name":"enemies",
          "objects":[
-                {
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "width":0,
-                 "x":393,
-                 "y":439
-                }, 
                 {
                  "height":0,
                  "name":"Boss",

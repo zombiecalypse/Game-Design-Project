@@ -73,6 +73,8 @@
  <objectgroup name="startpoints" width="40" height="30">
   <object name="start" x="48" y="451"/>
   <object name="retreat" x="1046" y="170"/>
+  <object name="spider_spawn2" x="554" y="600"/>
+  <object name="spider_spawn1" x="554" y="146"/>
  </objectgroup>
  <objectgroup name="enemies" width="40" height="30">
   <object name="Boss" type="Boss" x="974" y="179"/>
