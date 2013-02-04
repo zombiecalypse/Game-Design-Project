@@ -4,11 +4,12 @@ require_relative '../object_traits/hp'
 require_relative '../object_traits/aggro'
 module Objects
   class Spider < Chingu::GameObject
+    include Modularity::Does
+    does 'helpers/logging'
     trait :aggro, damage: 1
     trait :mover
-    trait :swarmer
     trait :hp, hp: 5
-    trait :bounding_circle, debug: true
+    trait :bounding_circle
     trait :asynchronous
 
     def initialize(opts={})

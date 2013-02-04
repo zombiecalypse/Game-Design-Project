@@ -10,13 +10,14 @@ require_relative '../object_traits/hp'
 require_relative '../interface/journal'
 require_relative '../helpers/the'
 require_relative '../helpers/logging'
+require_relative '../menu/game_over'
 
 module Objects
   class Player < Chingu::GameObject
     does "helpers/logging"
     attr_reader :current_dir, :journal, :speed
     attr_accessor :vulnerability
-    trait :bounding_box, debug: true
+    trait :bounding_box
     trait :collision_detection
     trait :asynchronous
     trait :hp, hp: 100
@@ -79,7 +80,7 @@ module Objects
 
     def on_kill
       log_debug { "X_x" }
-      $window.pop_game_state
+      $window.switch_game_state(Levels::GameOver)
     end
 
     def move_left

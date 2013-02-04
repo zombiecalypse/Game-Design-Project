@@ -10,7 +10,7 @@ module Objects
     trait :mover
     trait :swarmer
     trait :hp, hp: 5
-    trait :bounding_circle, debug: true
+    trait :bounding_circle
     trait :asynchronous
 
     def initialize(opt={})
