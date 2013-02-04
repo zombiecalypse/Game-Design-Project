@@ -683,7 +683,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/TileSet\/floor32x32.png",
+         "image":"TileSet\/floor32x32.png",
          "imageheight":32,
          "imagewidth":672,
          "margin":0,
@@ -698,7 +698,7 @@
         }, 
         {
          "firstgid":22,
-         "image":"..\/TileSet\/floor64x64.png",
+         "image":"TileSet\/floor64x64.png",
          "imageheight":64,
          "imagewidth":448,
          "margin":0,
@@ -713,7 +713,7 @@
         }, 
         {
          "firstgid":29,
-         "image":"..\/TileSet\/walls96x64.png",
+         "image":"TileSet\/walls96x64.png",
          "imageheight":64,
          "imagewidth":2496,
          "margin":0,
@@ -728,7 +728,7 @@
         }, 
         {
          "firstgid":55,
-         "image":"..\/TileSet\/walls32x96.png",
+         "image":"TileSet\/walls32x96.png",
          "imageheight":96,
          "imagewidth":192,
          "margin":0,
@@ -743,7 +743,7 @@
         }, 
         {
          "firstgid":61,
-         "image":"..\/TileSet\/mask32x32.png",
+         "image":"TileSet\/mask32x32.png",
          "imageheight":32,
          "imagewidth":1312,
          "margin":0,
@@ -758,7 +758,7 @@
         }, 
         {
          "firstgid":102,
-         "image":"..\/TileSet\/door96x64.png",
+         "image":"TileSet\/door96x64.png",
          "imageheight":64,
          "imagewidth":288,
          "margin":0,
@@ -773,7 +773,7 @@
         }, 
         {
          "firstgid":105,
-         "image":"..\/TileSet\/jailbed64x64.png",
+         "image":"TileSet\/jailbed64x64.png",
          "imageheight":64,
          "imagewidth":128,
          "margin":0,
@@ -788,7 +788,7 @@
         }, 
         {
          "firstgid":107,
-         "image":"..\/TileSet\/jailbed32x96.png",
+         "image":"TileSet\/jailbed32x96.png",
          "imageheight":96,
          "imagewidth":128,
          "margin":0,
@@ -803,7 +803,7 @@
         }, 
         {
          "firstgid":111,
-         "image":"..\/TileSet\/railing32x32.png",
+         "image":"TileSet\/railing32x32.png",
          "imageheight":32,
          "imagewidth":512,
          "margin":0,
@@ -818,7 +818,7 @@
         }, 
         {
          "firstgid":127,
-         "image":"..\/TileSet\/stairs64x96.png",
+         "image":"TileSet\/stairs64x96.png",
          "imageheight":96,
          "imagewidth":1088,
          "margin":0,
@@ -833,7 +833,7 @@
         }, 
         {
          "firstgid":144,
-         "image":"..\/TileSet\/floor_interior32x32.png",
+         "image":"TileSet\/floor_interior32x32.png",
          "imageheight":32,
          "imagewidth":384,
          "margin":0,
@@ -848,7 +848,7 @@
         }, 
         {
          "firstgid":156,
-         "image":"..\/TileSet\/machine32x96.png",
+         "image":"TileSet\/machine32x96.png",
          "imageheight":96,
          "imagewidth":32,
          "margin":0,
@@ -863,7 +863,7 @@
         }, 
         {
          "firstgid":157,
-         "image":"..\/TileSet\/machine64x64.png",
+         "image":"TileSet\/machine64x64.png",
          "imageheight":64,
          "imagewidth":384,
          "margin":0,
@@ -878,7 +878,7 @@
         }, 
         {
          "firstgid":163,
-         "image":"..\/TileSet\/machine64x96.png",
+         "image":"TileSet\/machine64x96.png",
          "imageheight":96,
          "imagewidth":448,
          "margin":0,
@@ -893,7 +893,7 @@
         }, 
         {
          "firstgid":170,
-         "image":"..\/TileSet\/machine96x96.png",
+         "image":"TileSet\/machine96x96.png",
          "imageheight":96,
          "imagewidth":288,
          "margin":0,
@@ -908,7 +908,7 @@
         }, 
         {
          "firstgid":173,
-         "image":"..\/TileSet\/furniture32x32.png",
+         "image":"TileSet\/furniture32x32.png",
          "imageheight":32,
          "imagewidth":320,
          "margin":0,
@@ -923,7 +923,7 @@
         }, 
         {
          "firstgid":183,
-         "image":"..\/TileSet\/furniture32x64.png",
+         "image":"TileSet\/furniture32x64.png",
          "imageheight":64,
          "imagewidth":1280,
          "margin":0,
@@ -938,7 +938,7 @@
         }, 
         {
          "firstgid":223,
-         "image":"..\/TileSet\/furniture32x96.png",
+         "image":"TileSet\/furniture32x96.png",
          "imageheight":96,
          "imagewidth":672,
          "margin":0,
@@ -953,7 +953,7 @@
         }, 
         {
          "firstgid":244,
-         "image":"..\/TileSet\/furniture64x32.png",
+         "image":"TileSet\/furniture64x32.png",
          "imageheight":32,
          "imagewidth":512,
          "margin":0,
@@ -968,7 +968,7 @@
         }, 
         {
          "firstgid":252,
-         "image":"..\/TileSet\/furniture64x64.png",
+         "image":"TileSet\/furniture64x64.png",
          "imageheight":64,
          "imagewidth":2240,
          "margin":0,
@@ -983,7 +983,7 @@
         }, 
         {
          "firstgid":287,
-         "image":"..\/TileSet\/furniture64x96.png",
+         "image":"TileSet\/furniture64x96.png",
          "imageheight":96,
          "imagewidth":192,
          "margin":0,
@@ -998,7 +998,7 @@
         }, 
         {
          "firstgid":290,
-         "image":"..\/TileSet\/carpet96x64.png",
+         "image":"TileSet\/carpet96x64.png",
          "imageheight":64,
          "imagewidth":672,
          "margin":0,

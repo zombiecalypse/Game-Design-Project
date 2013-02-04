@@ -92,7 +92,7 @@ module Levels
       @ground_tiles      = []
       @wall_tiles        = []
       map['tilesets'].each {|e| load_tile_properties e['tileproperties']}
-      load_tileset map['tilesets']
+      map['tilesets'].each {|e| load_tileset e}
       load_layers  map['layers']
     end
 
@@ -105,11 +105,10 @@ module Levels
     end
 
     def load_tile_properties props
-      gid = props['firstgid'] - 1
-      @tile_properties = {}
+      @tile_properties ||= {}
       return unless props
       props.each_pair do |index, properties|
-        @tile_properties[index.to_i + gid] = parse_properties properties
+        @tile_properties[index.to_i] = parse_properties properties
       end
     end
 
@@ -126,9 +125,11 @@ module Levels
       key == :zorder
     end
 
-    def load_tileset image_path
+    def load_tileset properties
+      image_path = properties['image']
+      @tileset ||= []
       begin
-        @tileset = Gosu::Image.load_tiles($window, Gosu::Image[image_path], @tilewidth, @tileheight, true)
+        @tileset.concat Gosu::Image.load_tiles($window, Gosu::Image[image_path], properties['tilewidth'], properties['tileheight'], true)
       rescue Exception => e
         log_error { "Couldn't load #{image_path}, out of #{Gosu::Image.autoload_dirs}" }
         throw e
