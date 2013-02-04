@@ -297,6 +297,10 @@ module Levels
       def rect
         Chingu::Rect.new(x,y, width, height)
       end
+      
+      def draw
+        @image.draw_rot(@x + @image.width/2, @y - @image.height/2 + 32, @zorder, @angle, @center_x, @center_y, @factor_x, @factor_y, @color, @mode)  if @image
+      end
     end
 
     class Polygon
