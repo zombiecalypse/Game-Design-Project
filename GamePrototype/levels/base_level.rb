@@ -249,6 +249,7 @@ module Levels
      	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32] 
      	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
     	}
+    	log_debug {"loaded #{@nodes.size} nodes"}
     end
   end
 end
