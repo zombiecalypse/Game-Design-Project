@@ -40,7 +40,7 @@ class ShockWave < Chingu::Particle
 end
 
 
-Burst = Spell.new name: :blast, icon: 'dummy.png' do |opts|
+Burst = Spell.new name: :blast, icon: 'droplet-splash.png' do |opts|
   player = opts[:player]
   wave = ShockWave.create x: player.x, y: player.y, player: player
 end
