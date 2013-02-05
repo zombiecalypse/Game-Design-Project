@@ -66,7 +66,7 @@ module Databases
       self.class.lookup_spell combination
     end
 
-    spell [:up, :right], Shield
+    spell [:up, :right, :down, :left], Shield
     spell [:up, :down],  Fire
     spell [:left, :right, :down], Burst
   end
