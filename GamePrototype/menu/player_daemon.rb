@@ -51,6 +51,10 @@ class PlayerDaemon
     @hud.textover txt
   end
 
+  def journal_page title, text
+    @journal.add_page title, text
+  end
+
   private
   @@default_options = {
     hp: 100,

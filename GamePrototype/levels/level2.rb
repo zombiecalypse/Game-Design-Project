@@ -22,25 +22,34 @@ module Levels
         "pulling the mouse left, right, up, or down",
         "then releasing and enter the next symbol.",
         "A fireball has the formula ↑↓" ]
+        journal "Spells", \
+          "To activate a spell, you have to use its formula by pressing the right mouse button pulling the mouse left, right, up, or down then releasing and enter the next symbol."
+        journal "Fireball",
+          "The fireball is a simple damage spell with the formula ↑↓"
     end
 
     once :blast do
-      textover [
+      text = [
         "You can push your enemies away from you",
-        "with a blast triggered by ←→↓",
+        "with a blast triggered by ←→↓.",
         "It does massive damage, if enemies",
-        "are pushed into walls"
+        "are pushed into walls."
       ]
+      textover text
+     journal "Blast spell", text.join(" ") 
     end
 
     once :shield do
-      textover [
+      text = [
         "If you cannot escape an attack",
         "you can still minimize the damage",
-        "by activating a shield before being hit",
+        "by activating a shield before being hit.",
         "The spell ↑→↓← makes attacks deal only",
-        "20% damage for 5 seconds"
+        "20% damage for 5 seconds."
       ]
+      textover text
+
+      journal "Shield spell", text.join(" ")
     end
 
     once :guards_entry do

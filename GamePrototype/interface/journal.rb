@@ -76,3 +76,7 @@ module Interface
     end
   end
 end
+
+def journal title, text
+  the(PlayerDaemon).journal_page title, text
+end
