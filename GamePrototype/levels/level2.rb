@@ -1,3 +1,4 @@
+# encoding: utf-8
 require_relative 'base_level'
 require_relative '../events/text_over'
 require_relative '../levels/boss_level'
@@ -13,7 +14,33 @@ module Levels
       sniper: Objects::Clockwork::Sniper
 
     once :to1 do
-      textover ["Bats swarm you", "but are easily killed by a fireball"]
+      textover [
+        "Bats swarm you", 
+        "but are easily killed by a fireball.",
+        "To activate a spell, you have to use its formula",
+        "by pressing the right mouse button",
+        "pulling the mouse left, right, up, or down",
+        "then releasing and enter the next symbol.",
+        "A fireball has the formula ↑↓" ]
+    end
+
+    once :blast do
+      textover [
+        "You can push your enemies away from you",
+        "with a blast triggered by ←→↓",
+        "It does massive damage, if enemies",
+        "are pushed into walls"
+      ]
+    end
+
+    once :shield do
+      textover [
+        "If you cannot escape an attack",
+        "you can still minimize the damage",
+        "by activating a shield before being hit",
+        "The spell ↑→↓← makes attacks deal only",
+        "20% damage for 5 seconds"
+      ]
     end
 
     once :guards_entry do

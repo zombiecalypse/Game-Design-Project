@@ -6,6 +6,11 @@
    eJzt2LsRwjAQRVG5HULaogJwROcQOGIIJPNZrfcEJ/TM8x05kJfW2gIAAFDQaRO9IwOttNJKqyy0Gm91nmDL7Jyr/kZaaaVVfKu7XsPtojdkoZVWWmmVhVZ9Llp1uT2tW6vrBHsAgHpe/5G9E71xFlpppZVWWWil1b8baTXeqnovrfa30EonrebspJVWv2p15GY6jbX6Zsfo94lq1fNslU6ftqqg2nnQCvLwzQFwZJXvswAAezwAuDdLlw==
   </data>
  </layer>
+ <layer name="ground2" width="75" height="75">
+  <data encoding="base64" compression="zlib">
+   eJzt1EEKwCAMBMCcpCff1/+/pAgGQpXSWynMQEjOy2oEAAAAAAAAf9DmsOpzaj6y2hu5HOXOLa9V9up+y2rVQo/eGhn1soczZLeTnarvj2f+dQAAAAAAAAAAAAAAAIBvXETEAWU=
+  </data>
+ </layer>
  <layer name="Walls" width="75" height="75">
   <data encoding="base64" compression="zlib">
    eJztnM9v1TAMx8Ofws+xX2gDiV+7IRDaA8QdOCEubCfgBJyAE48T4x8m0WrJ8+zYTtMu7Wrpq7eH2pfmUztxnJatEMLWokUjaTfqbkY7DVxjK7oX9TjqXfdJtdnANV60djtOB1GrqA/dJ9V+8PnaXPwU9yNxehv1IuTtUfD52jZz/BT9FPfDwinZYTjvaxorzj8t55be9yF8F/fDwkkyLi6xv+bMy0pikmunxv3YVvpxNeoa0nXhOC4uQQdKG1o/MJudIMd0rh18L0t8DMZyTz8ktlxcWv1VY4XZbAY5pq1xUeJjqU3vPdf8sMQsrIBH8g/t/vZtT7oG7V5Q363Bisb1DcN1gh1mrtk6XpSy0gyPQ6mNm8bryZn3Wq33xxoDQ7H6GHXUiWujxM/onKmNtS2woj5C/eRV1Keoz51qsaJzpmW8spiVVd85kfv9vaivUd861WJF58yxWdFxpRarH1E/O3lYWcdZro8eVrgdOkfguMHt43tlZcWNGZTV76h1p31ybC4/8+Qa2vVCnzne1r72HbuSDz7vPoED7nti9TfqpBP4Lvx+Lj+rySr3G2OxehL1uvsEDrjve+jvdDzMiZiVlOu0zgpiV8vtQFeQIIZx3zGrZDAnYlbW/vdhBetBLt5LWXnHdM0oK5gTS1jlcljrepCLdy1XkzjXZvUsagPpdjg7H/bxlW3nsdTnwbRcTeJcmxW15Gdr1A6Xy5as8frkDFquJnEeg9VJQTtDsqI2VO7uNRi/psRKyke9ubvXWmWVy92l3/Hm7lZLa+gHUQ+77946wdCs+uQclvM9rJI/vYk67r7jOs2Rsa2LZJXLOSzne1m9j/rSfcd1GqlW0xqrFGvWNQYnab73yrpOoPu2YLn9shp7Zl7W3J6a1xf6Cu/H4HigMU11HPImseZqJ5bz4XkOLE8/tWcSLPeB27eltVdOEPuSSXuTlvUFdz48z4FV6hMWWeuCtPbK6XvUy0xfpb1JKyt6PjeueVlx1yOJiwtu3KG1V06/ou4o/eXMyspiXlYe4+KCm7Np7ZXTnzBvVlxccL5Na6+c/oV+rHJrfKuGZKUZXQto1ofV2Mrdm5K95+RPR0HPB8CmxKq2zyVWlnwAbM6sIMYkpdiDfMBiVlbWmkNLrCDGJKXYg3zAYlZWLfqShZWWi6/DaT5gsSmy4tY6NMdM8QcxlsvFIR+w2BRZcWsdmmMmn4IYy+XiHpsqq1XI55iJFcSYJGvsgd0Pp3NCbl2YrDVWmiVWEGO5XNxjULfR/GuKrLwxphnUbebIyhtjmkHdZo6svDGmGdRt5sAK5+nW9bDHoG7DsWo1V5dY4Tzduh72GNRtOFYt+ZKVlbU+Xmq3op4y/z5FVjgnh75thPPPJZWYxClZ66xoHSGNUTQn5+KFPtNlYZnjNDYrz34WrP1oHSGNUetwNicvqTlxLHOcko3JyrOfBWs/WkdIYxTNyUtYldjYrFZGwdoPj09SzW6urLyWWNG6AR3LIXboOxSlqvmO29is1sG2h1erLzXf26p5DZZ6uXUPb+6sLPVyKeYuIyutXj52rVLaoxxzDSix0urlU6zrDsWq1rMrl4HVOqPcvOd9T35KkliVPrsyJz+ysNLWuGPMey2q7/NCc4652qzm7EdU2v/TsLDy8+v7LsCiRYsWleo/hJsNYw==
@@ -13,7 +18,7 @@
  </layer>
  <layer name="walls2" width="75" height="75">
   <data encoding="base64" compression="zlib">
-   eJzt1EEKwjAQBdCsiqtCQXd6EL2BnsBju3TpUWwghWDaEkQtxffgk1kOn2lDAAD4T6eJULpMhHrH4MZqnYMbAwB+r0uhtO2zS3MXdDVn3+eQZl3xLU0KpTYl70dX42Ivm2weXn2Vhrt6nXVVaoI7qhU7arM3ugbdjRluKv/+mOe/DgAAAAAAAMAn3JZeYEXuSy+wIrqq91h6AQAAAADgLU89EQpR
+   eJzt0rEJgEAQBMBrQdBMC9EOtHpDQ0vR4DNRHgOfxxlYuHBZLgIA4J+mm3C13IR8Y/ixXHP4MQDge00KV+2ZLt1N2OpJf2ZIt60AAAAAAAAAAACAWq2lC1RkK12gIrbKt5cuAAAAAAC8cgBQMQjt
   </data>
  </layer>
  <objectgroup name="movement" width="75" height="75">
@@ -229,6 +234,12 @@
   </object>
   <object name="teleport_spider" type="teleport" x="2232" y="947">
    <polygon points="0,0 -10,307 155,261 108,5 -37,-21"/>
+  </object>
+  <object name="shield" type="event" x="1012" y="830">
+   <polygon points="0,0 116,-1 110,77 -9,78"/>
+  </object>
+  <object name="blast" type="event" x="627" y="296">
+   <polygon points="0,0 -127,119 -73,160 63,4"/>
   </object>
  </objectgroup>
 </map>

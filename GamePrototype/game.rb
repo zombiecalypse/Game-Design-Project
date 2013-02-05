@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 require 'bundler'
 Bundler.require
 
