@@ -16,6 +16,14 @@ require_relative '../helpers/logging'
 
 module Levels
   class Level < Chingu::GameState
+
+    # Overwrite, if there is state in the level
+    def extract_info
+      {}
+    end
+
+    def load_info info
+    end
     include Modularity::Does
     does "helpers/logging"
     trait :viewport
@@ -46,12 +54,14 @@ module Levels
     #       * setting `clazz.zones[:trap]` explicitly
     def initialize(opts = {})
       super(opts)
+      load_info opts[:infos]
       initialize_map
       initialize_objects if @map
       initialize_song(opts[:song] || song_file)
       initialize_pathfinding
       @camera = opts[:camera]
     end
+
 
     def camera
       @camera ||= the(Objects::Player)

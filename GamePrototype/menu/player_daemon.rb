@@ -55,6 +55,26 @@ class PlayerDaemon
     @journal.add_page title, text
   end
 
+  def set_player_info dict
+    player.set_info dict
+  end
+
+  def extract_player_info
+    extract_info @player
+  end
+
+  def extract_position
+    {
+      level: self.level.class,
+      x: @player.x,
+      y: @player.y
+    }
+  end
+
+  def level
+    @player.parent
+  end
+
   private
   @@default_options = {
     hp: 100,
@@ -69,6 +89,7 @@ class PlayerDaemon
 
     player.extract_info
   end
+
 
   def reset_instance
     @hud.reset_instance

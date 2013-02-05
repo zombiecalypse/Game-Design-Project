@@ -39,6 +39,9 @@ module Interface
     include Singleton
     class Save
       attr_accessor :name
+      def initialize(name)
+        @name = name
+      end
       def self.build(name, &block)
         new = self.new name
         block.call new
@@ -49,9 +52,15 @@ module Interface
         lambda { create }
       end
 
+      attr_accessor :player, :position, :journal, :level
+
       def self.create
-        puts "NEW!"
-        # TODO generate new ID and collect all data
+        build Time.now.to_s do |save|
+          save.player = the(PlayerDaemon).extract_player_info
+          save.position = the(PlayerDaemon).extract_position
+          save.journal = the(PlayerDaemon).journal.extract_info
+          save.level = the(PlayerDaemon).level.extract_info
+        end
       end
 
       def load_action
@@ -59,14 +68,17 @@ module Interface
       end
 
       def load
-        puts "Loading #{name}" 
+        state = position[:level].new infos: level
+        the(PlayerDaemon).teleport level: state, x: position[:x], y: position[:y]
+        the(PlayerDaemon).set_player_info player
+        the(PlayerDaemon).journal.set_to journal
       end
     end
 
     def initialize(file=File::join(Dir::home,'.anura.saves'))
       @path = ::Pathname.new(file)
       if @path.exist?
-        @saves = YAML::load(file)
+        @saves = @path.open { |f| YAML::load(f) }
       else
         @saves = []
       end
@@ -74,11 +86,12 @@ module Interface
 
     def << save
       @saves << save
-      @path.open { |f| f.write YAML::dump(@saves) }
+      @path.open('w') { |f| f.write YAML::dump(@saves) }
     end
 
     def loads
       hash = {}
+      @saves.each {|e| puts "#{e.name}"}
       @saves.each {|e| hash[e.name] = e.load_action}
       hash["Exit"] = lambda {$window.pop_game_state}
       hash

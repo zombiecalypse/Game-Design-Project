@@ -24,7 +24,7 @@ module Levels
       menu_items.each do |key, value|
         item = if key.is_a? String
           Chingu::Text.new(key, {color: Colors::INACTIVE}.merge!(options.dup))
-        elsif key.is_a? Image
+        elsif key.is_a? Gosu::Image
           Chingu::GameObject.new(options.merge!(:image => key))
         elsif key.is_a? Chingu::GameObject
           key.options.merge!(options.dup)

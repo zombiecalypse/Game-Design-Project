@@ -24,7 +24,7 @@ module Interface
       end
     end
     class Page
-      attr_reader :title
+      attr_reader :title, :text
 
       def initialize(opts={})
         @title = opts[:title]
@@ -73,6 +73,21 @@ module Interface
 
     def show
       $window.push_game_state(Opened.new(journal: self))
+    end
+
+    def extract_info
+      hash = {}
+      @current_pages.each do |page|
+        hash[page.title] = page.text
+      end
+      hash
+    end
+
+    def set_to info
+      @current_pages = []
+      info.each_pair do |title, text|
+        @current_pages << Page.new(title: title, text: text)
+      end
     end
   end
 end

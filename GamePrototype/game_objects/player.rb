@@ -51,6 +51,14 @@ module Objects
         weapon: @weapon
       }
     end
+
+    def set_info info
+      @hp = info[:hp]
+      @current_dir = info[:dir]
+      @speed = info[:speed]
+      @vulnerability = info[:vulnerability]
+      @weapon = info[:weapon]
+    end
     
     def harm h
       super((h * vulnerability).to_i)
