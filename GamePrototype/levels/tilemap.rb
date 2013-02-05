@@ -207,7 +207,7 @@ module Levels
       @tile_properties[index] || {}
     end
 
-    def load_tiles data, z
+    def load_tiles data, v, z
       list = []
       enum = data.to_enum
       (0...@height_in_tiles).each do |yi|
@@ -215,7 +215,7 @@ module Levels
           index = enum.next - 1
           unless index == -1
             prop = tile_properties index
-            list[coord(xi,yi)] = Tile.new(image: @tileset[index], zorder: prop[:zorder] || z, x: xi*@tilewidth, y: yi*@tileheight)
+            list[coord(xi,yi)] = Tile.new(image: @tileset[index], zorder: prop[:zorder] || z, x: xi*@tilewidth, y: yi*@tileheight, hidden: (not v))
           end
         end
       end
@@ -223,12 +223,12 @@ module Levels
     end
 
     def load_ground layer
-      @ground_tiles << load_tiles(layer['data'], ZOrder::MAP)
+      @ground_tiles << load_tiles(layer['data'], layer['visible'], ZOrder::MAP)
       log_debug {"loaded #{@ground_tiles.size} ground tiles"}
     end
 
     def load_walls layer
-      @wall_tiles << load_tiles(layer['data'], ZOrder::PLAYER)
+      @wall_tiles << load_tiles(layer['data'], layer['visible'], ZOrder::PLAYER)
       log_debug {"loaded #{@wall_tiles.size} wall tiles"}
     end
 
@@ -285,8 +285,10 @@ module Levels
     end
 
     class Tile < Chingu::GameObject
+      attr_accessor :hidden
       def initialize(opts={})
         super opts
+        @hidden = opts[:hidden] || false
         pause
       end
 
@@ -295,7 +297,7 @@ module Levels
       end
       
       def draw
-        @image.draw_rot(@x + @image.width/2, @y - @image.height/2 + 32, @zorder, @angle, @center_x, @center_y, @factor_x, @factor_y, @color, @mode)  if @image
+        @image.draw_rot(@x + @image.width/2, @y - @image.height/2 + 32, @zorder, @angle, @center_x, @center_y, @factor_x, @factor_y, @color, @mode)  if @image and not @hidden
       end
     end
 

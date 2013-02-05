@@ -54,7 +54,7 @@ module Levels
       unless @finished
         AtBuilder.new x, y, self
       else
-        @events[mask_colour(x,y).to_s] 
+        @events[mask_colour(x,y).to_s]
       end
     end
 
