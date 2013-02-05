@@ -12,7 +12,7 @@ module Levels
     def create_spider
       [:spider_spawn1, :spider_spawn2].each do |point|
         x,y = map.startpoints[point]
-        spider = Objects::Spider.create(x: x, y: y)
+        spider = Objects::Spider.create(x: x-10 + Random.rand(20), y: y-10 + Random.rand(20))
         spider.notice the Objects::Player
       end
     end
