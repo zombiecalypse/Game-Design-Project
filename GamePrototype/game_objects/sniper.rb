@@ -25,7 +25,7 @@ module Objects
       trait :aggro, damage: 0, range: 400
       trait :mover
       trait :hp, hp: 20
-      trait :bounding_box, debug: true
+      trait :bounding_box
       trait :state_ai, start: :exploration
       trait :timer
       trait :asynchronous

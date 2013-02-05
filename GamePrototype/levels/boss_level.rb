@@ -1,5 +1,6 @@
 require_relative 'base_level'
 require_relative '../game_objects/spider'
+require_relative '../menu/end'
 
 module Levels
   class BossLevel < Level

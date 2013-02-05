@@ -15,6 +15,10 @@ module Objects
       trait :timer
       trait :asynchronous
 
+      blocked_if do |x,y|
+        parent.blocked? x,y
+      end
+
       def initialize(opts={})
         @animation = Chingu::Animation.new file: 'weaver.png', size: 192, delay: 250
         @animation.frame_names = { 
@@ -46,6 +50,10 @@ module Objects
         Math::atan2(dy, dx)
       end
 
+      def on_kill
+        $window.switch_game_state(Levels::End)
+      end
+
       # An attack, that takes some time to lift the leg, but does devastating
       # damage.
       def pierce p
@@ -61,12 +69,9 @@ module Objects
 
       # An attack, that is somewhat quick and pushes the player away
       def slash p
-        @cooldown = true
         slash = Slash.create(x: x, y: y, dir: angle_to(p))
         log_debug {"slash at #{[p.x,p.y]}"}
-        after(cooldown_time) do
-          @cooldown = nil
-        end
+        need_cooldown
       end
 
 
@@ -92,10 +97,14 @@ module Objects
         if hp < 100 and state == :second_playing_with_hero
           log_debug {"Go hiding second time"}
           self.state = :hiding 
+          after(3000) { summon_spiders }\
+            .then { after(10000) { summon_spiders }}
           after(20000) {self.state = :all_out}
         elsif hp < 250 and state == :playing_with_hero
           log_debug {"Go hiding first time"}
           self.state = :hiding 
+          after(3000) { summon_spiders }\
+            .then { after(10000) { summon_spiders }}
           after(20000) {self.state = :second_playing_with_hero}
         end
       end
@@ -126,28 +135,21 @@ module Objects
         parent.blocked? x,y
       end
 
-
-      while_in(:playing_with_hero) { playing_with_hero }
-
-      while_in(:second_playing_with_hero) { playing_with_hero }
-
-      while_in :hiding do
+      def hide
         # move to save spot
         # become invincible
         # summon some enemies 
         move_away_from the Player
-        every(3000) do
-          summon_spiders
-        end
       end
 
-      while_in :all_out do
+      def all_out
         # become fast
         @speed = 5
         # move toward player
+        return if @cooldown
         d_to_player = d(self, the(Player))
         keep_distance the(Player), piercing_distance*0.75
-        next unless d_to_player < piercing_distance*1.5
+        return unless d_to_player < piercing_distance*1.5
 
         # slash or stomp
         if rand < 0.25
@@ -157,8 +159,17 @@ module Objects
         end
       end
 
+
+      while_in(:playing_with_hero) { playing_with_hero }
+
+      while_in(:second_playing_with_hero) { playing_with_hero }
+
+      while_in(:hiding) { hide }
+
+      while_in(:all_out) { all_out }
+
       class Spit < Chingu::GameObject
-        trait :bounding_circle, debug: true
+        trait :bounding_circle
         traits :velocity, :collision_detection
 
         trait :attack, damage: 10, speed: 5, range: 800, destroy_on_hit: true
@@ -169,7 +180,7 @@ module Objects
       end
 
       class Pierce < Chingu::GameObject
-        trait :bounding_circle, debug: true
+        trait :bounding_circle
         traits :velocity, :collision_detection
 
         trait :attack, damage: 10, speed: 2, range: 300
@@ -182,7 +193,7 @@ module Objects
       end
       
       class Stomp < Chingu::GameObject
-        trait :bounding_circle, debug: true
+        trait :bounding_circle
         traits :velocity, :collision_detection
 
         trait :attack, damage: 3, speed: 20, range: 250
@@ -193,12 +204,10 @@ module Objects
       end
 
       class Slash < Chingu::GameObject
-        trait :bounding_circle, debug: true
+        trait :bounding_circle
         traits :velocity, :collision_detection
 
         trait :attack, damage: 3, speed: 15, range: 250
-
-        attr_accessor :speed
 
         def initialize(opts={})
           super({image: 'projectile.png'}.merge! opts)
@@ -210,7 +219,7 @@ module Objects
           player.during(250) do
             nx = player.x + 5*dx
             ny = player.y + 5*dy
-            next if player.blocked?(nx,ny)
+            next if parent.blocked?(nx,ny)
             player.x = nx
             player.y = ny
           end

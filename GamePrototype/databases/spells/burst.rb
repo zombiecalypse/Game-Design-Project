@@ -2,7 +2,7 @@ require_relative 'spell'
 
 class ShockWave < Chingu::Particle
   include Modularity::Does
-  trait :bounding_circle, debug: true
+  trait :bounding_circle
   traits :velocity, :collision_detection
   trait :attack, enemies: Enemies::all, damage: 0, speed: 0, range: 300
 
@@ -30,7 +30,7 @@ class ShockWave < Chingu::Particle
       ny = enemy.y + range/10* dy                            
       if enemy.blocked?(nx,ny)
         run = false
-        enemy.harm 5 # TODO animation?
+        enemy.harm 20 # TODO animation?
         next
       end
       enemy.x = nx
@@ -40,7 +40,7 @@ class ShockWave < Chingu::Particle
 end
 
 
-Burst = Spell.new name: :blast, icon: 'dummy.png' do |opts|
+Burst = Spell.new name: :blast, icon: 'droplet-splash.png' do |opts|
   player = opts[:player]
   wave = ShockWave.create x: player.x, y: player.y, player: player
 end

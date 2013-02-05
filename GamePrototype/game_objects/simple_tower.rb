@@ -26,7 +26,7 @@ module Objects
 
     trait :shooter, projectile: Projectile
     trait :aggro, damage: 0, observation_range: 300, range: 300
-    trait :bounding_box, debug: true
+    trait :bounding_box
     trait :hp, hp: 50
 
     def initialize(opts={})

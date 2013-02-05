@@ -3,7 +3,7 @@ require_relative '../enemies'
 require_relative '../../object_traits/attack'
 
 class FireShot < Chingu::GameObject
-  trait :bounding_circle, debug: true, scale: 0.5
+  trait :bounding_circle, scale: 0.5
   traits :velocity, :collision_detection, :timer
 
   trait :attack, enemies: Enemies::all, damage: 10, speed: 5, range: 500, destroy_on_hit: true

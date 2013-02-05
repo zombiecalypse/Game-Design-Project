@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 512 512"
+   id="svg3059"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   width="100%"
+   height="100%"
+   sodipodi:docname="droplet-splash.svg"
+   inkscape:export-filename="/home/aaron/Projects/Game-Design-Project/GamePrototype/media/droplet-splash.png"
+   inkscape:export-xdpi="22.5"
+   inkscape:export-ydpi="22.5">
+  <metadata
+     id="metadata3077">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3075" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     id="namedview3073"
+     showgrid="false"
+     inkscape:zoom="1.4238281"
+     inkscape:cx="256"
+     inkscape:cy="256"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3059" />
+  <rect
+     style="fill:#a05a2c;fill-opacity:1;stroke:none"
+     id="rect3143"
+     width="512"
+     height="512"
+     x="0"
+     y="1.5258789e-05"
+     rx="10"
+     ry="10" />
+  <g
+     transform="matrix(18.68858,0,0,18.68858,712.89135,-9225.98979)"
+     id="g3063">
+    <path
+       d="m-32.568,510.4999c-2.7539.8923-4.5312,2.2439-4.5312,3.7433 0,2.6843 5.6085,4.875 12.5312,4.8749s12.5312-2.1906 12.5312-4.8749c0-1.4993-1.7773-2.851-4.5312-3.7433 1.4526.6912 2.3438,1.5641 2.3438,2.5245 0,2.216-4.6287,4.0044-10.3438,4.0044-5.715,3e-05-10.3438-1.7884-10.3438-4.0044 1e-05-.9604.8912-1.8334 2.3438-2.5245z"
+       fill="#fff"
+       id="path3065" />
+    <path
+       d="m-28.8805,511.2399c-1.5117.4844-2.5,1.183-2.5,2.0022 0,1.4575 3.0536,2.6551 6.8125,2.6551s6.8125-1.1976 6.8125-2.6551c0-.8192-.9883-1.5178-2.5-2.0022 .7994.3765 1.3125.8239 1.3125,1.3493 1e-05,1.2032-2.5219,2.1763-5.625,2.1763s-5.625-.9731-5.625-2.1763c-1e-05-.5254.5131-.9728 1.3125-1.3493z"
+       fill="#fff"
+       id="path3067"
+       style="fill:#e9c6af" />
+    <path
+       d="m-24.8492,498.4931c-.2362,4.5502-1.2462,7.9755-2.4688,7.9755-.3032,0-.6055-.2252-.875-.6115 .0691,2.2455-.2626,3.6805-1.0625,3.6183-.2896-.0225-.6256-.2389-.9688-.6115 1.0837,2.6969 3.1471,4.5356 5.5312,4.5356s4.4475-1.8387 5.5312-4.5356c-.3432.3726-.6791.589-.9688.6115-.8709.0677-1.2229-1.6021-1.0625-4.2043-.3532.7387-.7602,1.1976-1.1875,1.1976-1.2226,1e-05-2.2326-3.4253-2.4688-7.9755z"
+       fill="#fff"
+       id="path3069"
+       style="fill:#d38d5f" />
+    <path
+       d="m718.6857,492.8197c0,.4637-.3759.8397-.8397.8397s-.8397-.3759-.8397-.8397 .3759-.8397.8397-.8397 .8397.376.8397.8397z"
+       fill="#fff"
+       transform="matrix(1.55263,0,0,1.55263,-1139.4476,-269.13267)"
+       id="path3071"
+       style="fill:#502d16" />
+  </g>
+</svg>

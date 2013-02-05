@@ -1,5 +1,9 @@
 class TextOver < Chingu::GameObject
   trait :timer
+
+  @@default_options = {
+    max_width: 200
+  }
   def initialize opts = {}
     super opts
     opts[:texts] ||= [opts[:text]]

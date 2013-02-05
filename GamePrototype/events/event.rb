@@ -63,7 +63,7 @@ class Pop_Event < Event
 end
 
 class Tile < Chingu::GameObject
-	trait :bounding_box, debug: true
+	trait :bounding_box
 	trait :collision_detection
 	
 	def initialize (event, x, y, w, h, opts={})
