@@ -1,6 +1,5 @@
 require_relative '../levels/map'
 require_relative 'test_helpers'
-require 'texplay'
 
 
 # Oh I f*ing love rspec

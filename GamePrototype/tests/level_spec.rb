@@ -1,7 +1,6 @@
 require_relative '../levels/base_level'
 require_relative '../levels/map'
 require_relative 'test_helpers'
-require 'texplay'
 
 include Levels
 describe Level do

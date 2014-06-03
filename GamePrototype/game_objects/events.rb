@@ -2,7 +2,6 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 require 'logger'
-require 'texplay'
 
 
 module Objects

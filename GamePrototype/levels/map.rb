@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'chingu'
 require 'gosu'
-require 'texplay'
 require_relative '../interface/z_orders'
 module Levels
   # TODO 

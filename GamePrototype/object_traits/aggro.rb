@@ -4,8 +4,7 @@ require_relative '../helpers/dist'
 module Chingu::Traits
   # Type of enemy that just shoots as soon as possible
   module Aggro
-    include Modularity::Does
-    does "helpers/logging"
+    include Helpers::DoesLogging
     module ClassMethods
       attr_reader :all_on_notice, :all_on_attack
       def initialize_trait(options={})

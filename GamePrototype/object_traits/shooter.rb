@@ -5,8 +5,7 @@ require_relative '../helpers/dist'
 
 module Chingu::Traits
   module Shooter
-    include Modularity::Does
-    does "helpers/logging"
+    include Helpers::DoesLogging
     module ClassMethods
       def initialize_trait(opts={})
         @projectile = opts[:projectile] || Projectile

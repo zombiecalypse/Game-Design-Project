@@ -22,8 +22,7 @@ module Chingu::Traits
 
       attr_reader :swarms
     end
-    include Modularity::Does
-    does "helpers/logging"
+    include Helpers::DoesLogging
 
     def setup_trait(opts={})
       name = opts[:name]

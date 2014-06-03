@@ -69,8 +69,7 @@ module Levels
     #     - Quad-tree for drawing and updating
     #     - finding out, what objects are created all the time only to be
     #       destroyed.
-    include Modularity::Does
-    does 'helpers/logging', level: Logger::DEBUG
+    include Helpers::DoesLogging[level: Logger::DEBUG]
     attr_reader :width_in_tiles, :height_in_tiles, :tilewidth, :tileheight
 
     attr_reader :tilesets, :ground_tiles, :wall_tiles

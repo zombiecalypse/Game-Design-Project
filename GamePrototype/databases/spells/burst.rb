@@ -1,12 +1,11 @@
 require_relative 'spell'
 
 class ShockWave < Chingu::Particle
-  include Modularity::Does
   trait :bounding_circle
   traits :velocity, :collision_detection
   trait :attack, enemies: Enemies::all, damage: 0, speed: 0, range: 300
 
-  does 'helpers/logging'
+  include Helpers::DoesLogging
 
   def initialize(opts={})
     super({image: 'projectile.png', rotation_rate: 30, fade_rate:  -5, scale_rate: 0.75, alpha: 160}.merge! opts)

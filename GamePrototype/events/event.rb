@@ -4,7 +4,6 @@ require 'rubygems'
 require 'chingu'
 require 'gosu'
 require 'logger'
-require 'texplay'
 
 class Event
 	attr_accessor :active

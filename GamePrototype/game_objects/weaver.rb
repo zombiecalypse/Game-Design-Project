@@ -7,7 +7,7 @@ module Objects
     #   > Playing with hero
     #   > All out
     class Weaver < Chingu::GameObject
-      does 'helpers/logging', level: Logger::DEBUG
+      include Helpers::DoesLogging[level: Logger::DEBUG]
       trait :mover, speed: 3
       trait :hp, hp: 400
       trait :state_ai, start: :playing_with_hero

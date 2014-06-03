@@ -19,7 +19,7 @@ module Objects
           player.harm 10
         end
       end
-      does 'helpers/logging'
+      include Helpers::DoesLogging
 
       trait :shooter, projectile: Projectile
       trait :aggro, damage: 0, range: 400

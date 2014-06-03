@@ -1,12 +1,9 @@
 require 'rubygems'
 require 'modularity'
 
-class Object
-  include Modularity::Does
-end
 
 module Helpers
-  module LoggingTrait
+  module DoesLogging
     include Modularity::AsTrait
     as_trait do |opts = {}|
       define_method('log_options') do

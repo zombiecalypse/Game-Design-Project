@@ -24,8 +24,7 @@ module Levels
 
     def load_info info
     end
-    include Modularity::Does
-    does "helpers/logging"
+    include Helpers::DoesLogging
     trait :viewport
 
     attr_reader :song, :map, :nodes

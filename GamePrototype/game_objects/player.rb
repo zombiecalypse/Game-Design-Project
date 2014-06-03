@@ -14,7 +14,7 @@ require_relative '../menu/game_over'
 
 module Objects
   class Player < Chingu::GameObject
-    does "helpers/logging"
+    include Helpers::DoesLogging
     attr_reader :current_dir, :journal, :speed
     attr_accessor :vulnerability
     trait :bounding_box

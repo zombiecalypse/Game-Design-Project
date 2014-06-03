@@ -4,8 +4,7 @@ require_relative '../object_traits/hp'
 require_relative '../object_traits/aggro'
 module Objects
   class Spider < Chingu::GameObject
-    include Modularity::Does
-    does 'helpers/logging'
+    include Helpers::DoesLogging
     trait :aggro, damage: 1
     trait :mover
     trait :hp, hp: 5
