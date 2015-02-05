@@ -45,8 +45,8 @@ class Spell
     dx = x - @player.x_window
     dy = y - @player.y_window
     phi = Math::atan2(dy,dx)
-    @block.call player: @player, 
-      x: x, y: y, 
+    @block.call player: @player,
+      x: x, y: y,
       dx: dx, dy: dy,
       phi: phi
   end

@@ -1,7 +1,7 @@
 module Pathfinding
   class BFS
 	  attr_accessor :path
-	    
+
 	  def initialize start, goal, nodes
 	     @nodes = nodes
 	     start_pos = Pos.new(((start.x - 16)/32.0).round * 32 + 16, ((start.y - 16)/32.0).round * 32 + 16)
@@ -11,7 +11,7 @@ module Pathfinding
 	     biuld_tree
 	     @path = biuld_path
 	  end
-	  
+
 	  def biuld_tree
 	    clean_up
 	    @queue = [@root]
@@ -21,7 +21,7 @@ module Pathfinding
 	      return unless @goal_node.d == -1
 	    end
 	  end
-	  
+
 	  def biuld_path
 	    path = [@goal_node.pos]
 	    current_node = @goal_node
@@ -31,7 +31,7 @@ module Pathfinding
 	    end
 	    return path.reverse
 	  end
-	  
+
 	  def bfs node
 	    new_nodes = []
 	    node.neighbours.each{|n|
@@ -47,16 +47,16 @@ module Pathfinding
 	    node.children = new_nodes
 	    return new_nodes
 	  end
-	  
+
 	  def clean_up
-	    @nodes.each{|n| 
+	    @nodes.each{|n|
 	      n.d = -1
 	      n.parent = nil
 	      n.children = []
 	    }
 	    @root.d = 0
 	  end
-	  
+
 	  def pos_to_node pos
 	    result = nil
 	    @nodes.each{|n| result = n if n.pos.equal? pos}
@@ -64,21 +64,21 @@ module Pathfinding
 	    return result
 	  end
 	end
-  
+
   class Node
 	  attr_accessor :pos, :parent, :children, :neighbours, :d
-  
+
     def initialize parent, pos
     	@pos = pos
       @parent = parent
       @children = []
       @neighbours = []
     end
-    	
+
     def parent?
     	return (not @parent.nil?)
     end
-    
+
     def line_blocked?(node, level)
       distance = [(node.pos.x - pos.x).abs , (node.pos.y - pos.y).abs].max
       for i in 0..distance
@@ -88,32 +88,32 @@ module Pathfinding
       end
       return false
     end
-  	
+
   	def distance other
   	  Math.sqrt((other.pos.x - pos.x)**2 + (other.pos.y - pos.y)**2)
   	end
-  	
+
     def to_s
     	return pos.to_s
     end
   end
-    
+
   class Pos
 	  attr_accessor :x, :y
-    	
+
     def initialize x, y
   	  @x = x.round
       @y = y.round
     end
-    
+
     def distance other
       Math.sqrt((other.x - @x)**2 + (other.y - @y)**2)
     end
-    	
+
     def equal? other
   	  return x == other.x && y == other.y
     end
-    	
+
     def to_s
     	return "(#{x},#{y})"
     end

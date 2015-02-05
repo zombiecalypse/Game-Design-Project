@@ -34,7 +34,7 @@ module Objects
 
       def initialize(opts={})
         @animation = Chingu::Animation.new file: 'clockwork.png', size: 32, delay: 250
-        @animation.frame_names = { 
+        @animation.frame_names = {
           down: 3..5,
           left: 9..11,
           right: 15..17,
@@ -46,7 +46,7 @@ module Objects
 
       on_notice do |p|
         if state == :exploration
-          self.state = :attacking 
+          self.state = :attacking
           @enemy = p
         end
       end

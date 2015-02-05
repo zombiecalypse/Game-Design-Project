@@ -59,7 +59,7 @@ module Objects
       @vulnerability = info[:vulnerability]
       @weapon = info[:weapon]
     end
-    
+
     def harm h
       super((h * vulnerability).to_i)
     end
@@ -177,7 +177,7 @@ module Objects
 
     def self.the
       throw "Weird number of players: #{self.all}" if self.all.size != 1
-      self.all.first 
+      self.all.first
     end
   end
 end

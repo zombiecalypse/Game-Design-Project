@@ -27,12 +27,12 @@ module Levels
     #   a list of `layers` from bottom to top:
     #    name
     #    can be either tilelayer:
-    #      a flat list of cell elements `data` 
+    #      a flat list of cell elements `data`
     #       0 means empty
     #       index in tileset
     #   or a objectlayer
     #     a list of `objects`
-    #       can either be a plain object 
+    #       can either be a plain object
     #         `x`, `y` in pixel
     #         `type`
     #       or a polygon:
@@ -59,7 +59,7 @@ module Levels
     # OMG we have a performance problem with the maps if sufficiently huge! I'm
     # so exited! Do *all* the quad-trees!
     #
-    # Findings so far: 
+    # Findings so far:
     #  * bottle-necks are:
     #     - drawing of tiles, which could for the most part be avoided
     #     - loading of the tiles is slow, but does not impair the game in any
@@ -136,7 +136,7 @@ module Levels
     end
 
     def draw
-      @viewport.apply do 
+      @viewport.apply do
         draw_smartly
       end
     end
@@ -218,7 +218,7 @@ module Levels
           end
         end
       end
-      list 
+      list
     end
 
     def load_ground layer
@@ -294,7 +294,7 @@ module Levels
       def rect
         Chingu::Rect.new(x,y, width, height)
       end
-      
+
       def draw
         @image.draw_rot(@x + @image.width/2, @y - @image.height/2 + 32, @zorder, @angle, @center_x, @center_y, @factor_x, @factor_y, @color, @mode)  if @image and not @hidden
       end
@@ -328,7 +328,7 @@ module Levels
       end
 
       def ray_crosses_through_line_segment?(point, from, to)
-        (point.x < (from.x - to.x) * (point.y - to.y) / 
+        (point.x < (from.x - to.x) * (point.y - to.y) /
          (from.y - to.y) + to.x) rescue false
       end
 

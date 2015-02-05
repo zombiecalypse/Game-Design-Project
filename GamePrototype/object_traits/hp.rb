@@ -53,13 +53,13 @@ module Chingu::Traits
     def on_harm(dmg)
       flash Colors::HARM
     end
-    def on_heal(hl) 
+    def on_heal(hl)
       flash Colors::HEAL
     end
     def on_kill ; end
 
     def flash(c)
-      during(100) do 
+      during(100) do
         @color = c
       end.then do
         @color = Gosu::Color::WHITE

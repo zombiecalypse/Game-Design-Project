@@ -7,8 +7,8 @@ require 'logger'
 
 class Event
 	attr_accessor :active
-	
-	def initialize (mode, opts={}, &block)	
+
+	def initialize (mode, opts={}, &block)
 		@mode = mode
 		case @mode
 		when ON_HIT
@@ -16,14 +16,14 @@ class Event
 								opts[:x] || 0,
 								opts[:y] || 0,
 								opts[:w] || 0,
-								opts[:h] || 0,)													
+								opts[:h] || 0,)
 		#TODO add other modes
 		end
 		@repeat = opts[:repeat].nil? ? false : opts[:repeat]
 		@active = opts[:active].nil? ? true : opts[:active]
 		@block = block
 	end
-	
+
 	def activate
 		return unless @active
 		@block.call
@@ -37,7 +37,7 @@ class Con_Event < Event
 		@conversation = conversation
 		@conversation.block = block
 	end
-	
+
 	def activate
 		return unless @active
 		@conversation.activate
@@ -53,7 +53,7 @@ class Pop_Event < Event
 		@y = opts[:y]
 		@active = true
 	end
-	
+
 	def activate
 		return unless @active
 		$window.push_game_state(Popup.new(@line, @x, @y))
@@ -64,7 +64,7 @@ end
 class Tile < Chingu::GameObject
 	trait :bounding_box
 	trait :collision_detection
-	
+
 	def initialize (event, x, y, w, h, opts={})
 		super opts
 		@event = event
@@ -73,37 +73,37 @@ class Tile < Chingu::GameObject
 		@w = w
 		@h = h
 		@area = Chingu::Rect.new(x-(w/2),y-(h/2),w,h)
-	
+
 	end
-	
+
 	def collision_at?(x, y)
 		@area.collide_point?(x,y)
 	end
-	
+
 	def update
 		each_collision(Objects::Player) do
 			@event.activate
 		end
 	end
-	
+
 	def draw
 		$window.fill_rect(@area,Gosu::Color::BLUE)
 	end
-	
+
 	def x
 		@x
 	end
-	
+
 	def y
 		@y
 	end
-		
+
 	def size
 		[@w, @h]
 	end
-	
+
 end
 
 ON_HIT = 0		# event is triggered when player enters area
 ON_CLICK = 1	# event is triggered when object is clicked on
-ON_SCENE = 2	# event is triggered when player enters level 
+ON_SCENE = 2	# event is triggered when player enters level

@@ -20,13 +20,13 @@ class ShockWave < Chingu::Particle
   def hit enemy
     # TODO make something less adhoc
     return unless enemy.respond_to? :blocked?
-    dx = (enemy.x - @player.x)/d(enemy, @player)**1.25 
-    dy = (enemy.y - @player.y)/d(enemy, @player)**1.25 
+    dx = (enemy.x - @player.x)/d(enemy, @player)**1.25
+    dy = (enemy.y - @player.y)/d(enemy, @player)**1.25
     run = true
-    @player.during(125) do 
+    @player.during(125) do
       next unless run
-      nx = enemy.x + range/10 * dx                            
-      ny = enemy.y + range/10* dy                            
+      nx = enemy.x + range/10 * dx
+      ny = enemy.y + range/10* dy
       if enemy.blocked?(nx,ny)
         run = false
         enemy.harm 20 # TODO animation?

@@ -28,7 +28,7 @@ module Events
     def render
       $window.push_game_state self
     end
-    
+
     def forward
       @text = as_text @lines.pop
       quit_dialog unless @text
@@ -50,7 +50,7 @@ module Events
     end
   end
 
-  class Popup 
+  class Popup
     attr_reader :lines
 
     def initialize opts={}

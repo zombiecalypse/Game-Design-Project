@@ -44,8 +44,8 @@ module Chingu::Traits
       @goal_distance = dist
     end
 
-    def move 
-      return unless @goal 
+    def move
+      return unless @goal
       dist = d(self, @goal)
       return if (dist - @goal_distance).abs < speed
       if dist < @goal_distance
@@ -93,7 +93,7 @@ module Chingu::Traits
     def move_along_path
       first = @path[0]
       return if not first
-      if d(self, first) < speed # wont loop but assumes 
+      if d(self, first) < speed # wont loop but assumes
         @path = @path[1..-1]    # well-behaved suroundings
         move_along_path
       else
@@ -111,7 +111,7 @@ module Chingu::Traits
       super
       move
     end
-    
+
     private
     def log_debug(&b)
       self.class.log_debug(&b)

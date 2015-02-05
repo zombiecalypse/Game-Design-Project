@@ -12,7 +12,7 @@ class Game < Chingu::Window
     self.input = { :i => :info}
     push_game_state(Levels::StartMenu)
   end
-  
+
   def info
   	puts current_game_state
   end

@@ -19,12 +19,12 @@ class FireShot < Chingu::GameObject
     super
     @image = @animation.next if @animation
   end
-  
+
   def update_trait
     super
     @parent.enter @x,@y
   end
-  
+
   def random_directions
     @@degrees ||= (0..35).to_a.collect {|i| i*10}
     @@degrees.sample(15)
@@ -33,7 +33,7 @@ class FireShot < Chingu::GameObject
   class ExplosionParticle < Chingu::Particle
     trait :timer
     def initialize(opts={})
-      super({ 
+      super({
         image: "fire_particle.png",
         scale_rate: +0.2,
         fade_rate: -10,

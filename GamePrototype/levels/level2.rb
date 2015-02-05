@@ -15,7 +15,7 @@ module Levels
 
     once :to1 do
       textover [
-        "Bats swarm you", 
+        "Bats swarm you",
         "but are easily killed by a fireball.",
         "To activate a spell, you have to use its formula",
         "by pressing the right mouse button",
@@ -36,7 +36,7 @@ module Levels
         "are pushed into walls."
       ]
       textover text
-     journal "Blast spell", text.join(" ") 
+     journal "Blast spell", text.join(" ")
     end
 
     once :shield do
@@ -57,14 +57,14 @@ module Levels
     end
 
     once :guards_afraid do
-      textover ["Guard 3: The spiders grow huge down here", 
-                "Guard 4: Yeah, we lost some patrols to them", 
+      textover ["Guard 3: The spiders grow huge down here",
+                "Guard 4: Yeah, we lost some patrols to them",
                 "Guard 3: That explains the \"Warning\" sign..."]
     end
 
     once :guards_spider do
-      textover ["Guard 5: Ouch, that bastard bit me!", 
-                "Guard 5: We'll just stay here", 
+      textover ["Guard 5: Ouch, that bastard bit me!",
+                "Guard 5: We'll just stay here",
                 "Guard 5: If that prisoner got any further...",
                 "Guard 5: ... we can just let the spider queen take care of 'em"]
     end

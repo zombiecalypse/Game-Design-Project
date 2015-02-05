@@ -9,7 +9,7 @@ module Interface
       super
     end
 
-    def initialize(opts = {}) 
+    def initialize(opts = {})
       super
       @menu = Levels::Menu.create(menu_items: SaveDatabase.instance.loads)
       self.input = {
@@ -26,7 +26,7 @@ module Interface
       super
     end
 
-    def initialize(opts = {}) 
+    def initialize(opts = {})
       super
       @menu = Levels::Menu.create(menu_items: SaveDatabase.instance.saves)
       self.input = {
@@ -34,7 +34,7 @@ module Interface
       }
     end
   end
-  
+
   class SaveDatabase
     include Singleton
     class Save

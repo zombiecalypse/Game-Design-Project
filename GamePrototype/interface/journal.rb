@@ -5,7 +5,7 @@ require 'gosu'
 require_relative '../menu/menu'
 
 module Interface
-  class Journal 
+  class Journal
     class Opened < Chingu::GameState
       def initialize(opts={})
         super

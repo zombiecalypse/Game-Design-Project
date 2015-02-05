@@ -11,7 +11,7 @@ module Chingu::Traits
   #     speed:           speed (in pixel), with which to move (optional)
   #     range:           maximal number of pixel that the attack moves, before it
   #                      destroys itself
-  #   instance: 
+  #   instance:
   #     dir:             direction (in arc), in which to move (optional)
   #
   # requires:
@@ -21,7 +21,7 @@ module Chingu::Traits
   module Attack
     module ClassMethods
       def initialize_trait(opts={})
-       trait_options[:attack] = opts 
+       trait_options[:attack] = opts
        trait_options[:attack][:enemies] ||= [opts[:enemy]] if opts[:enemy]
       end
     end

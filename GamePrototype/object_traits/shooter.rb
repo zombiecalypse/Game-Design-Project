@@ -41,7 +41,7 @@ module Chingu::Traits
         self.velocity_y = Math::sin(phi) * self.max_speed
       end
 
-      def max_speed 
+      def max_speed
         5
       end
 

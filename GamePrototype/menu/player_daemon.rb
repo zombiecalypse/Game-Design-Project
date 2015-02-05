@@ -37,7 +37,7 @@ class PlayerDaemon
     if need_planeshift? level
       do_planeshift(level, x,y, point)
     else
-      state =$window.current_game_state 
+      state =$window.current_game_state
       x,y = state[point] if point and state.respond_to? :[]
       @player.x,@player.y = x,y
     end
@@ -110,9 +110,9 @@ class PlayerDaemon
 
     @player = Objects::Player.create(info.merge! x: x, y: y, level: state)
     @hud.player = @player
-    @player.input = { 
-      holding_a:             :move_left, 
-      holding_d:             :move_right, 
+    @player.input = {
+      holding_a:             :move_left,
+      holding_d:             :move_right,
       holding_w:             :move_up,
       holding_s:             :move_down,
       mouse_left:            :new_word,

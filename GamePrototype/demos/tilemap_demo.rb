@@ -12,7 +12,7 @@ class Game < Chingu::Window
     self.input = { :i => :info}
     the(PlayerDaemon).teleport(level: Levels::TilemapTestLevel, point: :start1)
   end
-  
+
   def info
   	puts current_game_state
   end

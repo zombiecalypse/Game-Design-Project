@@ -36,7 +36,7 @@ module Levels
     # [map] It creates a map, that has been input via either
     #       * `map do ... end`
     #       * defining `create_map`
-    # [objects] If the map defines located objects, then there can be 
+    # [objects] If the map defines located objects, then there can be
     #           a callback, that is executed for every such point. This
     #           is done by either
     #       * `on(:obj) do |x,y| ... end`
@@ -84,7 +84,7 @@ module Levels
     def blocked? x,y
       return true if x < 0 or y < 0
       return true if x >= map.width or y >= map.height
-      return true if map.blocked? x,y 
+      return true if map.blocked? x,y
     end
 
     def can_move_to? x,y
@@ -165,9 +165,9 @@ module Levels
       true
     end
 
-    private 
+    private
     def map_block
-      self.class.map_block 
+      self.class.map_block
     end
 
     def self.once sym, &b
@@ -185,11 +185,11 @@ module Levels
 
     def song_file
       self.class.song_file
-    end 
+    end
 
     def object_callbacks
       self.class.object_callbacks
-    end 
+    end
 
     def zones
       self.class.zones
@@ -219,7 +219,7 @@ module Levels
       @map.objects.each_pair do |key, instances|
         next unless object_callbacks and object_callbacks[key]
         log_debug { "Load all #{key}" }
-        instances.each do |e| 
+        instances.each do |e|
           self.instance_exec(e, &object_callbacks[key])
         end
       end
@@ -232,7 +232,7 @@ module Levels
         log_debug { "Got song #{@song}" }
       end
     end
-    
+
     def initialize_pathfinding
     	@nodes = []
     	mapper = Array.new((@map.width-16)/32 + 2) {Array.new((@map.height-16)/32 + 2)}
@@ -259,7 +259,7 @@ module Levels
      	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
      	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32 + 1]
      	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
-     	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32] 
+     	  current_node = mapper[(n.pos.x-16)/32 - 1][(n.pos.y-16)/32]
      	  n.neighbours << current_node if (current_node && not(n.line_blocked?(current_node,self)))
     	}
     	log_debug {"loaded #{@nodes.size} nodes"}

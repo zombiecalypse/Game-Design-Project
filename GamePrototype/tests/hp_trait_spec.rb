@@ -16,7 +16,7 @@ describe Chingu::Traits::Hp do
 
     @enemy = @enemy_class.new
   end
-  
+
   after :each do
     @game.close
   end

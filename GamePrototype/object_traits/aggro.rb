@@ -76,7 +76,7 @@ module Chingu::Traits
       enemies
         .select {|e| noticable? e}
         .each do |enemy|
-          do_on_notice enemy 
+          do_on_notice enemy
           log_debug {"I found #{enemy}"}
         end
     end

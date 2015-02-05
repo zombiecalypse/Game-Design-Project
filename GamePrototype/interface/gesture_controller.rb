@@ -50,11 +50,11 @@ module Interface
 
     def read
       return @cached if @cached
-      
+
       xs, ys = @buffer.transpose
 
       return nil if xs.nil? or xs.size < 5
-      
+
       self.class.recognize(xs,ys) rescue nil
     end
   end

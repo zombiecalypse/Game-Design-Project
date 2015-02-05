@@ -21,7 +21,7 @@ module Objects
 
       def initialize(opts={})
         @animation = Chingu::Animation.new file: 'weaver.png', size: 192, delay: 250
-        @animation.frame_names = { 
+        @animation.frame_names = {
           down: 0..3,
           left: 4..7,
           right: 8..11,
@@ -62,7 +62,7 @@ module Objects
         after(1000) do
           pierce.speed = 15
           log_debug {"pierce at #{[p.x,p.y]}"}
-        end.then do 
+        end.then do
           after(cooldown_time) { @cooldown = nil }
         end
       end
@@ -86,7 +86,7 @@ module Objects
         @cooldown = true
         stomp = Stomp.create(x: x, y: y, dir: angle_to(p))
         log_debug {"stomp at #{[p.x,p.y]}"}
-        after(750) do 
+        after(750) do
           @cooldown = false
         end
       end
@@ -96,13 +96,13 @@ module Objects
       def on_harm x
         if hp < 100 and state == :second_playing_with_hero
           log_debug {"Go hiding second time"}
-          self.state = :hiding 
+          self.state = :hiding
           after(3000) { summon_spiders }\
             .then { after(10000) { summon_spiders }}
           after(20000) {self.state = :all_out}
         elsif hp < 250 and state == :playing_with_hero
           log_debug {"Go hiding first time"}
-          self.state = :hiding 
+          self.state = :hiding
           after(3000) { summon_spiders }\
             .then { after(10000) { summon_spiders }}
           after(20000) {self.state = :second_playing_with_hero}
@@ -138,7 +138,7 @@ module Objects
       def hide
         # move to save spot
         # become invincible
-        # summon some enemies 
+        # summon some enemies
         move_away_from the Player
       end
 
@@ -191,7 +191,7 @@ module Objects
           super({image: 'projectile.png'}.merge! opts)
         end
       end
-      
+
       class Stomp < Chingu::GameObject
         trait :bounding_circle
         traits :velocity, :collision_detection

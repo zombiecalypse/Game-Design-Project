@@ -45,7 +45,7 @@ module Interface
         arrow = @gesture_icons[sym]
         if arrow
           arrow.draw(x,20,ZOrder::HUD, 0.5, 0.5)
-          x += arrow.width 
+          x += arrow.width
         end
       end
     end

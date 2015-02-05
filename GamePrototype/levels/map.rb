@@ -3,8 +3,8 @@ require 'chingu'
 require 'gosu'
 require_relative '../interface/z_orders'
 module Levels
-  # TODO 
-  #   1) Map will newly get multiple images as parameter, that lay 
+  # TODO
+  #   1) Map will newly get multiple images as parameter, that lay
   #      out the whole map.
   #   2) Map will get event-colours
   #   3) Map will also get a cool syntax, because hell yeah, syntax.
@@ -38,11 +38,11 @@ module Levels
 
     # Map.new do
     #   at(0,0).map("level1_map.png", 'level1_mask.png')
-    #  
+    #
     #   define :cut_scene1, rgb(0.2, 0.1, 0.9)
-    #   
+    #
     #   at(100,100).startpoint :teleport1
-    #  
+    #
     #   at(300,200).object :spider
     #   at(350,200).object :spider
     # end
@@ -58,7 +58,7 @@ module Levels
     end
 
     def mask_of x,y
-      @masks.detect do |e| 
+      @masks.detect do |e|
         (x-e.x).between?(0, e.image.width) and (y-e.y).between?(0, e.image.height)
       end
     end

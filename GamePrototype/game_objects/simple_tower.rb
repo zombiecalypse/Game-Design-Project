@@ -15,7 +15,7 @@ module Objects
         super
         after(timeout) { self.destroy }
         every(50) do
-          self.angle += 10 
+          self.angle += 10
         end
       end
 

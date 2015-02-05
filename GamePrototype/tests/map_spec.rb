@@ -28,7 +28,7 @@ describe Map do
       at(0,0).map("test_mask.png", "test_mask.png")
     end
 
-    @map.should be_blocked(25,125) 
+    @map.should be_blocked(25,125)
     @map.should_not be_blocked(300,200)
   end
 
@@ -37,11 +37,11 @@ describe Map do
   it "should take multiple images" do
     @map = Map.create do
       at(0,0).map("test_mask.png", "test_mask.png")
-      
+
       at(100,100).map("test_mask.png", "test_mask.png")
     end
 
-    @map.should be_blocked(25,125) 
+    @map.should be_blocked(25,125)
     @map.should be_blocked(125,225)
     @map.should_not be_blocked(325,425)
   end
@@ -49,7 +49,7 @@ describe Map do
   it "should have a width and height" do
     @map = Map.create do
       at(0,0).map("test_mask.png", "test_mask.png") # is 500x500 in size
-      
+
       at(100,0).map("test_mask.png", "test_mask.png")
     end
 
